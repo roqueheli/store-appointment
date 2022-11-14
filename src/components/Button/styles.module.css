@@ -1,0 +1,26 @@
+.btn {
+    background-color: #050443;
+    border: 0;
+    border-radius: .5rem;
+    font-weight: 800;
+    color: #e3c67c;
+    padding: 20px 36px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: opacity .3s ease;
+    margin-top: .3rem;
+    width: 100%;
+}
+
+.btn:last-child {
+    color: #050443;
+    background-color: #e3c67c;
+}
+
+.btn > svg {
+    margin-right: 8px;
+}
+
+.btn:hover {
+    opacity: .7;
+}

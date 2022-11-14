@@ -6,15 +6,31 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint . --fix"
   },
   "dependencies": {
+    "firebase": "^9.9.2",
+    "framer-motion": "^7.6.5",
+    "install": "^0.13.0",
+    "moment": "^2.29.4",
     "next": "12.2.5",
+    "npm": "^9.1.1",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-calendar": "^4.0.0",
+    "react-dom": "18.2.0",
+    "react-icons": "^4.6.0",
+    "react-router-dom": "^6.4.3",
+    "sass": "^1.56.0",
+    "scss": "^0.2.4"
   },
   "devDependencies": {
-    "eslint": "8.22.0",
-    "eslint-config-next": "12.2.5"
+    "eslint": "^8.22.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-next": "12.2.5",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-n": "^15.2.4",
+    "eslint-plugin-promise": "^6.0.0",
+    "eslint-plugin-react": "^7.30.1"
   }
 }

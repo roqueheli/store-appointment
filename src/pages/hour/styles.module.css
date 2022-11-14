@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Style+Script&display=swap');
+
+.container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #050443;
+    font-family: 'Style Script';
+}
+
+.title_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    text-align: center;
+}
+
+.title {
+    padding: 0;
+    width: 100%;
+    margin: 0;
+    color: #050443;
+    font-size: 3rem;
+    font-family: 'Style Script';
+}
+
+.btnContainer {
+    width: 80%;
+}
+
+.subcontainer {
+    overflow: auto;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: center; */
+    height: 60vh;
+    width: 100%;
+}
+
+.subcontainer ul {
+    cursor: pointer;
+    overflow: auto;
+    padding: 0;
+    text-align: center;
+    list-style: none;
+    width: 70%;
+}
+
+.subcontainer ul li {
+    font-size: 1.2rem;
+    margin-bottom: .3rem;
+    border: 1px solid #050443;
+    width: 100%;
+    border-radius: .2rem;
+}

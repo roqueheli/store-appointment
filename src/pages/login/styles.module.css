@@ -1,0 +1,55 @@
+.btnContainer {
+  margin-top: 16px;
+  width: 80%;
+}
+
+.subcontainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  width: 80%;
+}
+
+.loggedContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 90vh;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+}
+
+.buttonscontainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.logostyle {
+  border-radius: 50%;
+  cursor: pointer;
+  width: 20rem;
+}
+
+.avatar {
+  border-radius: 9999px;
+  width: 60px;
+  height: 60px;
+  margin-bottom: .4rem;
+}
+
+.avatarContainer {
+  color: #050443;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: .7rem;
+  cursor: pointer;
+}
