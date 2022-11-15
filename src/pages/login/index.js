@@ -98,12 +98,12 @@ const Home = () => {
             setLogin(true);
         } else {
             userStateChange(setUser);
-            setLogin(true);
+            if (user) setLogin(true);
         }
     }, []);
     
     const handleClick = () => {
-        setLogin(!login);
+        setLogin(true);
     }
 
     return (
