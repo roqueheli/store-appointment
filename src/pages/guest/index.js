@@ -30,9 +30,9 @@ const Guest = () => {
             </div>
             <div className={styles.subcontainer}>
                 <form onSubmit={handleSubmit}>
-                    <input type="text" placeholder='Nombre' name="name" onChange={handleChange} value={guessData.name} />
-                    <input type="email" placeholder='Email' name="email" onChange={handleChange} value={guessData.email} />
-                    <input type="text" placeholder='Celular' name="phone" onChange={handleChange} value={guessData.phone} />
+                    <input required type="text" placeholder='Nombre' name="name" onChange={handleChange} value={guessData.name} />
+                    <input required type="email" placeholder='Email' name="email" onChange={handleChange} value={guessData.email} />
+                    <input required type="text" placeholder='Celular' name="phone" onChange={handleChange} value={guessData.phone} />
                 </form>
             </div>
             <div className={styles.btnContainer}>
