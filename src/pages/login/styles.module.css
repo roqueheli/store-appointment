@@ -44,6 +44,20 @@
   margin-bottom: .4rem;
 }
 
+.noavatar {
+  border-radius: 9999px;
+  width: 75px;
+  height: 75px;
+  font-size: 1.5rem;
+  margin-bottom: .4rem;
+  background-color: #050443;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #e3c67c;
+  color: #e3c67c;
+}
+
 .avatarContainer {
   color: #050443;
   display: flex;

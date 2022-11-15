@@ -7,26 +7,27 @@ import { FcGoogle } from 'react-icons/fc';
 import { MdDateRange, MdLogout } from 'react-icons/md';
 import styles from './styles.module.css';
 
-const Login = ({ setLogin }) => {
-    const { user, setUser } = useContext(StoreContext);
+const Login = ({ setLogin, user, setUser }) => {
     const googleRef = useRef();
     const loginRef = useRef();
     const appointmentRef = useRef();
     const backRef = useRef();
     const logoutRef = useRef();
     
-    useEffect(() => {
-        userStateChange(setUser);
-    }, []);
-    
     const handleGoogleLogin = (e) => {
+        e.preventDefault();
         loginWithGoogle().then(userStateChange(setUser))
         .catch(err => console.log('error', err));
     };
     
     const handleLogout = (e) => {
         e.preventDefault();
-        logout();
+        if(!user?.token) {
+            logout();
+        } else {
+            sessionStorage.removeItem('session');
+            setUser(null);
+        }
     };
 
     const handleClick = () => {
@@ -59,8 +60,11 @@ const Login = ({ setLogin }) => {
                     <>
                         <Link href="/profile">
                             <div className={styles.avatarContainer}>
-                                <img className={styles.avatar} src={user.avatar} alt={user.username} />
-                                <strong>{user.username}</strong>
+                                {user.avatar !== '' ?
+                                    <img className={styles.avatar} src={user.avatar} alt={user.username} /> :
+                                    <span className={styles.noavatar}>{user.username.toUpperCase().slice(0,1)}</span>
+                                }
+                                <strong>{`${user.username[0].toUpperCase()}${user.username.substring(1)}`}</strong>
                             </div>
                         </Link>
                         <Link href="/appointment">
@@ -81,10 +85,22 @@ const Login = ({ setLogin }) => {
 }
 
 const Home = () => {
+    const { user, setUser } = useContext(StoreContext);
     const [login, setLogin] = useState(false);
     const loginRef = useRef();
     const guestRef = useRef();
     const backRef = useRef();
+
+    useEffect(() => {
+        const userStorage = JSON.parse(sessionStorage.getItem('session'));
+        if (userStorage) {
+            setUser(userStorage);
+            setLogin(true);
+        } else {
+            userStateChange(setUser);
+            setLogin(true);
+        }
+    }, []);
     
     const handleClick = () => {
         setLogin(!login);
@@ -114,7 +130,7 @@ const Home = () => {
                         </Link>
                     </div>
                 </div>
-             : <Login setLogin={setLogin} />
+             : <Login setLogin={setLogin} user={user} setUser={setUser} />
             }
         </>
     );
