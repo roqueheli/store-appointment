@@ -5,36 +5,7 @@ import Button from '../../components/Button';
 import Card from '../../components/Card';
 import styles from './styles.module.css';
 
-const workers = [
-  {
-    id: '1',
-    name: 'Edgar Zambrano',
-    description: 'Aunque podemos copiar estos textos y copiarlos en nuestro código.',
-    photoUrl: 'https://instagram.fscl13-1.fna.fbcdn.net/v/t51.2885-15/312915067_134971822383100_3785699069190191760_n.jpg?stp=dst-jpg_e35&_nc_ht=instagram.fscl13-1.fna.fbcdn.net&_nc_cat=104&_nc_ohc=u8YJpi7zTpcAX8P6mcS&edm=ALQROFkBAAAA&ccb=7-5&ig_cache_key=Mjk1Nzg2OTMxNzk3ODY0MDQyMw%3D%3D.2-ccb7-5&oh=00_AfClELmqgSQf-IEap4NGoR_JCIRTvHkHsBgIoJpw6w6nbA&oe=636DBA5F&_nc_sid=30a2ef'
-  },  
-  {
-    id: '2',
-    name: 'Edgar Zambrano',
-    description: 'Aunque podemos copiar estos textos y copiarlos en nuestro código.',
-    photoUrl: 'https://instagram.fscl13-1.fna.fbcdn.net/v/t51.2885-15/312915067_134971822383100_3785699069190191760_n.jpg?stp=dst-jpg_e35&_nc_ht=instagram.fscl13-1.fna.fbcdn.net&_nc_cat=104&_nc_ohc=u8YJpi7zTpcAX8P6mcS&edm=ALQROFkBAAAA&ccb=7-5&ig_cache_key=Mjk1Nzg2OTMxNzk3ODY0MDQyMw%3D%3D.2-ccb7-5&oh=00_AfClELmqgSQf-IEap4NGoR_JCIRTvHkHsBgIoJpw6w6nbA&oe=636DBA5F&_nc_sid=30a2ef'
-  },
-  {
-    id: '3',
-    name: 'Edgar Zambrano',
-    description: 'Aunque podemos copiar estos textos y copiarlos en nuestro código.',
-    photoUrl: 'https://instagram.fscl13-1.fna.fbcdn.net/v/t51.2885-15/312915067_134971822383100_3785699069190191760_n.jpg?stp=dst-jpg_e35&_nc_ht=instagram.fscl13-1.fna.fbcdn.net&_nc_cat=104&_nc_ohc=u8YJpi7zTpcAX8P6mcS&edm=ALQROFkBAAAA&ccb=7-5&ig_cache_key=Mjk1Nzg2OTMxNzk3ODY0MDQyMw%3D%3D.2-ccb7-5&oh=00_AfClELmqgSQf-IEap4NGoR_JCIRTvHkHsBgIoJpw6w6nbA&oe=636DBA5F&_nc_sid=30a2ef'
-  },  
-  // {
-  //   id: '4',
-  //   name: 'Edgar Zambrano',
-  //   description: 'Aunque podemos copiar estos textos y copiarlos en nuestro código.',
-  //   photoUrl: 'https://instagram.fscl13-1.fna.fbcdn.net/v/t51.2885-15/312915067_134971822383100_3785699069190191760_n.jpg?stp=dst-jpg_e35&_nc_ht=instagram.fscl13-1.fna.fbcdn.net&_nc_cat=104&_nc_ohc=u8YJpi7zTpcAX8P6mcS&edm=ALQROFkBAAAA&ccb=7-5&ig_cache_key=Mjk1Nzg2OTMxNzk3ODY0MDQyMw%3D%3D.2-ccb7-5&oh=00_AfClELmqgSQf-IEap4NGoR_JCIRTvHkHsBgIoJpw6w6nbA&oe=636DBA5F&_nc_sid=30a2ef'
-  // },
-];
-
-const Workers = () => {
-  const { pathname } = useRouter();
-
+const Workers = ({ workers }) => {
   return (
     <div className={styles.container}>
       <div className={styles.title_container}>      
@@ -59,6 +30,16 @@ const Workers = () => {
       </div>
     </div>
   );
+}
+
+Workers.getInitialProps = async (ctx) => {
+  const rs = await fetch(`${process.env.NEXT_PUBLIC_HOST}workers`, {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' }
+  });
+  console.log(rs);
+  const json = await rs.json()
+  return { workers: json.stargazers_count }
 }
 
 export default Workers;

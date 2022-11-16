@@ -4,7 +4,6 @@ import { useRouter } from 'next/router'
 import Button from '../../components/Button';
 import styles from './styles.module.css';
 import { StoreContext } from '../../context/store';
-import AccessError from './AccessError';
 
 const initialObject = {
     email: '',
@@ -38,14 +37,14 @@ const Access = () => {
                 console.log('error', e);
             }
         })();
-    }
+    };
     
     const handleChange = (e) => {
         setLoginData({
             ...loginData,
             [e.target.name]: e.target.value
         });
-    }
+    };
     
     return (
         <div className={styles.container}>
@@ -73,6 +72,6 @@ const Access = () => {
             </div>
         </div>
     );
-}
+};
 
 export default Access;
