@@ -1,12 +1,50 @@
 import Link from 'next/link';
-import React, { useRef } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import Button from '../../components/Button';
+import { StoreContext } from '../../context/store';
 import styles from './styles.module.css';
 
 const Hour = () => {
+  const [selected, setSelected] = useState("");
+  const { bookingData, setBookingData } = useContext(StoreContext);
+  const [hours, setHours] = useState([]);
   const buttonRef = useRef();
   const serviceRef = useRef();
 
+  const handleClick = (blocktime) => {
+    setSelected(blocktime);
+    setBookingData({
+      ...bookingData,
+      "schedule": {
+        ...bookingData.schedule,
+        "block_time_id": blocktime.id
+      }
+    });
+  }
+
+  useEffect(() => {
+    const userStorage = JSON.parse(sessionStorage.getItem('session'));
+    if (userStorage) {
+      (async () => {
+        try {
+            const rs = await fetch(`${process.env.NEXT_PUBLIC_HOST}workers/available_hours`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json',
+                           'Authorization': `${userStorage.token}`
+                },
+                body: JSON.stringify({ id: bookingData.worker.worker_id, day: bookingData.schedule.day }),
+            });
+            if (rs.status === 200) {
+                const data = await rs.json();
+                setHours(data.block_times);
+            }
+        } catch (e) {
+            console.log('error', e);
+        }
+      })();
+    }
+  }, []);
+  
   return (
     <div className={styles.container}>
       <div className={styles.title_container}>
@@ -14,32 +52,19 @@ const Hour = () => {
       </div>
       <div className={styles.subcontainer}>
         <ul>
-          <li>11:00</li>
-          <li>11:30</li>
-          <li>12:00</li>
-          <li>12:30</li>
-          <li>13:00</li>
-          <li>13:30</li>
-          <li>14:00</li>
-          <li>14:30</li>
-          <li>15:00</li>
-          <li>15:30</li>
-          <li>16:00</li>
-          <li>16:30</li>
-          <li>17:00</li>
-          <li>17:30</li>
-          <li>18:00</li>
-          <li>18:30</li>
-          <li>19:00</li>
-          <li>19:30</li>
-          <li>20:00</li>
-          <li>20:30</li>
+          {hours.map(hour => {
+            if (hour === selected) {
+              return <li key={hour.id} className={selected ? styles.liactive : ''} onClick={() => handleClick(hour)}>{hour.start.substring(11,19)}</li>
+            } else {
+              return <li key={hour.id} className={styles.linormal} onClick={() => handleClick(hour)}>{hour.start.substring(11,19)}</li>
+            }
+          })}
         </ul>
       </div>
       <div className={styles.btnContainer}>
-        <Link href='/service'>
+        <Link href='/confirmation'>
             <Button ref={serviceRef}>
-            Siguiente
+            Confirmar
             </Button>
         </Link>
         <Link href='/appointment'>
@@ -49,7 +74,7 @@ const Hour = () => {
         </Link>
       </div>
     </div>
-  )
+  );
 }
 
 export default Hour;

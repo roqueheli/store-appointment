@@ -12,6 +12,7 @@
 }
 
 .title_container {
+    margin-top: 1rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -30,15 +31,12 @@
 
 .btnContainer {
     width: 80%;
+    margin-bottom: 1rem;
 }
 
 .subcontainer {
     overflow: auto;
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    /* justify-content: center; */
-    height: 60vh;
+    padding: 2rem;
+    height: 70vh;
     width: 100%;
 }

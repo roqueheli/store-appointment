@@ -43,7 +43,6 @@
 }
 
 .subcontainer ul {
-    cursor: pointer;
     overflow: auto;
     padding: 0;
     text-align: center;
@@ -51,10 +50,20 @@
     width: 70%;
 }
 
-.subcontainer ul li {
+.subcontainer .linormal {
+    cursor: pointer;
     font-size: 1.2rem;
     margin-bottom: .3rem;
     border: 1px solid #050443;
+    width: 100%;
+    border-radius: .2rem;
+}
+
+.subcontainer .liactive {
+    cursor: pointer;
+    font-size: 1.2rem;
+    margin-bottom: .3rem;
+    border: 2px solid #7ac142;
     width: 100%;
     border-radius: .2rem;
 }

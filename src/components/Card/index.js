@@ -1,9 +1,9 @@
 import React from 'react';
 import styles from './styles.module.scss';
 
-const Card = ({ service, onClick }) => {
+const Card = ({ service, onClick, active }) => {
   return (
-      <div className={styles.content} onClick={onClick}>
+      <div className={`${styles.content} ` + (active ? `${styles.selected}` : '')} onClick={onClick}>
           <div className={styles.card}>
               <img src='./mrbarber.jpeg' alt={service.name} />
           </div>

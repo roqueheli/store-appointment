@@ -37,8 +37,8 @@ Services.getInitialProps = async (ctx) => {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' }
   });
-  const json = await rs.json()
-  return { services: json.stargazers_count }
+  const data = await rs.json()
+  return { services: data }
 }
 
 export default Services;

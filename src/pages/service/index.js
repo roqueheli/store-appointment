@@ -1,41 +1,27 @@
 import Link from 'next/link';
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import Button from '../../components/Button';
 import Card from '../../components/Card';
+import { StoreContext } from '../../context/store';
 import styles from './styles.module.css';
 
-const services = [
-  {
-    id: '1',
-    name: 'Corte + Lavado',
-    description: 'Aunque podemos copiar estos textos y copiarlos en nuestro código.',
-    price: '10.000',
-    photoUrl: 'https://instagram.fscl13-1.fna.fbcdn.net/v/t51.2885-15/312915067_134971822383100_3785699069190191760_n.jpg?stp=dst-jpg_e35&_nc_ht=instagram.fscl13-1.fna.fbcdn.net&_nc_cat=104&_nc_ohc=u8YJpi7zTpcAX8P6mcS&edm=ALQROFkBAAAA&ccb=7-5&ig_cache_key=Mjk1Nzg2OTMxNzk3ODY0MDQyMw%3D%3D.2-ccb7-5&oh=00_AfClELmqgSQf-IEap4NGoR_JCIRTvHkHsBgIoJpw6w6nbA&oe=636DBA5F&_nc_sid=30a2ef'
-  },  
-  {
-    id: '2',
-    name: 'Corte + Barba',
-    description: 'Aunque podemos copiar estos textos y copiarlos en nuestro código.',
-    price: '10.000',
-    photoUrl: 'https://instagram.fscl13-1.fna.fbcdn.net/v/t51.2885-15/312915067_134971822383100_3785699069190191760_n.jpg?stp=dst-jpg_e35&_nc_ht=instagram.fscl13-1.fna.fbcdn.net&_nc_cat=104&_nc_ohc=u8YJpi7zTpcAX8P6mcS&edm=ALQROFkBAAAA&ccb=7-5&ig_cache_key=Mjk1Nzg2OTMxNzk3ODY0MDQyMw%3D%3D.2-ccb7-5&oh=00_AfClELmqgSQf-IEap4NGoR_JCIRTvHkHsBgIoJpw6w6nbA&oe=636DBA5F&_nc_sid=30a2ef'
-  },
-  {
-    id: '3',
-    name: 'Barba',
-    description: 'Aunque podemos copiar estos textos y copiarlos en nuestro código.',
-    price: '10.000',
-    photoUrl: 'https://instagram.fscl13-1.fna.fbcdn.net/v/t51.2885-15/312915067_134971822383100_3785699069190191760_n.jpg?stp=dst-jpg_e35&_nc_ht=instagram.fscl13-1.fna.fbcdn.net&_nc_cat=104&_nc_ohc=u8YJpi7zTpcAX8P6mcS&edm=ALQROFkBAAAA&ccb=7-5&ig_cache_key=Mjk1Nzg2OTMxNzk3ODY0MDQyMw%3D%3D.2-ccb7-5&oh=00_AfClELmqgSQf-IEap4NGoR_JCIRTvHkHsBgIoJpw6w6nbA&oe=636DBA5F&_nc_sid=30a2ef'
-  },  
-  {
-    id: '4',
-    name: 'Corte infantil',
-    description: 'Aunque podemos copiar estos textos y copiarlos en nuestro código.',
-    price: '10.000',
-    photoUrl: 'https://instagram.fscl13-1.fna.fbcdn.net/v/t51.2885-15/312915067_134971822383100_3785699069190191760_n.jpg?stp=dst-jpg_e35&_nc_ht=instagram.fscl13-1.fna.fbcdn.net&_nc_cat=104&_nc_ohc=u8YJpi7zTpcAX8P6mcS&edm=ALQROFkBAAAA&ccb=7-5&ig_cache_key=Mjk1Nzg2OTMxNzk3ODY0MDQyMw%3D%3D.2-ccb7-5&oh=00_AfClELmqgSQf-IEap4NGoR_JCIRTvHkHsBgIoJpw6w6nbA&oe=636DBA5F&_nc_sid=30a2ef'
-  },
-];
+const Service = ({ services }) => {
+  const [selected, setSelected] = useState("");
+  const { bookingData, setBookingData } = useContext(StoreContext);
 
-const Service = () => {
+  const handleClick = (service) => {
+    setSelected(service);
+    setBookingData({
+      ...bookingData,
+      "service": {
+        "service_id": service.id,
+        "name": service.name,
+        "description": service.description,
+        "price": service.price
+      }
+    });
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.title_container}>
@@ -43,11 +29,12 @@ const Service = () => {
       </div>
       <div className={styles.subcontainer}>
         {services?.map(service => {
-          return (
-              <Card key={service.id} service={service} />
-            ); 
-          })
-        }
+          if (service === selected) {
+            return <Card key={service.id} service={service} active onClick={() => handleClick(service)} />;
+          } else {
+            return <Card key={service.id} service={service} onClick={() => handleClick(service)} />;
+          }
+        })}
       </div>
       <div className={styles.btnContainer}>
         <Link href='/worker'>
@@ -55,7 +42,7 @@ const Service = () => {
             Siguiente
           </Button>
         </Link>
-        <Link href='/hour'>
+        <Link href='/login'>
           <Button>
             Atrás
           </Button>
@@ -63,6 +50,15 @@ const Service = () => {
       </div>
     </div>
   );
+}
+
+Service.getInitialProps = async (ctx) => {
+  const rs = await fetch(`${process.env.NEXT_PUBLIC_HOST}services`, {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' }
+  });
+  const data = await rs.json()
+  return { services: data }
 }
 
 export default Service;

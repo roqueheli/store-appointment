@@ -67,7 +67,7 @@ const Login = ({ setLogin, user, setUser }) => {
                                 <strong>{`${user.username[0].toUpperCase()}${user.username.substring(1)}`}</strong>
                             </div>
                         </Link>
-                        <Link href="/appointment">
+                        <Link href="/service">
                         <Button ref={appointmentRef}>
                             <MdDateRange />
                             Reserva ahora
@@ -85,7 +85,7 @@ const Login = ({ setLogin, user, setUser }) => {
 }
 
 const Home = () => {
-    const { user, setUser } = useContext(StoreContext);
+    const { user, setUser, bookingData, setBookingData } = useContext(StoreContext);
     const [login, setLogin] = useState(false);
     const loginRef = useRef();
     const guestRef = useRef();
@@ -96,6 +96,16 @@ const Home = () => {
         if (userStorage) {
             setUser(userStorage);
             setLogin(true);
+            setBookingData({
+                ...bookingData,
+                "user": {
+                    "user_id": userStorage.user_id,
+                    "firstname": userStorage.username,
+                    "phone": userStorage?.phone || 0,
+                    "email": userStorage.email,
+                    "token": userStorage?.token
+                }
+            });
         } else {
             userStateChange(setUser);
             if (user) setLogin(true);

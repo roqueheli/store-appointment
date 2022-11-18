@@ -1,37 +1,27 @@
 import Link from 'next/link';
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import Button from '../../components/Button';
 import Card from '../../components/Card';
+import { StoreContext } from '../../context/store';
 import styles from './styles.module.css';
 
-const workers = [
-  {
-    id: '1',
-    name: 'Edgar Zambrano',
-    description: 'Aunque podemos copiar estos textos y copiarlos en nuestro código.',
-    photoUrl: 'https://instagram.fscl13-1.fna.fbcdn.net/v/t51.2885-15/312915067_134971822383100_3785699069190191760_n.jpg?stp=dst-jpg_e35&_nc_ht=instagram.fscl13-1.fna.fbcdn.net&_nc_cat=104&_nc_ohc=u8YJpi7zTpcAX8P6mcS&edm=ALQROFkBAAAA&ccb=7-5&ig_cache_key=Mjk1Nzg2OTMxNzk3ODY0MDQyMw%3D%3D.2-ccb7-5&oh=00_AfClELmqgSQf-IEap4NGoR_JCIRTvHkHsBgIoJpw6w6nbA&oe=636DBA5F&_nc_sid=30a2ef'
-  },  
-  {
-    id: '2',
-    name: 'Edgar Zambrano',
-    description: 'Aunque podemos copiar estos textos y copiarlos en nuestro código.',
-    photoUrl: 'https://instagram.fscl13-1.fna.fbcdn.net/v/t51.2885-15/312915067_134971822383100_3785699069190191760_n.jpg?stp=dst-jpg_e35&_nc_ht=instagram.fscl13-1.fna.fbcdn.net&_nc_cat=104&_nc_ohc=u8YJpi7zTpcAX8P6mcS&edm=ALQROFkBAAAA&ccb=7-5&ig_cache_key=Mjk1Nzg2OTMxNzk3ODY0MDQyMw%3D%3D.2-ccb7-5&oh=00_AfClELmqgSQf-IEap4NGoR_JCIRTvHkHsBgIoJpw6w6nbA&oe=636DBA5F&_nc_sid=30a2ef'
-  },
-  {
-    id: '3',
-    name: 'Edgar Zambrano',
-    description: 'Aunque podemos copiar estos textos y copiarlos en nuestro código.',
-    photoUrl: 'https://instagram.fscl13-1.fna.fbcdn.net/v/t51.2885-15/312915067_134971822383100_3785699069190191760_n.jpg?stp=dst-jpg_e35&_nc_ht=instagram.fscl13-1.fna.fbcdn.net&_nc_cat=104&_nc_ohc=u8YJpi7zTpcAX8P6mcS&edm=ALQROFkBAAAA&ccb=7-5&ig_cache_key=Mjk1Nzg2OTMxNzk3ODY0MDQyMw%3D%3D.2-ccb7-5&oh=00_AfClELmqgSQf-IEap4NGoR_JCIRTvHkHsBgIoJpw6w6nbA&oe=636DBA5F&_nc_sid=30a2ef'
-  },  
-  // {
-  //   id: '4',
-  //   name: 'Edgar Zambrano',
-  //   description: 'Aunque podemos copiar estos textos y copiarlos en nuestro código.',
-  //   photoUrl: 'https://instagram.fscl13-1.fna.fbcdn.net/v/t51.2885-15/312915067_134971822383100_3785699069190191760_n.jpg?stp=dst-jpg_e35&_nc_ht=instagram.fscl13-1.fna.fbcdn.net&_nc_cat=104&_nc_ohc=u8YJpi7zTpcAX8P6mcS&edm=ALQROFkBAAAA&ccb=7-5&ig_cache_key=Mjk1Nzg2OTMxNzk3ODY0MDQyMw%3D%3D.2-ccb7-5&oh=00_AfClELmqgSQf-IEap4NGoR_JCIRTvHkHsBgIoJpw6w6nbA&oe=636DBA5F&_nc_sid=30a2ef'
-  // },
-];
+const Worker = ({ workers }) => {
+  const [selected, setSelected] = useState("");
+  const { bookingData, setBookingData } = useContext(StoreContext);
 
-const Worker = () => {
+  const handleClick = (worker) => {
+    setSelected(worker);
+    setBookingData({
+      ...bookingData,
+      "worker": {
+        "worker_id": worker.id,
+        "name": worker?.name,
+        "instagram": worker?.instagram,
+        "image_url": worker?.image_url
+      }
+    });
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.title_container}>
@@ -39,16 +29,17 @@ const Worker = () => {
       </div>
       <div className={styles.subcontainer}>
         {workers?.map(worker => {
-          return (
-              <Card key={worker.id} service={worker} />
-            ); 
-          })
+          if (worker === selected) {
+            return <Card key={worker.id} service={worker} active onClick={() => handleClick(worker)} />;
+          } else {
+            return <Card key={worker.id} service={worker} onClick={() => handleClick(worker)} />;
+          }})
         }
       </div>
       <div className={styles.btnContainer}>
-      <Link href='/confirmation'>
+      <Link href='/appointment'>
           <Button>
-            Confirmación
+            Seleccion fecha
           </Button>
         </Link>
         <Link href='/service'>
@@ -59,6 +50,15 @@ const Worker = () => {
       </div>
     </div>
   );
+}
+
+Worker.getInitialProps = async (ctx) => {
+  const rs = await fetch(`${process.env.NEXT_PUBLIC_HOST}workers`, {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' }
+  });
+  const data = await rs.json();
+  return { workers: data }
 }
 
 export default Worker;

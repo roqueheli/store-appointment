@@ -16,7 +16,7 @@ const Guest = () => {
     
     const handleSubmit = (e) => {
         e.preventDefault();
-        router.push('/appointment');
+        router.push('/service');
     }
     
     const handleChange = (e) => {

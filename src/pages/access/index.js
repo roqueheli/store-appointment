@@ -13,7 +13,7 @@ const initialObject = {
 const Access = () => {
     const [loginData, setLoginData] = useState(initialObject);
     const [loginError, setLoginError] = useState(false);
-    const { setUser } = useContext(StoreContext);
+    const { setUser, bookingData, setBookingData } = useContext(StoreContext);
     const router = useRouter();
     
     const handleSubmit = (e) => {
@@ -28,7 +28,17 @@ const Access = () => {
                 if (rs.status === 200) {
                     const data = await rs.json();
                     setUser({ username: data.username, email: loginData.email, avatar: '', token: data.token });
-                    sessionStorage.setItem('session', JSON.stringify({ username: data.username, email: loginData.email, avatar: '', token: data.token }));
+                    setBookingData({
+                        ...bookingData,
+                        "user": {
+                            "user_id": data.user_id,
+                            "firstname": data.username,
+                            "phone": data?.phone || 0,
+                            "email": data.email,
+                            "token": data?.token
+                        }
+                    });
+                    sessionStorage.setItem('session', JSON.stringify({ user_id: data.user_id, username: data.username, email: loginData.email, avatar: '', token: data.token }));
                     router.push('/login');
                 } else {
                     setLoginError(true);

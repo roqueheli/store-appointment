@@ -12,6 +12,7 @@
 }
 
 .title_container {
+    margin-top: 1rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -30,15 +31,37 @@
 
 .btnContainer {
     width: 80%;
+    margin-bottom: 1rem;
 }
 
 .subcontainer {
     overflow: auto;
-    padding: 1rem;
+    padding: 2rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* justify-content: center; */
-    height: 60vh;
+    height: 70vh;
     width: 100%;
+}
+
+.subcontainer ul {
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+    overflow: hidden;
+    padding: 0;
+    text-align: center;
+    list-style: none;
+    width: 70%;
+}
+
+.subcontainer ul li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    font-size: 1.2rem;
+    margin-bottom: .3rem;
+    border: 1px solid #050443;
+    width: 100%;
+    border-radius: .2rem;
 }

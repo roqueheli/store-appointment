@@ -37,9 +37,8 @@ Workers.getInitialProps = async (ctx) => {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' }
   });
-  console.log(rs);
-  const json = await rs.json()
-  return { workers: json.stargazers_count }
+  const data = await rs.json();
+  return { workers: data }
 }
 
 export default Workers;

@@ -1,36 +1,51 @@
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Button from '../../components/Button';
 import Card from '../../components/Card';
-import Success from '../../components/success/Success';
+import Success from '../../components/Success/Success';
+import { StoreContext } from '../../context/store';
 import styles from './styles.module.css';
-
-const service = {
-    id: '1',
-    name: 'Corte + Lavado',
-    description: 'Aunque podemos copiar estos textos y copiarlos en nuestro código.',
-    price: '10.000',
-    photoUrl: 'https://instagram.fscl13-1.fna.fbcdn.net/v/t51.2885-15/312915067_134971822383100_3785699069190191760_n.jpg?stp=dst-jpg_e35&_nc_ht=instagram.fscl13-1.fna.fbcdn.net&_nc_cat=104&_nc_ohc=u8YJpi7zTpcAX8P6mcS&edm=ALQROFkBAAAA&ccb=7-5&ig_cache_key=Mjk1Nzg2OTMxNzk3ODY0MDQyMw%3D%3D.2-ccb7-5&oh=00_AfClELmqgSQf-IEap4NGoR_JCIRTvHkHsBgIoJpw6w6nbA&oe=636DBA5F&_nc_sid=30a2ef'
-};
-
-const worker = {
-    id: '1',
-    name: 'Edgar Zambrano',
-    description: 'Aunque podemos copiar estos textos y copiarlos en nuestro código.',
-    photoUrl: 'https://instagram.fscl13-1.fna.fbcdn.net/v/t51.2885-15/312915067_134971822383100_3785699069190191760_n.jpg?stp=dst-jpg_e35&_nc_ht=instagram.fscl13-1.fna.fbcdn.net&_nc_cat=104&_nc_ohc=u8YJpi7zTpcAX8P6mcS&edm=ALQROFkBAAAA&ccb=7-5&ig_cache_key=Mjk1Nzg2OTMxNzk3ODY0MDQyMw%3D%3D.2-ccb7-5&oh=00_AfClELmqgSQf-IEap4NGoR_JCIRTvHkHsBgIoJpw6w6nbA&oe=636DBA5F&_nc_sid=30a2ef'
-};
-
-const appointment = {
-    id: '1',
-    date: new Date().toString(),
-}
 
 const Confirmation = () => {
   const [success, setSuccess] = useState(false);
+  const { bookingData } = useContext(StoreContext);
   
   const handleClick = (e) => {
     e.preventDefault();
-    setSuccess(!success);
+    const userStorage = JSON.parse(sessionStorage.getItem('session'));
+    if (userStorage) {
+      (async () => {
+        try {
+            const rs = await fetch(`${process.env.NEXT_PUBLIC_HOST}reservations`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json',
+                           'Authorization': `${userStorage.token}`
+                },
+                body: JSON.stringify({
+                    firstname: bookingData.user.firstname,
+                    lastname: "",
+                    phone: bookingData.user?.phone || 0,
+                    day: bookingData.schedule.day,
+                    email: bookingData.user.email,
+                    user_id: bookingData.user.user_id,
+                    block_time_id: bookingData.schedule.block_time_id,
+                    work_day_id: bookingData.schedule.work_day_id,
+                    worker_id: bookingData.worker.worker_id,
+                    service_id: bookingData.service.service_id,
+                    rut: ""
+                }),
+            });
+            const data = await rs.json();
+            if (rs.status === 201) {
+                setSuccess(!success);
+            } else {
+              console.log(data);
+            }
+        } catch (e) {
+            console.log('error', e);
+        }
+      })();
+    }
   }
 
   return (
@@ -40,9 +55,9 @@ const Confirmation = () => {
       </div>
         <div className={styles.subcontainer}>
           {!success ? <>
-            <Card key={service.id} service={service} />
-            <Card key={worker.id} service={worker} />
-            <Card key={appointment.id} service={appointment} />
+            <Card key={bookingData.service.name} service={bookingData.service} />
+            <Card key={bookingData.worker.name} service={bookingData.worker} />
+            <Card key={bookingData.schedule.id} service={bookingData.schedule} />
           </> : <Success />}
         </div>
         <div className={styles.btnContainer}>
@@ -59,7 +74,7 @@ const Confirmation = () => {
             </>
             : 
               <>
-                <Link href='/'>
+                <Link href='/login'>
                   <Button>
                     Inicio
                   </Button>

@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import Button from '../../components/Button';
 import styles from './styles.module.css';
-import Success from '../../components/success/Success';
+import Success from '../../components/Success/Success';
 import { useRouter } from 'next/router';
 
 const initialObject = {
     name: '',
     email: '',
     password: '',
-    confirm: '',
+    password_confirmation: '',
     phone: ''
 }
 
@@ -22,7 +22,7 @@ const Register = () => {
     
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (registerData.password != registerData.confirm) {
+        if (registerData.password != registerData.password_confirmation) {
             setMessage({ first: 'Las contraseñas', second: 'no coinciden'});
             setRegisterError(true);
             return;
@@ -35,9 +35,8 @@ const Register = () => {
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(registerData),
                 });
-                console.log(rs.status);
+                const data = await rs.json();
                 if (rs.status === 201) {
-                    const data = await rs.json();
                     setSuccess(true);
                     setTimeout(() => {
                         router.push('/login');
@@ -71,7 +70,7 @@ const Register = () => {
                         <input required type="text" placeholder='Nombre' name="name" onChange={handleChange} value={registerData.name} />
                         <input required type="email" placeholder='Email' name="email" onChange={handleChange} value={registerData.email} />
                         <input required type="password" placeholder='Password' name="password" onChange={handleChange} value={registerData.password} />
-                        <input required type="password" placeholder='Confirmar password' name="confirm" onChange={handleChange} value={registerData.confirm} />
+                        <input required type="password" placeholder='Confirmar password' name="password_confirmation" onChange={handleChange} value={registerData.password_confirmation} />
                         <input required type="text" placeholder='Celular' name="phone" onChange={handleChange} value={registerData.phone} />
                         <input required className={styles.submitbutton} type="submit" value='Registrarse' />
                     </form>
