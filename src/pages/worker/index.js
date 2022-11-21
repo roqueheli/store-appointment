@@ -17,7 +17,8 @@ const Worker = ({ workers }) => {
         "worker_id": worker.id,
         "name": worker?.name,
         "instagram": worker?.instagram,
-        "image_url": worker?.image_url
+        "image_url": worker?.image_url,
+        "description": worker.description
       }
     });
   };

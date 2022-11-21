@@ -1,0 +1,112 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Style+Script&display=swap');
+
+.container {
+    width: 100%;
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #050443;
+    font-family: 'Style Script';
+}
+
+.title_container {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    text-align: center;
+}
+
+.title {
+    padding: 0;
+    width: 100%;
+    margin: 0;
+    color: #050443;
+    font-size: 3rem;
+    font-family: 'Style Script';
+}
+
+.btnContainer {
+    width: 80%;
+    margin-bottom: 1rem;
+}
+
+.subcontainer {
+    overflow: auto;
+    padding: 2rem;
+    height: 70vh;
+    width: 100%;
+}
+
+.subcontainer ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.reservationcard {
+    border: 1px solid #d9e1ee;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif !important;
+    display: flex;
+    text-align: center;
+    background-color: #ffffff;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+    height: 11.7vh;
+    animation: animatop 0.9s cubic-bezier(0.425, 1.140, 0.470, 1.125) forwards;
+    border-radius: .3rem;
+    pointer-events: auto;
+    margin-bottom: .4rem;
+}
+
+.reservationcard .leftside {
+    font-style: normal;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 30%;
+    border-right: 1px solid #d9e1ee;
+}
+
+.reservationcard .leftside b {
+    font-size: 32px;
+    line-height: 40px;
+    font-weight: 600;
+    color: #181818;
+}
+
+.reservationcard .leftside em,
+.reservationcard .leftside time {
+    font-size: 12px;
+    line-height: 20px;
+    color: #3b4c66;
+    text-transform: uppercase;
+}
+.reservationcard .rightside {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 70%;
+}
+
+.reservationcard .rightside .servicedetails {
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif !important;
+    color: #3b4c66;
+    font-size: 12px;
+    line-height: 20px;
+    width: 64%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.reservationcard .rightside h5 {
+    padding: 0;
+    margin: 0;
+}

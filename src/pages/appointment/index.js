@@ -22,7 +22,6 @@ const Appointment = () => {
       ...bookingData,
       "schedule": {
         "day": new Date(new Date(date).setHours(0, 0, 0, 0)).toISOString().slice(0,10).replace(/-/g,""),
-        "work_day_id": new Date(new Date(date).setHours(0, 0, 0, 0)).getDay()
       }
     });
   }

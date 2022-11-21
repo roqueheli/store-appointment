@@ -54,9 +54,13 @@ const Confirmation = () => {
         <h1 className={styles.title}>Confirmación</h1>
       </div>
         <div className={styles.subcontainer}>
-          {!success ? <>
+          {!success ? 
+          <>
+            <h3>Servicio</h3>
             <Card key={bookingData.service.name} service={bookingData.service} />
+            <h3>Barbero</h3>
             <Card key={bookingData.worker.name} service={bookingData.worker} />
+            <h3>Fecha</h3>
             <Card key={bookingData.schedule.id} service={bookingData.schedule} />
           </> : <Success />}
         </div>
@@ -79,9 +83,11 @@ const Confirmation = () => {
                     Inicio
                   </Button>
                 </Link>
-                <Button>
-                  Mi agenda
-                </Button>
+                <Link href={`/myreservations/${bookingData.user.user_id}`}>
+                  <Button>
+                    Mis reservas
+                  </Button>
+                </Link>
               </>
           }
         </div>

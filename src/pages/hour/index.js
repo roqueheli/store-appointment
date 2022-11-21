@@ -17,7 +17,9 @@ const Hour = () => {
       ...bookingData,
       "schedule": {
         ...bookingData.schedule,
-        "block_time_id": blocktime.id
+        "work_day_id": hours.work_day.id,
+        "block_time_id": blocktime.id,
+        "hour": blocktime.start.substring(11,19),
       }
     });
   }
@@ -36,7 +38,7 @@ const Hour = () => {
             });
             if (rs.status === 200) {
                 const data = await rs.json();
-                setHours(data.block_times);
+                setHours(data);
             }
         } catch (e) {
             console.log('error', e);
@@ -52,7 +54,7 @@ const Hour = () => {
       </div>
       <div className={styles.subcontainer}>
         <ul>
-          {hours.map(hour => {
+          {hours?.block_times?.map(hour => {
             if (hour === selected) {
               return <li key={hour.id} className={selected ? styles.liactive : ''} onClick={() => handleClick(hour)}>{hour.start.substring(11,19)}</li>
             } else {

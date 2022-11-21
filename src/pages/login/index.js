@@ -5,12 +5,14 @@ import Button from '../../components/Button';
 import { StoreContext } from '../../context/store';
 import { FcGoogle } from 'react-icons/fc';
 import { MdDateRange, MdLogout } from 'react-icons/md';
+import { BsCalendarDate }  from 'react-icons/bs';
 import styles from './styles.module.css';
 
 const Login = ({ setLogin, user, setUser }) => {
     const googleRef = useRef();
     const loginRef = useRef();
     const appointmentRef = useRef();
+    const myreservationsRef = useRef();
     const backRef = useRef();
     const logoutRef = useRef();
     
@@ -68,10 +70,16 @@ const Login = ({ setLogin, user, setUser }) => {
                             </div>
                         </Link>
                         <Link href="/service">
-                        <Button ref={appointmentRef}>
-                            <MdDateRange />
-                            Reserva ahora
-                        </Button>
+                            <Button ref={appointmentRef}>
+                                <MdDateRange />
+                                Reserva ahora
+                            </Button>
+                        </Link>
+                        <Link href={`/myreservations/${user.user_id}`}>
+                            <Button ref={myreservationsRef}>
+                                <BsCalendarDate />
+                                Mis reservas
+                            </Button>
                         </Link>
                         <Button ref={logoutRef} onClick={handleLogout}>
                             <MdLogout />
@@ -85,7 +93,7 @@ const Login = ({ setLogin, user, setUser }) => {
 }
 
 const Home = () => {
-    const { user, setUser, bookingData, setBookingData } = useContext(StoreContext);
+    const { user, setUser, setBookingData } = useContext(StoreContext);
     const [login, setLogin] = useState(false);
     const loginRef = useRef();
     const guestRef = useRef();
@@ -96,8 +104,8 @@ const Home = () => {
         if (userStorage) {
             setUser(userStorage);
             setLogin(true);
+            setBookingData({});
             setBookingData({
-                ...bookingData,
                 "user": {
                     "user_id": userStorage.user_id,
                     "firstname": userStorage.username,
