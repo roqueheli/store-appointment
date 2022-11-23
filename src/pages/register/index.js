@@ -22,7 +22,7 @@ const Register = () => {
     
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (registerData.password != registerData.password_confirmation) {
+        if (registerData.password !== registerData.password_confirmation) {
             setMessage({ first: 'Las contraseñas', second: 'no coinciden'});
             setRegisterError(true);
             return;

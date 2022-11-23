@@ -38,7 +38,7 @@ const Access = () => {
                             "token": data?.token
                         }
                     });
-                    sessionStorage.setItem('session', JSON.stringify({ user_id: data.user_id, username: data.username, email: loginData.email, avatar: '', token: data.token }));
+                    sessionStorage.setItem('session', JSON.stringify({ user_id: data?.user_id || null, username: data?.username, email: loginData?.email, avatar: '', token: data?.token || null }));
                     router.push('/login');
                 } else {
                     setLoginError(true);

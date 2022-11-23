@@ -29,7 +29,7 @@ const Appointment = () => {
   return (
     <div className={styles.container}>
       <div className={styles.title_container}>
-        <h1 className={styles.title}>Reservas</h1>
+        <h1 className={styles.title}>Fechas</h1>
       </div>
       <div className={styles.subcontainer}>
         <Calendar tileDisabled={tileDisabled} onChange={handleChange} value={date} />

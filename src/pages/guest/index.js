@@ -31,7 +31,6 @@ const Guest = () => {
                 "token": ""
             }
         });
-        // sessionStorage.setItem('session', JSON.stringify({ user_id: null, username: guessData?.username, email: guessData?.email, avatar: null, token: null }))
         router.push('/service');
     }
     

@@ -40,7 +40,7 @@ const Login = ({ setLogin }) => {
     
     const handleLogout = (e) => {
         e.preventDefault();
-        if(user?.token !== null) {
+        if(user.user_id === 0) {
             logout();
         } else {
             setUser(null);
@@ -55,7 +55,7 @@ const Login = ({ setLogin }) => {
 
     const handleReservations = (e) => {
         e.preventDefault();
-        sessionStorage.setItem('session', JSON.stringify({ user_id: null, username: user?.username, email: user?.email, avatar: null, token: null }));
+        sessionStorage.setItem('session', JSON.stringify({ user_id: user?.user_id || null, username: user?.username, email: user?.email, avatar: user?.avatar || '', token: user?.token || null }));
         router.push(`/myreservations`);
     }
 
@@ -65,7 +65,6 @@ const Login = ({ setLogin }) => {
                 <img className={styles.logostyle} src="./mrbarber.jpeg" alt="logo" />
             </Link>
             <div className={styles.subcontainer}>
-                {console.log(user)}
                 {!user ?
                     <>
                         <Button ref={googleRef} onClick={handleGoogleLogin}>
@@ -85,11 +84,13 @@ const Login = ({ setLogin }) => {
                     <>
                         <Link href="/profile">
                             <div className={styles.avatarContainer}>
-                                {user.avatar !== '' ?
-                                    <img className={styles.avatar} src={user.avatar} alt={user.username} /> :
-                                    <span className={styles.noavatar}>{user.username.toUpperCase().slice(0,1)}</span>
-                                }
-                                <strong>{`${user.username[0].toUpperCase()}${user.username.substring(1)}`}</strong>
+                                <div className={styles.avatarSubcontainer}>                                    
+                                    {user.avatar !== '' ?
+                                        <img className={styles.avatar} src={user.avatar} alt={user.username} /> :
+                                        <span className={styles.noavatar}>{user.username.toUpperCase().slice(0,1)}</span>
+                                    }
+                                    <strong>{`${user.username[0].toUpperCase()}${user.username.substring(1)}`}</strong>
+                                </div>
                             </div>
                         </Link>
                         <Link href="/service">
