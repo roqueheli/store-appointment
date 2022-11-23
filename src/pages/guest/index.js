@@ -1,21 +1,37 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Button from '../../components/Button';
+import { StoreContext } from '../../context/store';
 import styles from './styles.module.css';
 
 const initialObject = {
-    name: '',
+    username: '',
     email: '',
     phone: ''
 }
 
 const Guest = () => {
+    const { bookingData, setBookingData, initialObj } = useContext(StoreContext);
     const [guessData, setGuessData] = useState(initialObject);
     const router = useRouter();
+
+    useEffect(() => {
+        setBookingData(initialObj);
+    }, []);
     
     const handleSubmit = (e) => {
         e.preventDefault();
+        setBookingData({
+            ...bookingData,
+            "user": {
+                "firstname": guessData.username,
+                "phone": guessData?.phone || 0,
+                "email": guessData.email,
+                "token": ""
+            }
+        });
+        // sessionStorage.setItem('session', JSON.stringify({ user_id: null, username: guessData?.username, email: guessData?.email, avatar: null, token: null }))
         router.push('/service');
     }
     
@@ -33,7 +49,7 @@ const Guest = () => {
             </div>
             <div className={styles.subcontainer}>
                 <form onSubmit={handleSubmit}>
-                    <input required type="text" placeholder='Nombre' name="name" onChange={handleChange} value={guessData.name} />
+                    <input required type="text" placeholder='Nombre' name="username" onChange={handleChange} value={guessData.username} />
                     <input required type="email" placeholder='Email' name="email" onChange={handleChange} value={guessData.email} />
                     <input required type="text" placeholder='Celular' name="phone" onChange={handleChange} value={guessData.phone} />
                     <input className={styles.submitbutton} type="submit" value='Agenda invitado' />

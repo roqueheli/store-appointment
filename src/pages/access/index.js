@@ -15,7 +15,7 @@ const Access = () => {
     const [loginError, setLoginError] = useState(false);
     const { setUser, bookingData, setBookingData } = useContext(StoreContext);
     const router = useRouter();
-    
+
     const handleSubmit = (e) => {
         e.preventDefault();
         (async () => {

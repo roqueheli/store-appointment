@@ -110,3 +110,18 @@
     padding: 0;
     margin: 0;
 }
+
+.reservationcard .icons {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 80%;
+}
+
+.reservationcard .icons button {
+    border: none;
+    margin: 0;
+    padding: 0;
+    background: none;
+    cursor: pointer;
+}

@@ -31,11 +31,6 @@ export const userStateChange = (onChange) => onAuthStateChanged(getAuth(), (user
   onChange(normalizedUser);
 });
 
-export const loginWithGitHub = () => {
-  const gitHubProvider = new GithubAuthProvider();
-  return signInWithPopup(getAuth(), gitHubProvider);
-};
-
 export const loginWithGoogle = () => {
   const googleProvider = new GoogleAuthProvider();
   return signInWithPopup(getAuth(), googleProvider);

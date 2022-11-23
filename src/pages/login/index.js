@@ -7,14 +7,17 @@ import { FcGoogle } from 'react-icons/fc';
 import { MdDateRange, MdLogout } from 'react-icons/md';
 import { BsCalendarDate }  from 'react-icons/bs';
 import styles from './styles.module.css';
+import { useRouter } from 'next/router';
 
-const Login = ({ setLogin, user, setUser }) => {
+const Login = ({ setLogin }) => {
+    const { user, setUser, bookingData, setBookingData, initialObj } = useContext(StoreContext);
     const googleRef = useRef();
     const loginRef = useRef();
     const appointmentRef = useRef();
     const myreservationsRef = useRef();
     const backRef = useRef();
     const logoutRef = useRef();
+    const router = useRouter();
     
     const handleGoogleLogin = (e) => {
         e.preventDefault();
@@ -22,18 +25,38 @@ const Login = ({ setLogin, user, setUser }) => {
         .catch(err => console.log('error', err));
     };
     
+    useEffect(() => {
+        setBookingData({
+            ...bookingData,
+            "user": {
+                "user_id": user?.user_id || '',
+                "firstname": user?.username,
+                "phone": user?.phone || 0,
+                "email": user?.email,
+                "token": user?.token || ''
+            }            
+        });
+    }, [user]);
+    
     const handleLogout = (e) => {
         e.preventDefault();
-        if(!user?.token) {
+        if(user?.token !== null) {
             logout();
         } else {
-            sessionStorage.removeItem('session');
             setUser(null);
         }
+        sessionStorage.removeItem('session');
+        setBookingData(initialObj);
     };
 
     const handleClick = () => {
         setLogin(false);
+    }
+
+    const handleReservations = (e) => {
+        e.preventDefault();
+        sessionStorage.setItem('session', JSON.stringify({ user_id: null, username: user?.username, email: user?.email, avatar: null, token: null }));
+        router.push(`/myreservations`);
     }
 
     return (
@@ -42,7 +65,8 @@ const Login = ({ setLogin, user, setUser }) => {
                 <img className={styles.logostyle} src="./mrbarber.jpeg" alt="logo" />
             </Link>
             <div className={styles.subcontainer}>
-                {user === null &&
+                {console.log(user)}
+                {!user ?
                     <>
                         <Button ref={googleRef} onClick={handleGoogleLogin}>
                             <FcGoogle />
@@ -57,8 +81,7 @@ const Login = ({ setLogin, user, setUser }) => {
                             Atrás
                         </Button>
                     </>
-                }
-                {user ?
+                :
                     <>
                         <Link href="/profile">
                             <div className={styles.avatarContainer}>
@@ -75,37 +98,36 @@ const Login = ({ setLogin, user, setUser }) => {
                                 Reserva ahora
                             </Button>
                         </Link>
-                        <Link href={`/myreservations/${user.user_id}`}>
-                            <Button ref={myreservationsRef}>
-                                <BsCalendarDate />
-                                Mis reservas
-                            </Button>
-                        </Link>
+                        <Button onClick={handleReservations} ref={myreservationsRef}>
+                            <BsCalendarDate />
+                            Mis reservas
+                        </Button>
                         <Button ref={logoutRef} onClick={handleLogout}>
                             <MdLogout />
                             Logout
                         </Button>
                     </>
-                : ''}
+                }
             </div>
         </div>
     );
 }
 
 const Home = () => {
-    const { user, setUser, setBookingData } = useContext(StoreContext);
+    const { user, setUser, bookingData, setBookingData, initialObj } = useContext(StoreContext);
     const [login, setLogin] = useState(false);
     const loginRef = useRef();
     const guestRef = useRef();
     const backRef = useRef();
 
     useEffect(() => {
+        setBookingData(initialObj);
         const userStorage = JSON.parse(sessionStorage.getItem('session'));
         if (userStorage) {
             setUser(userStorage);
             setLogin(true);
-            setBookingData({});
             setBookingData({
+                ...bookingData,
                 "user": {
                     "user_id": userStorage.user_id,
                     "firstname": userStorage.username,
@@ -116,7 +138,17 @@ const Home = () => {
             });
         } else {
             userStateChange(setUser);
-            if (user) setLogin(true);
+            if (user) {
+                setLogin(true);
+                setBookingData({
+                    ...bookingData,
+                    "user": {
+                        "user_id": null,
+                        "firstname": user.username,
+                        "email": user.email
+                    }
+                });
+            };
         }
     }, []);
     
@@ -148,7 +180,7 @@ const Home = () => {
                         </Link>
                     </div>
                 </div>
-             : <Login setLogin={setLogin} user={user} setUser={setUser} />
+             : <Login setLogin={setLogin} />
             }
         </>
     );

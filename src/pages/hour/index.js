@@ -26,25 +26,23 @@ const Hour = () => {
 
   useEffect(() => {
     const userStorage = JSON.parse(sessionStorage.getItem('session'));
-    if (userStorage) {
-      (async () => {
-        try {
-            const rs = await fetch(`${process.env.NEXT_PUBLIC_HOST}workers/available_hours`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json',
-                           'Authorization': `${userStorage.token}`
-                },
-                body: JSON.stringify({ id: bookingData.worker.worker_id, day: bookingData.schedule.day }),
-            });
-            if (rs.status === 200) {
-                const data = await rs.json();
-                setHours(data);
-            }
-        } catch (e) {
-            console.log('error', e);
-        }
-      })();
-    }
+    (async () => {
+      try {
+          const rs = await fetch(`${process.env.NEXT_PUBLIC_HOST}workers/available_hours`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json',
+                          'Authorization': `${userStorage?.token || ''}`
+              },
+              body: JSON.stringify({ id: bookingData.worker.worker_id, day: bookingData.schedule.day }),
+          });
+          if (rs.status === 200) {
+              const data = await rs.json();
+              setHours(data);
+          }
+      } catch (e) {
+          console.log('error', e);
+      }
+    })();
   }, []);
   
   return (

@@ -2,7 +2,7 @@ import { createContext, useState } from 'react'
 
 export const StoreContext = createContext();
 
-const initialObj = {
+export const initialObj = {
     user: {
         user_id: 0,
         firstname: "",
@@ -33,6 +33,9 @@ const initialObj = {
         block_time_id: 0,
         work_day_id: 0,
         hour: 0
+    },
+    reservation: {
+        id: 0
     }
 }
 
@@ -40,7 +43,9 @@ const StoreProvider = ({ children }) => {
     const [bookingData, setBookingData] = useState(initialObj);
     const [user, setUser] = useState(undefined);
 
-    return <StoreContext.Provider value={{ bookingData, setBookingData, user, setUser }}>{children}</StoreContext.Provider>
+    // console.log(bookingData);
+
+    return <StoreContext.Provider value={{ bookingData, setBookingData, user, setUser, initialObj }}>{children}</StoreContext.Provider>
 }
 
 export default StoreProvider;

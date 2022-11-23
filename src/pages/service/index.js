@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import React, { useContext, useState } from 'react';
+import { useRouter } from 'next/router';
+import React, { useContext, useEffect, useState } from 'react';
 import Button from '../../components/Button';
 import Card from '../../components/Card';
 import { StoreContext } from '../../context/store';
@@ -7,7 +8,8 @@ import styles from './styles.module.css';
 
 const Service = ({ services }) => {
   const [selected, setSelected] = useState("");
-  const { bookingData, setBookingData } = useContext(StoreContext);
+  const { user, bookingData, setBookingData, initialObj } = useContext(StoreContext);
+  const router = useRouter();
 
   const handleClick = (service) => {
     setSelected(service);
@@ -20,6 +22,17 @@ const Service = ({ services }) => {
         "price": service.price
       }
     });
+  }
+
+  const handleBack = (e) => {
+    e.preventDefault();
+    setBookingData({
+      ...bookingData,
+      "reservation": {
+        "id": 0
+      }
+    });
+    router.push('/login')
   }
 
   return (
@@ -42,11 +55,9 @@ const Service = ({ services }) => {
             Siguiente
           </Button>
         </Link>
-        <Link href='/login'>
-          <Button>
-            Atrás
-          </Button>
-        </Link>
+        <Button onClick={handleBack}>
+          Atrás
+        </Button>
       </div>
     </div>
   );
