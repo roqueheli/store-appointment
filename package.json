@@ -2,6 +2,9 @@
   "name": "devtter",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "19x"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -33,8 +36,5 @@
     "eslint-plugin-n": "^15.2.4",
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-react": "^7.30.1"
-  },
-  "engines": {
-    "node": ">=6.9.0"
   }
 }
