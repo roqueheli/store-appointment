@@ -2,9 +2,6 @@
   "name": "devtter",
   "version": "0.1.0",
   "private": true,
-  "engines": {
-    "node": "v14.17.5"
-  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
