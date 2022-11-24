@@ -28,12 +28,12 @@ const Login = ({ setLogin }) => {
     useEffect(() => {
         setBookingData({
             ...bookingData,
-            "user": {
-                "user_id": user?.user_id || '',
-                "firstname": user?.username,
-                "phone": user?.phone || 0,
-                "email": user?.email,
-                "token": user?.token || ''
+            'user': {
+                'user_id': user?.user_id || '',
+                'firstname': user?.username,
+                'phone': user?.phone || 0,
+                'email': user?.email,
+                'token': user?.token || ''
             }            
         });
     }, [user]);
@@ -62,7 +62,7 @@ const Login = ({ setLogin }) => {
     return (
         <div className={styles.container}>
             <Link href='/'>
-                <img className={styles.logostyle} src="./mrbarber.jpeg" alt="logo" />
+                <img className={styles.logostyle} src='./mrbarber.jpeg' alt='logo' />
             </Link>
             <div className={styles.subcontainer}>
                 {!user ?
@@ -82,7 +82,7 @@ const Login = ({ setLogin }) => {
                     </>
                 :
                     <>
-                        <Link href="/profile">
+                        <Link href='/profile'>
                             <div className={styles.avatarContainer}>
                                 {user.avatar !== '' ?
                                     <img className={styles.avatar} src={user.avatar} alt={user.username} /> :
@@ -91,7 +91,7 @@ const Login = ({ setLogin }) => {
                                 <strong>{`${user.username[0].toUpperCase()}${user.username.substring(1)}`}</strong>
                             </div>
                         </Link>
-                        <Link href="/service">
+                        <Link href='/service'>
                             <Button ref={appointmentRef}>
                                 <MdDateRange />
                                 Reserva ahora
@@ -127,12 +127,12 @@ const Home = () => {
             setLogin(true);
             setBookingData({
                 ...bookingData,
-                "user": {
-                    "user_id": userStorage.user_id,
-                    "firstname": userStorage.username,
-                    "phone": userStorage?.phone || 0,
-                    "email": userStorage.email,
-                    "token": userStorage?.token
+                'user': {
+                    'user_id': userStorage.user_id,
+                    'firstname': userStorage.username,
+                    'phone': userStorage?.phone || 0,
+                    'email': userStorage.email,
+                    'token': userStorage?.token
                 }
             });
         } else {
@@ -141,10 +141,10 @@ const Home = () => {
                 setLogin(true);
                 setBookingData({
                     ...bookingData,
-                    "user": {
-                        "user_id": null,
-                        "firstname": user.username,
-                        "email": user.email
+                    'user': {
+                        'user_id': null,
+                        'firstname': user.username,
+                        'email': user.email
                     }
                 });
             };
@@ -160,13 +160,13 @@ const Home = () => {
             {!login ?             
                 <div className={styles.container}>
                     <Link href='/'>
-                        <img className={styles.logostyle} src="./mrbarber.jpeg" alt="logo" />
+                        <img className={styles.logostyle} src='./mrbarber.jpeg' alt='logo' />
                     </Link>
                     <div className={styles.subcontainer}>
                         <Button ref={loginRef} onClick={handleClick}>
                             Login
                         </Button>
-                        <Link href="/guest">
+                        <Link href='/guest'>
                         <Button ref={guestRef}>
                             <MdDateRange />
                             Reserva invitado

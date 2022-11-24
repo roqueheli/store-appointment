@@ -19,15 +19,15 @@ const ReservationCard = ({ reservation, available }) => {
     if (userStorage) {
       setBookingData({
         ...bookingData,
-        "user": {
-          "user_id": userStorage.user_id,
-          "firstname": userStorage.username,
-          "phone": userStorage?.phone || 0,
-          "email": userStorage.email,
-          "token": userStorage?.token
+        'user': {
+          'user_id': userStorage.user_id,
+          'firstname': userStorage.username,
+          'phone': userStorage?.phone || 0,
+          'email': userStorage.email,
+          'token': userStorage?.token
         },
-        "reservation": {
-          "id": reservation.id
+        'reservation': {
+          'id': reservation.id
         }
       });
       router.push('/service');
@@ -35,7 +35,7 @@ const ReservationCard = ({ reservation, available }) => {
   }
   
   useEffect(() => {
-    document.body.addEventListener("keydown", function(event) {
+    document.body.addEventListener('keydown', function(event) {
       if (event.code === 'Escape' || event.keyCode === 27) {
         setShowModal(false);
       }

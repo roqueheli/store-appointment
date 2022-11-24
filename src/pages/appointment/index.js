@@ -20,8 +20,8 @@ const Appointment = () => {
     setDate(date);
     setBookingData({
       ...bookingData,
-      "schedule": {
-        "day": new Date(new Date(date).setHours(0, 0, 0, 0)).toISOString().slice(0,10).replace(/-/g,""),
+      'schedule': {
+        'day': new Date(new Date(date).setHours(0, 0, 0, 0)).toISOString().slice(0,10).replace(/-/g,''),
       }
     });
   }
@@ -33,7 +33,7 @@ const Appointment = () => {
       </div>
       <div className={styles.subcontainer}>
         <Calendar tileDisabled={tileDisabled} onChange={handleChange} value={date} />
-        <div className="text-center">
+        <div className='text-center'>
           Selected date: {date?.toDateString()}
         </div>
       </div>

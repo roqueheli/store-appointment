@@ -26,7 +26,7 @@ const Confirmation = () => {
               },
               body: JSON.stringify({
                   firstname: bookingData.user.firstname,
-                  lastname: "",
+                  lastname: '',
                   phone: bookingData.user?.phone || 0,
                   day: bookingData.schedule.day,
                   email: bookingData.user.email,
@@ -35,7 +35,7 @@ const Confirmation = () => {
                   work_day_id: bookingData.schedule.work_day_id,
                   worker_id: bookingData.worker.worker_id,
                   service_id: bookingData.service.service_id,
-                  rut: ""
+                  rut: ''
               }),
           });
           const data = await rs.json();

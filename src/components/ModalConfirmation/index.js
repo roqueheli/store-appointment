@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import React from 'react';
-import styled from "styled-components";
+import styled from 'styled-components';
 import Button from '../Button';
 
 const ModalConfirmation = ({ onClose, setShowModal, reservation, title }) => {
@@ -85,7 +85,7 @@ const ModalConfirmation = ({ onClose, setShowModal, reservation, title }) => {
         <StyledModalOverlay>
             <StyledModal>
                 <StyledModalHeader>
-                    <a href="#" onClick={handleCloseClick}>x</a>
+                    <a href='#' onClick={handleCloseClick}>x</a>
                 </StyledModalHeader>
                 {title && <StyledModalTitle>{title}</StyledModalTitle>}
                 <StyledButtonsContainer>

@@ -1,12 +1,9 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
 import Link from 'next/link';
 import Button from '../../components/Button';
 import styles from './styles.module.css';
 
-const WorkerDetail = () => {
-    const params = useParams();
-    
+const WorkerDetail = () => {   
     return (
         <div className={styles.container}>
             <div className={styles.subcontainer}>WorkerDetail</div>

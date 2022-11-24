@@ -24,11 +24,11 @@ const Guest = () => {
         e.preventDefault();
         setBookingData({
             ...bookingData,
-            "user": {
-                "firstname": guessData.username,
-                "phone": guessData?.phone || 0,
-                "email": guessData.email,
-                "token": ""
+            'user': {
+                'firstname': guessData.username,
+                'phone': guessData?.phone || 0,
+                'email': guessData.email,
+                'token': ''
             }
         });
         router.push('/service');
@@ -48,10 +48,10 @@ const Guest = () => {
             </div>
             <div className={styles.subcontainer}>
                 <form onSubmit={handleSubmit}>
-                    <input required type="text" placeholder='Nombre' name="username" onChange={handleChange} value={guessData.username} />
-                    <input required type="email" placeholder='Email' name="email" onChange={handleChange} value={guessData.email} />
-                    <input required type="text" placeholder='Celular' name="phone" onChange={handleChange} value={guessData.phone} />
-                    <input className={styles.submitbutton} type="submit" value='Agenda invitado' />
+                    <input required type='text' placeholder='Nombre' name='username' onChange={handleChange} value={guessData.username} />
+                    <input required type='email' placeholder='Email' name='email' onChange={handleChange} value={guessData.email} />
+                    <input required type='text' placeholder='Celular' name='phone' onChange={handleChange} value={guessData.phone} />
+                    <input className={styles.submitbutton} type='submit' value='Agenda invitado' />
                 </form>
             </div>
             <div className={styles.btnContainer}>

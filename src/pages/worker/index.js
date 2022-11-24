@@ -6,19 +6,19 @@ import { StoreContext } from '../../context/store';
 import styles from './styles.module.css';
 
 const Worker = ({ workers }) => {
-  const [selected, setSelected] = useState("");
+  const [selected, setSelected] = useState('');
   const { bookingData, setBookingData } = useContext(StoreContext);
 
   const handleClick = (worker) => {
     setSelected(worker);
     setBookingData({
       ...bookingData,
-      "worker": {
-        "worker_id": worker.id,
-        "name": worker?.name,
-        "instagram": worker?.instagram,
-        "image_url": worker?.image_url,
-        "description": worker.description
+      'worker': {
+        'worker_id': worker.id,
+        'name': worker?.name,
+        'instagram': worker?.instagram,
+        'image_url': worker?.image_url,
+        'description': worker.description
       }
     });
   };

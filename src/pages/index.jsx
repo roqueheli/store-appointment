@@ -9,7 +9,7 @@ const Home = () => {
   const schedulesRef = useRef();
 
   const logostyle = {
-      borderRadius: "50%",
+      borderRadius: '50%',
       cursor: 'pointer',
       width: '20rem',
   }
@@ -17,7 +17,7 @@ const Home = () => {
   return (
       <div className={styles.container}>
           <Link href='/'>
-            <img style={logostyle} src="./mrbarber.jpeg" alt="logo" />
+            <img style={logostyle} src='./mrbarber.jpeg' alt='logo' />
           </Link>
           <div className={styles.subcontainer}>              
             <Link href='/services'>

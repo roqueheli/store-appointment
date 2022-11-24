@@ -55,8 +55,8 @@ const PasswordChange = () => {
             <div className={styles.subcontainer}>
                 {!success ? 
                     <form onSubmit={handleUpdate}>
-                        <input required placeholder={'Nueva contraseña'} type="password" name="newpass" onChange={handleNewValue} value={newValues.newpass} />
-                        <input required placeholder={'Confirmar contraseña'} type="password" name="confirm" onChange={handleNewValue} value={newValues.confirm} />
+                        <input required placeholder={'Nueva contraseña'} type='password' name='newpass' onChange={handleNewValue} value={newValues.newpass} />
+                        <input required placeholder={'Confirmar contraseña'} type='password' name='confirm' onChange={handleNewValue} value={newValues.confirm} />
                         <input className={styles.submitbutton} type='submit' value='Cambiar contraseña' />
                     </form>
                 :   <Success />}
