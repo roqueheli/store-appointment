@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import styles from './styles.module.css';
 
-function AppLayout ({ children }) {
+export const AppLayout = ({ children }) => {
   return (
     <>
       <Head>
@@ -17,5 +17,3 @@ function AppLayout ({ children }) {
     </>
   );
 };
-
-export default AppLayout;
