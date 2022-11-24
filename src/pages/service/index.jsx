@@ -64,7 +64,7 @@ function Service({ services }) {
   );
 }
 
-Service.getInitialProps = async (ctx) => {
+Service.getInitialProps = async () => {
   const rs = await fetch(`${process.env.NEXT_PUBLIC_HOST}services`, {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },

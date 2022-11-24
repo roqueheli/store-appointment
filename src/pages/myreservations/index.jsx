@@ -106,7 +106,7 @@ function MyReservations({ reservations }) {
   );
 }
 
-MyReservations.getInitialProps = async (ctx) => {
+MyReservations.getInitialProps = async () => {
   const userStorage = JSON.parse(sessionStorage.getItem('session'));
   const rs = await fetch(`${process.env.NEXT_PUBLIC_HOST}reservations/by_user`, {
     method: 'POST',
