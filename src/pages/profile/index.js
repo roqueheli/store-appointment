@@ -1,7 +1,6 @@
 import Link from 'next/link';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '../../components/Button';
-import { StoreContext } from '../../context/store';
 import styles from './styles.module.css';
 
 const Profile = () => {
@@ -13,7 +12,6 @@ const Profile = () => {
   }, []);
 
   const user_id = userStorage?.user_id || 0;
-
   return (
     <div className={styles.container}>
       <div className={styles.title_container}>
@@ -21,11 +19,18 @@ const Profile = () => {
       </div>
       <div className={styles.subcontainer}>
         {user_id > 0 ? 
+        <>
           <div className={styles.profilecard}>
             <Link href={`profile/${user_id}`}>
               <h1>Perfil</h1>
             </Link>
           </div>
+          <div className={styles.profilecard}>
+            <Link href={`passwordchange/${user_id}`}>
+              <h1>Cambiar contraseña</h1>
+            </Link>
+          </div>
+        </>
         : ''}
         <div className={styles.profilecard}>
           <Link href={'myreservations'}>

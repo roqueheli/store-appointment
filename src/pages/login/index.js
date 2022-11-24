@@ -18,7 +18,7 @@ const Login = ({ setLogin }) => {
     const backRef = useRef();
     const logoutRef = useRef();
     const router = useRouter();
-    
+
     const handleGoogleLogin = (e) => {
         e.preventDefault();
         loginWithGoogle().then(userStateChange(setUser))
