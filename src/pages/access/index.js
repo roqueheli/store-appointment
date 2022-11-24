@@ -68,7 +68,7 @@ const Access = () => {
                     <input className={styles.submitbutton} type="submit" value='Iniciar sesión' />
                     <div className={styles.othertexts}>                        
                         <a href="/register">Registrarse</a>
-                        <a href="/recover">¿Olvidó su contraseña?</a>
+                        <a href="/passwordreset">¿Olvidó su contraseña?</a>
                     </div>
                 </form>
                 {loginError ? <h4 className={styles.loginerrormsg}>Email o contraseña <span className={styles.errormsgsecondline}>inválido</span></h4> : <p></p>}
