@@ -1,7 +1,6 @@
 import Link from 'next/link';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '../../components/Button';
-import { StoreContext } from '../../context/store';
 import styles from './styles.module.css';
 
 const Profile = () => {
@@ -13,7 +12,6 @@ const Profile = () => {
   }, []);
 
   const user_id = userStorage?.user_id || 0;
-
   return (
     <div className={styles.container}>
       <div className={styles.title_container}>

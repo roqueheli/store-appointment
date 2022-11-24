@@ -24,8 +24,8 @@ const PasswordReset = () => {
                 const rs = await fetch(`${process.env.NEXT_PUBLIC_HOST}users/reset_password`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email: newValues.email, temporal: newValues.temporal, newpass: newValues.newpass, confirm: newValues.confirm })
-                  });
+                    body: JSON.stringify({ email: newValues.email })
+                });
                 if (rs.status === 200) {
                     setSuccess(true);
                     setTimeout(() => {
