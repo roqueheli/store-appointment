@@ -84,13 +84,11 @@ const Login = ({ setLogin }) => {
                     <>
                         <Link href="/profile">
                             <div className={styles.avatarContainer}>
-                                <div className={styles.avatarSubcontainer}>                                    
-                                    {user.avatar !== '' ?
-                                        <img className={styles.avatar} src={user.avatar} alt={user.username} /> :
-                                        <span className={styles.noavatar}>{user.username.toUpperCase().slice(0,1)}</span>
-                                    }
-                                    <strong>{`${user.username[0].toUpperCase()}${user.username.substring(1)}`}</strong>
-                                </div>
+                                {user.avatar !== '' ?
+                                    <img className={styles.avatar} src={user.avatar} alt={user.username} /> :
+                                    <span className={styles.noavatar}>{user.username.toUpperCase().slice(0,1)}</span>
+                                }
+                                <strong>{`${user.username[0].toUpperCase()}${user.username.substring(1)}`}</strong>
                             </div>
                         </Link>
                         <Link href="/service">

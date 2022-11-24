@@ -27,7 +27,7 @@ const Access = () => {
                 });
                 if (rs.status === 200) {
                     const data = await rs.json();
-                    setUser({ username: data.username, email: loginData.email, avatar: '', token: data.token });
+                    setUser({ username: data.username, email: loginData.email, phone: data?.phone || 0, avatar: '', token: data.token });
                     setBookingData({
                         ...bookingData,
                         "user": {
@@ -38,7 +38,7 @@ const Access = () => {
                             "token": data?.token
                         }
                     });
-                    sessionStorage.setItem('session', JSON.stringify({ user_id: data?.user_id || null, username: data?.username, email: loginData?.email, avatar: '', token: data?.token || null }));
+                    sessionStorage.setItem('session', JSON.stringify({ user_id: data?.user_id || null, username: data?.username, email: loginData?.email, phone: data?.phone || 0, avatar: '', token: data?.token || null }));
                     router.push('/login');
                 } else {
                     setLoginError(true);

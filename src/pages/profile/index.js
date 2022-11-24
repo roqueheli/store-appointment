@@ -22,7 +22,9 @@ const Profile = () => {
       <div className={styles.subcontainer}>
         {user_id > 0 ? 
           <div className={styles.profilecard}>
-            <h1>Perfil</h1>
+            <Link href={`profile/${user_id}`}>
+              <h1>Perfil</h1>
+            </Link>
           </div>
         : ''}
         <div className={styles.profilecard}>
