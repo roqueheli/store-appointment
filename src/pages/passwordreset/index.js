@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import Button from '../../components/Button';
+import Success from '../../components/Success/Success';
 import styles from './styles.module.css';
 
 const initialObj = {
@@ -13,6 +14,7 @@ const initialObj = {
 
 const PasswordReset = () => {
     const [newValues, setNewValues] = useState(initialObj);
+    const [success, setSuccess] = useState(false);
     const router = useRouter();
 
     const handleUpdate = (e) => {
@@ -25,6 +27,7 @@ const PasswordReset = () => {
                     body: JSON.stringify({ email: newValues.email, temporal: newValues.temporal, newpass: newValues.newpass, confirm: newValues.confirm })
                   });
                 if (rs.status === 200) {
+                    setSuccess(true);
                     setTimeout(() => {
                         router.push('/access');
                     }, 3000);
@@ -50,13 +53,12 @@ const PasswordReset = () => {
                 <h1 className={styles.title}>Contraseña</h1>
             </div>
             <div className={styles.subcontainer}>
-                <form onSubmit={handleUpdate}>
-                    <input required placeholder={'Email'} type="text" name="email" onChange={handleNewValue} value={newValues.email} />
-                    <input required placeholder={'Contraseña temporal'} type="password" name="temporal" onChange={handleNewValue} value={newValues.temporal} />
-                    <input required placeholder={'Nueva contraseña'} type="password" name="newpass" onChange={handleNewValue} value={newValues.newpass} />
-                    <input required placeholder={'Confirmar contraseña'} type="password" name="confirm" onChange={handleNewValue} value={newValues.confirm} />
-                    <input className={styles.submitbutton} type='submit' value='Cambiar contraseña' />
-                </form>
+                {!success ? 
+                    <form onSubmit={handleUpdate}>
+                        <input required placeholder={'Email'} type="text" name="email" onChange={handleNewValue} value={newValues.email} />
+                        <input className={styles.submitbutton} type='submit' value='Recuperar contraseña' />
+                    </form>
+                :   <Success />}
             </div>
             <div className={styles.btnContainer}>
                 <Link href={'/access'}>
