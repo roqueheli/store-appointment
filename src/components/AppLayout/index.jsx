@@ -1,5 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
+import PropTypes from 'prop-types';
 import styles from './styles.module.css';
 
 function AppLayout({ children }) {
@@ -18,5 +19,9 @@ function AppLayout({ children }) {
     </>
   );
 }
+
+AppLayout.propTypes = {
+  children: PropTypes.node.isRequired,
+};
 
 export default AppLayout;

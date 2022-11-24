@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useContext, useState } from 'react';
+import PropTypes from 'prop-types';
 import Button from '../../components/Button';
 import Card from '../../components/Card';
 import { StoreContext } from '../../context/store';
@@ -46,7 +47,12 @@ function Service({ services }) {
         {services?.map((service) => {
           if (service === selected) {
             return (
-              <Card key={service.id} service={service} active onClick={() => handleClick(service)} />
+              <Card
+                key={service.id}
+                service={service}
+                onClick={() => handleClick(service)}
+                active
+              />
             );
           }
           return (
@@ -75,6 +81,10 @@ Service.getInitialProps = async () => {
   });
   const data = await rs.json();
   return { services: data };
+};
+
+Service.propTypes = {
+  services: PropTypes.node.isRequired,
 };
 
 export default Service;

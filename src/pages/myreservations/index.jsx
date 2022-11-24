@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import React, { useContext, useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { MdOutlineDelete } from 'react-icons/md';
 import { FiEdit } from 'react-icons/fi';
 import Button from '../../components/Button';
@@ -57,7 +58,7 @@ function ReservationCard({ reservation, available }) {
             <span>{reservation.worker.name}</span>
             <span>{`${handlePrice(reservation.service.price)}`}</span>
           </div>
-          {available === 'yes'
+          {available
             ? (
               <div className={styles.icons}>
                 <button type="button" onClick={handleEdit}>
@@ -75,6 +76,11 @@ function ReservationCard({ reservation, available }) {
   );
 }
 
+ReservationCard.propTypes = {
+  reservation: PropTypes.node.isRequired,
+  available: PropTypes.node.isRequired,
+};
+
 function MyReservations({ reservations }) {
   const router = useRouter();
 
@@ -87,13 +93,13 @@ function MyReservations({ reservations }) {
         {reservations.current?.length > 0 ? <h4>Próximas</h4> : ''}
         <ul>
           {reservations?.current.map((reservation) => (
-            <li key={reservation.id}><ReservationCard reservation={reservation} available="yes" /></li>
+            <li key={reservation.id}><ReservationCard reservation={reservation} available /></li>
           ))}
         </ul>
         {reservations.old.length > 0 ? <h4>Anteriores</h4> : ''}
         <ul>
           {reservations?.old.map((reservation) => (
-            <li key={reservation.id}><ReservationCard reservation={reservation} available="no" /></li>
+            <li key={reservation.id}><ReservationCard reservation={reservation} /></li>
           ))}
         </ul>
       </div>
@@ -115,6 +121,10 @@ MyReservations.getInitialProps = async () => {
   });
   const data = await rs.json();
   return { reservations: data };
+};
+
+MyReservations.propTypes = {
+  reservations: PropTypes.node.isRequired,
 };
 
 export default MyReservations;

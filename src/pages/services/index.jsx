@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import PropTypes from 'prop-types';
 import Button from '../../components/Button';
 import Card from '../../components/Card';
 import styles from './styles.module.css';
@@ -35,6 +36,10 @@ Services.getInitialProps = async () => {
   });
   const data = await rs.json();
   return { services: data };
+};
+
+Services.propTypes = {
+  services: PropTypes.node.isRequired,
 };
 
 export default Services;

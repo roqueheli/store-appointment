@@ -57,9 +57,23 @@ function Hour() {
         <ul>
           {hours?.block_times?.map((hour) => {
             if (hour === selected) {
-              return (<li key={hour.id} className={selected ? styles.liactive : ''} onClick={() => handleClick(hour)}>{hour.start.substring(11, 19)}</li>);
+              return (
+                <li
+                  key={hour.id}
+                  className={selected ? styles.liactive : ''}
+                >
+                  <button type="button" onClick={() => handleClick(hour)}>{hour.start.substring(11, 19)}</button>
+                </li>
+              );
             }
-            return (<li key={hour.id} className={styles.linormal} onClick={() => handleClick(hour)}>{hour.start.substring(11, 19)}</li>);
+            return (
+              <li
+                key={hour.id}
+                className={styles.linormal}
+              >
+                <button type="button" onClick={() => handleClick(hour)}>{hour.start.substring(11, 19)}</button>
+              </li>
+            );
           })}
         </ul>
       </div>

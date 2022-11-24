@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Button from '../Button';
 
@@ -96,5 +97,12 @@ function ModalConfirmation({
     </StyledModalOverlay>
   );
 }
+
+ModalConfirmation.propTypes = {
+  onClose: PropTypes.node.isRequired,
+  setShowModal: PropTypes.node.isRequired,
+  reservation: PropTypes.node.isRequired,
+  title: PropTypes.node.isRequired,
+};
 
 export default ModalConfirmation;

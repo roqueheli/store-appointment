@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import React, { useContext, useState } from 'react';
+import PropTypes from 'prop-types';
 import Button from '../../components/Button';
 import Card from '../../components/Card';
 import { StoreContext } from '../../context/store';
@@ -32,7 +33,7 @@ function Worker({ workers }) {
         {workers?.map((worker) => {
           if (worker === selected) {
             return (
-              <Card key={worker.id} service={worker} active onClick={() => handleClick(worker)} />
+              <Card key={worker.id} service={worker} onClick={() => handleClick(worker)} active />
             );
           }
           return (
@@ -63,6 +64,10 @@ Worker.getInitialProps = async () => {
   });
   const data = await rs.json();
   return { workers: data };
+};
+
+Worker.propTypes = {
+  workers: PropTypes.node.isRequired,
 };
 
 export default Worker;

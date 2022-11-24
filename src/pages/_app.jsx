@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import AppLayout from '../components/AppLayout';
 import Transition from '../components/Transition/Transition';
 import StoreProvider from '../context/store';
@@ -16,5 +17,10 @@ function MyApp({ Component, pageProps }) {
     </StoreProvider>
   );
 }
+
+MyApp.propTypes = {
+  Component: PropTypes.node.isRequired,
+  pageProps: PropTypes.node.isRequired,
+};
 
 export default MyApp;

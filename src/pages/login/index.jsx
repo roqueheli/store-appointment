@@ -1,6 +1,7 @@
 import React, {
   useContext, useEffect, useRef, useState,
 } from 'react';
+import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { FcGoogle } from 'react-icons/fc';
 import { MdDateRange, MdLogout } from 'react-icons/md';
@@ -8,12 +9,12 @@ import { BsCalendarDate } from 'react-icons/bs';
 import { useRouter } from 'next/router';
 import { logout, userStateChange, loginWithGoogle } from '../../firebase/client';
 import Button from '../../components/Button';
-import { StoreContext } from '../../context/store';
+import { initialObj, StoreContext } from '../../context/store';
 import styles from './styles.module.css';
 
 function Login({ setLogin }) {
   const {
-    user, setUser, bookingData, setBookingData, initialObj,
+    user, setUser, bookingData, setBookingData,
   } = useContext(StoreContext);
   const googleRef = useRef();
   const loginRef = useRef();
@@ -98,7 +99,11 @@ function Login({ setLogin }) {
                 <div className={styles.avatarContainer}>
                   {user.avatar !== ''
                     ? <img className={styles.avatar} src={user.avatar} alt={user.username} />
-                    : <span className={styles.noavatar}>{user.username.toUpperCase().slice(0, 1)}</span>}
+                    : (
+                      <span className={styles.noavatar}>
+                        {user.username.toUpperCase().slice(0, 1)}
+                      </span>
+                    )}
                   <strong>{`${user.username[0].toUpperCase()}${user.username.substring(1)}`}</strong>
                 </div>
               </Link>
@@ -123,9 +128,13 @@ function Login({ setLogin }) {
   );
 }
 
+Login.propTypes = {
+  setLogin: PropTypes.node.isRequired,
+};
+
 function Home() {
   const {
-    user, setUser, bookingData, setBookingData, initialObj,
+    user, setUser, bookingData, setBookingData,
   } = useContext(StoreContext);
   const [login, setLogin] = useState(false);
   const loginRef = useRef();
@@ -169,33 +178,31 @@ function Home() {
   };
 
   return (
-    <>
-      {!login
-        ? (
-          <div className={styles.container}>
-            <Link href="/">
-              <img className={styles.logostyle} src="./mrbarber.jpeg" alt="logo" />
-            </Link>
-            <div className={styles.subcontainer}>
-              <Button ref={loginRef} onClick={handleClick}>
-                Login
+    !login
+      ? (
+        <div className={styles.container}>
+          <Link href="/">
+            <img className={styles.logostyle} src="./mrbarber.jpeg" alt="logo" />
+          </Link>
+          <div className={styles.subcontainer}>
+            <Button ref={loginRef} onClick={handleClick}>
+              Login
+            </Button>
+            <Link href="/guest">
+              <Button ref={guestRef}>
+                <MdDateRange />
+                Reserva invitado
               </Button>
-              <Link href="/guest">
-                <Button ref={guestRef}>
-                  <MdDateRange />
-                  Reserva invitado
-                </Button>
-              </Link>
-              <Link href="/">
-                <Button ref={backRef}>
-                  Atrás
-                </Button>
-              </Link>
-            </div>
+            </Link>
+            <Link href="/">
+              <Button ref={backRef}>
+                Atrás
+              </Button>
+            </Link>
           </div>
-        )
-        : <Login setLogin={setLogin} />}
-    </>
+        </div>
+      )
+      : <Login setLogin={setLogin} />
   );
 }
 

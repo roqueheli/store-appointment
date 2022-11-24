@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import React from 'react';
+import PropTypes from 'prop-types';
 import Button from '../../components/Button';
 import Card from '../../components/Card';
 import styles from './styles.module.css';
@@ -35,6 +36,10 @@ Workers.getInitialProps = async () => {
   });
   const data = await rs.json();
   return { workers: data };
+};
+
+Workers.propTypes = {
+  workers: PropTypes.node.isRequired,
 };
 
 export default Workers;

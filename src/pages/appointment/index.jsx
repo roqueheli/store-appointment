@@ -12,7 +12,11 @@ function Appointment() {
   const hourRef = useRef();
   const [dateBook, setDateBook] = useState(null);
 
-  const tileDisabled = ({ date }) => new Date(date).setHours(0, 0, 0, 0) < new Date().setHours(0, 0, 0, 0);
+  const tileDisabled = ({ date }) => {
+    const setHoursDate = new Date(date).setHours(0, 0, 0, 0);
+    const setDateHours = new Date().setHours(0, 0, 0, 0);
+    return setHoursDate < setDateHours;
+  };
 
   const handleChange = (bookdate) => {
     setDateBook(bookdate);

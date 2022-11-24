@@ -1,4 +1,5 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useMemo, useState } from 'react';
+import PropTypes from 'prop-types';
 
 export const StoreContext = createContext();
 
@@ -43,16 +44,19 @@ function StoreProvider({ children }) {
   const [bookingData, setBookingData] = useState(initialObj);
   const [user, setUser] = useState(undefined);
 
-  // console.log(bookingData);
+  const value = useMemo(() => ({
+    user, setUser, bookingData, setBookingData,
+  }), [user, bookingData]);
 
   return (
-    <StoreContext.Provider value={{
-      bookingData, setBookingData, user, setUser, initialObj,
-    }}
-    >
+    <StoreContext.Provider value={value}>
       {children}
     </StoreContext.Provider>
   );
 }
+
+StoreProvider.propTypes = {
+  children: PropTypes.node.isRequired,
+};
 
 export default StoreProvider;

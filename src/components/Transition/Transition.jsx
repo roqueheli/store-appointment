@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/router';
 
@@ -33,5 +34,9 @@ function Transition({ children }) {
     </div>
   );
 }
+
+Transition.propTypes = {
+  children: PropTypes.node.isRequired,
+};
 
 export default Transition;

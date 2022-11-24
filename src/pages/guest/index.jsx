@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useContext, useEffect, useState } from 'react';
 import Button from '../../components/Button';
-import { StoreContext } from '../../context/store';
+import { StoreContext, initialObj } from '../../context/store';
 import styles from './styles.module.css';
 
 const initialObject = {
@@ -12,7 +12,7 @@ const initialObject = {
 };
 
 function Guest() {
-  const { bookingData, setBookingData, initialObj } = useContext(StoreContext);
+  const { bookingData, setBookingData } = useContext(StoreContext);
   const [guessData, setGuessData] = useState(initialObject);
   const router = useRouter();
 
