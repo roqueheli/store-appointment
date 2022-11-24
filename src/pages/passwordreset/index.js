@@ -55,7 +55,7 @@ const PasswordReset = () => {
             <div className={styles.subcontainer}>
                 {!success ? 
                     <form onSubmit={handleUpdate}>
-                        <input required placeholder={'Email'} type="text" name="email" onChange={handleNewValue} value={newValues.email} />
+                        <input required placeholder={'Email'} type='text' name='email' onChange={handleNewValue} value={newValues.email} />
                         <input className={styles.submitbutton} type='submit' value='Recuperar contraseña' />
                     </form>
                 :   <Success />}

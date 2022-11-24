@@ -1,11 +1,11 @@
 import Link from 'next/link';
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import Button from '../../components/Button';
 import { StoreContext } from '../../context/store';
 import styles from './styles.module.css';
 
 const Hour = () => {
-  const [selected, setSelected] = useState("");
+  const [selected, setSelected] = useState('');
   const { bookingData, setBookingData } = useContext(StoreContext);
   const [hours, setHours] = useState([]);
   const buttonRef = useRef();
@@ -15,11 +15,11 @@ const Hour = () => {
     setSelected(blocktime);
     setBookingData({
       ...bookingData,
-      "schedule": {
+      'schedule': {
         ...bookingData.schedule,
-        "work_day_id": hours.work_day.id,
-        "block_time_id": blocktime.id,
-        "hour": blocktime.start.substring(11,19),
+        'work_day_id': hours.work_day.id,
+        'block_time_id': blocktime.id,
+        'hour': blocktime.start.substring(11,19),
       }
     });
   }

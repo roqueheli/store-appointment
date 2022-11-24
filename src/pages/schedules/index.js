@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import React from 'react';
 import Button from '../../components/Button';
-import Card from '../../components/Card';
 import styles from './styles.module.css';
 
 const Schedules = () => {

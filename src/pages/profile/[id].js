@@ -84,9 +84,9 @@ const ProfileDetail = () => {
             <div className={styles.subcontainer}>
                 {loading && !success ?
                     <form onSubmit={handleUpdate}>
-                        <input type="text" name="email" disabled value={profile.email} />
-                        <input type="text" name="name" onChange={handleNewValue} value={newValues.name} />
-                        <input type="text" name="phone" placeholder='Teléfono' onChange={handleNewValue} value={newValues.phone} />
+                        <input type='text' name='email' disabled value={profile.email} />
+                        <input type='text' name='name' onChange={handleNewValue} value={newValues.name} />
+                        <input type='text' name='phone' placeholder='Teléfono' onChange={handleNewValue} value={newValues.phone} />
                         <input className={styles.submitbutton} type='submit' value='Guardar' />
                         <Link href={'/profile'}>
                             <Button>Cancelar</Button>

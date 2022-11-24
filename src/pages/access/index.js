@@ -30,12 +30,12 @@ const Access = () => {
                     setUser({ username: data.username, email: loginData.email, phone: data?.phone || 0, avatar: '', token: data.token });
                     setBookingData({
                         ...bookingData,
-                        "user": {
-                            "user_id": data.user_id,
-                            "firstname": data.username,
-                            "phone": data?.phone || 0,
-                            "email": data.email,
-                            "token": data?.token
+                        'user': {
+                            'user_id': data.user_id,
+                            'firstname': data.username,
+                            'phone': data?.phone || 0,
+                            'email': data.email,
+                            'token': data?.token
                         }
                     });
                     sessionStorage.setItem('session', JSON.stringify({ user_id: data?.user_id || null, username: data?.username, email: loginData?.email, phone: data?.phone || 0, avatar: '', token: data?.token || null }));
@@ -63,12 +63,12 @@ const Access = () => {
             </div>
             <div className={styles.subcontainer}>
                 <form onSubmit={handleSubmit}>
-                    <input required type="email" placeholder='Email' name="email" onChange={handleChange} value={loginData.email} />
-                    <input required type="password" placeholder='Password' name="password" onChange={handleChange} value={loginData.password} autoComplete="off" />
-                    <input className={styles.submitbutton} type="submit" value='Iniciar sesión' />
+                    <input required type='email' placeholder='Email' name='email' onChange={handleChange} value={loginData.email} />
+                    <input required type='password' placeholder='Password' name='password' onChange={handleChange} value={loginData.password} autoComplete='off' />
+                    <input className={styles.submitbutton} type='submit' value='Iniciar sesión' />
                     <div className={styles.othertexts}>                        
-                        <a href="/register">Registrarse</a>
-                        <a href="/passwordreset">¿Olvidó su contraseña?</a>
+                        <a href='/register'>Registrarse</a>
+                        <a href='/passwordreset'>¿Olvidó su contraseña?</a>
                     </div>
                 </form>
                 {loginError ? <h4 className={styles.loginerrormsg}>Email o contraseña <span className={styles.errormsgsecondline}>inválido</span></h4> : <p></p>}

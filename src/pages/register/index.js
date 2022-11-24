@@ -67,12 +67,12 @@ const Register = () => {
             {!success ?
                 <>
                     <form onSubmit={handleSubmit}>
-                        <input required type="text" placeholder='Nombre' name="name" onChange={handleChange} value={registerData.name} />
-                        <input required type="email" placeholder='Email' name="email" onChange={handleChange} value={registerData.email} />
-                        <input required type="password" placeholder='Password' name="password" onChange={handleChange} value={registerData.password} />
-                        <input required type="password" placeholder='Confirmar password' name="password_confirmation" onChange={handleChange} value={registerData.password_confirmation} />
-                        <input required type="text" placeholder='Celular' name="phone" onChange={handleChange} value={registerData.phone} />
-                        <input required className={styles.submitbutton} type="submit" value='Registrarse' />
+                        <input required type='text' placeholder='Nombre' name='name' onChange={handleChange} value={registerData.name} />
+                        <input required type='email' placeholder='Email' name='email' onChange={handleChange} value={registerData.email} />
+                        <input required type='password' placeholder='Password' name='password' onChange={handleChange} value={registerData.password} />
+                        <input required type='password' placeholder='Confirmar password' name='password_confirmation' onChange={handleChange} value={registerData.password_confirmation} />
+                        <input required type='text' placeholder='Celular' name='phone' onChange={handleChange} value={registerData.phone} />
+                        <input required className={styles.submitbutton} type='submit' value='Registrarse' />
                     </form>
                     {registerError ? <h4 className={styles.loginerrormsg}>{message.first} <span className={styles.errormsgsecondline}>{message.second}</span></h4> : <p></p>}
                 </>

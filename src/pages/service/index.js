@@ -7,7 +7,7 @@ import { StoreContext } from '../../context/store';
 import styles from './styles.module.css';
 
 const Service = ({ services }) => {
-  const [selected, setSelected] = useState("");
+  const [selected, setSelected] = useState('');
   const { user, bookingData, setBookingData, initialObj } = useContext(StoreContext);
   const router = useRouter();
 
@@ -15,11 +15,11 @@ const Service = ({ services }) => {
     setSelected(service);
     setBookingData({
       ...bookingData,
-      "service": {
-        "service_id": service.id,
-        "name": service.name,
-        "description": service.description,
-        "price": service.price
+      'service': {
+        'service_id': service.id,
+        'name': service.name,
+        'description': service.description,
+        'price': service.price
       }
     });
   }
@@ -28,8 +28,8 @@ const Service = ({ services }) => {
     e.preventDefault();
     setBookingData({
       ...bookingData,
-      "reservation": {
-        "id": 0
+      'reservation': {
+        'id': 0
       }
     });
     router.push('/login')
