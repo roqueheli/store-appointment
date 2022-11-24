@@ -4,24 +4,21 @@ import Button from '../../components/Button';
 import Card from '../../components/Card';
 import styles from './styles.module.css';
 
-const Services = ({ services }) => {
+function Services({ services }) {
   return (
     <div className={styles.container}>
       <div className={styles.title_container}>
         <h1 className={styles.title}>Servicios</h1>
       </div>
       <div className={styles.subcontainer}>
-        {services?.map(service => {
-          return (
-              <Link href={`/services/${service.id}`}>
-                <Card key={service.id} service={service} />
-              </Link>
-            ); 
-          })
-        }
+        {services?.map((service) => (
+          <Link href={`/services/${service.id}`}>
+            <Card key={service.id} service={service} />
+          </Link>
+        ))}
       </div>
       <div className={styles.btnContainer}>
-        <Link href='/'>
+        <Link href="/">
           <Button>
             Atrás
           </Button>
@@ -31,13 +28,13 @@ const Services = ({ services }) => {
   );
 }
 
-Services.getInitialProps = async (ctx) => {
+Services.getInitialProps = async () => {
   const rs = await fetch(`${process.env.NEXT_PUBLIC_HOST}services`, {
     method: 'GET',
-    headers: { 'Content-Type': 'application/json' }
+    headers: { 'Content-Type': 'application/json' },
   });
-  const data = await rs.json()
-  return { services: data }
-}
+  const data = await rs.json();
+  return { services: data };
+};
 
 export default Services;

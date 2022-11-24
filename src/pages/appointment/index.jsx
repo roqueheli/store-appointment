@@ -1,30 +1,28 @@
 import React, { useContext, useRef, useState } from 'react';
 import Link from 'next/link';
-import Button from '../../components/Button';
 import Calendar from 'react-calendar';
+import Button from '../../components/Button';
 import 'react-calendar/dist/Calendar.css';
 import styles from './styles.module.css';
 import { StoreContext } from '../../context/store';
 
-const Appointment = () => {
-  const {bookingData, setBookingData} = useContext(StoreContext);
+function Appointment() {
+  const { bookingData, setBookingData } = useContext(StoreContext);
   const buttonRef = useRef();
   const hourRef = useRef();
   const [date, setDate] = useState(null);
 
-  const tileDisabled = ({ activeStartDate, date, view }) => {
-    return new Date(date).setHours(0, 0, 0, 0) < new Date().setHours(0, 0, 0, 0);
-  }
+  const tileDisabled = ({ activeStartDate, date, view }) => new Date(date).setHours(0, 0, 0, 0) < new Date().setHours(0, 0, 0, 0);
 
   const handleChange = (date) => {
     setDate(date);
     setBookingData({
       ...bookingData,
-      'schedule': {
-        'day': new Date(new Date(date).setHours(0, 0, 0, 0)).toISOString().slice(0,10).replace(/-/g,''),
-      }
+      schedule: {
+        day: new Date(new Date(date).setHours(0, 0, 0, 0)).toISOString().slice(0, 10).replace(/-/g, ''),
+      },
     });
-  }
+  };
 
   return (
     <div className={styles.container}>
@@ -33,24 +31,26 @@ const Appointment = () => {
       </div>
       <div className={styles.subcontainer}>
         <Calendar tileDisabled={tileDisabled} onChange={handleChange} value={date} />
-        <div className='text-center'>
-          Selected date: {date?.toDateString()}
+        <div className="text-center">
+          Selected date:
+          {' '}
+          {date?.toDateString()}
         </div>
       </div>
       <div className={styles.btnContainer}>
-        <Link href='/hour'>
-            <Button ref={hourRef}>
+        <Link href="/hour">
+          <Button ref={hourRef}>
             Siguiente
-            </Button>
+          </Button>
         </Link>
-        <Link href='/worker'>
-            <Button ref={buttonRef}>
+        <Link href="/worker">
+          <Button ref={buttonRef}>
             Atrás
-            </Button>
+          </Button>
         </Link>
       </div>
     </div>
-  )
+  );
 }
 
 export default Appointment;

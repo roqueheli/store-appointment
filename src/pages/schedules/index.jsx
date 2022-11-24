@@ -3,7 +3,7 @@ import React from 'react';
 import Button from '../../components/Button';
 import styles from './styles.module.css';
 
-const Schedules = () => {
+function Schedules() {
   return (
     <div className={styles.container}>
       <div className={styles.title_container}>
@@ -42,7 +42,7 @@ const Schedules = () => {
         </ul>
       </div>
       <div className={styles.btnContainer}>
-        <Link href='/'>
+        <Link href="/">
           <Button>
             Atrás
           </Button>
@@ -52,14 +52,14 @@ const Schedules = () => {
   );
 }
 
-Schedules.getInitialProps = async (ctx) => {
+Schedules.getInitialProps = async () => {
   const rs = await fetch(`${process.env.NEXT_PUBLIC_HOST}work_days`, {
     method: 'GET',
-    headers: { 'Content-Type': 'application/json' }
+    headers: { 'Content-Type': 'application/json' },
   });
   console.log(rs);
-  const data = await rs.json()
-  return { schedules: data }
-}
+  const data = await rs.json();
+  return { schedules: data };
+};
 
 export default Schedules;

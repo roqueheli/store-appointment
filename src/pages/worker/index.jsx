@@ -5,7 +5,7 @@ import Card from '../../components/Card';
 import { StoreContext } from '../../context/store';
 import styles from './styles.module.css';
 
-const Worker = ({ workers }) => {
+function Worker({ workers }) {
   const [selected, setSelected] = useState('');
   const { bookingData, setBookingData } = useContext(StoreContext);
 
@@ -13,13 +13,13 @@ const Worker = ({ workers }) => {
     setSelected(worker);
     setBookingData({
       ...bookingData,
-      'worker': {
-        'worker_id': worker.id,
-        'name': worker?.name,
-        'instagram': worker?.instagram,
-        'image_url': worker?.image_url,
-        'description': worker.description
-      }
+      worker: {
+        worker_id: worker.id,
+        name: worker?.name,
+        instagram: worker?.instagram,
+        image_url: worker?.image_url,
+        description: worker.description,
+      },
     });
   };
 
@@ -29,21 +29,20 @@ const Worker = ({ workers }) => {
         <h1 className={styles.title}>Barberos</h1>
       </div>
       <div className={styles.subcontainer}>
-        {workers?.map(worker => {
+        {workers?.map((worker) => {
           if (worker === selected) {
             return <Card key={worker.id} service={worker} active onClick={() => handleClick(worker)} />;
-          } else {
-            return <Card key={worker.id} service={worker} onClick={() => handleClick(worker)} />;
-          }})
-        }
+          }
+          return <Card key={worker.id} service={worker} onClick={() => handleClick(worker)} />;
+        })}
       </div>
       <div className={styles.btnContainer}>
-      <Link href='/appointment'>
+        <Link href="/appointment">
           <Button>
             Seleccion fecha
           </Button>
         </Link>
-        <Link href='/service'>
+        <Link href="/service">
           <Button>
             Atrás
           </Button>
@@ -53,13 +52,13 @@ const Worker = ({ workers }) => {
   );
 }
 
-Worker.getInitialProps = async (ctx) => {
+Worker.getInitialProps = async () => {
   const rs = await fetch(`${process.env.NEXT_PUBLIC_HOST}workers`, {
     method: 'GET',
-    headers: { 'Content-Type': 'application/json' }
+    headers: { 'Content-Type': 'application/json' },
   });
   const data = await rs.json();
-  return { workers: data }
-}
+  return { workers: data };
+};
 
 export default Worker;

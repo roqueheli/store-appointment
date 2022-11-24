@@ -4,24 +4,21 @@ import Button from '../../components/Button';
 import Card from '../../components/Card';
 import styles from './styles.module.css';
 
-const Workers = ({ workers }) => {
+function Workers({ workers }) {
   return (
     <div className={styles.container}>
-      <div className={styles.title_container}>      
+      <div className={styles.title_container}>
         <h1 className={styles.title}>Barberos</h1>
       </div>
       <div className={styles.subcontainer}>
-        {workers?.map(worker => {
-          return (
-              <Link href={`/workers/${worker.id}`}>
-                <Card key={worker.id} service={worker} />
-              </Link>
-            ); 
-          })
-        }
+        {workers?.map((worker) => (
+          <Link href={`/workers/${worker.id}`}>
+            <Card key={worker.id} service={worker} />
+          </Link>
+        ))}
       </div>
       <div className={styles.btnContainer}>
-        <Link href='/'>
+        <Link href="/">
           <Button>
             Atrás
           </Button>
@@ -31,13 +28,13 @@ const Workers = ({ workers }) => {
   );
 }
 
-Workers.getInitialProps = async (ctx) => {
+Workers.getInitialProps = async () => {
   const rs = await fetch(`${process.env.NEXT_PUBLIC_HOST}workers`, {
     method: 'GET',
-    headers: { 'Content-Type': 'application/json' }
+    headers: { 'Content-Type': 'application/json' },
   });
   const data = await rs.json();
-  return { workers: data }
-}
+  return { workers: data };
+};
 
 export default Workers;
