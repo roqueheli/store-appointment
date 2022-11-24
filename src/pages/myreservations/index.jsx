@@ -60,10 +60,10 @@ function ReservationCard({ reservation, available }) {
           {available === 'yes'
             ? (
               <div className={styles.icons}>
-                <button onClick={handleEdit}>
+                <button type="button" onClick={handleEdit}>
                   <FiEdit size={14} />
                 </button>
-                <button onClick={() => setShowModal(true)}>
+                <button type="button" onClick={() => setShowModal(true)}>
                   <MdOutlineDelete size={17} />
                 </button>
               </div>

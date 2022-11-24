@@ -31,9 +31,13 @@ function Worker({ workers }) {
       <div className={styles.subcontainer}>
         {workers?.map((worker) => {
           if (worker === selected) {
-            return <Card key={worker.id} service={worker} active onClick={() => handleClick(worker)} />;
+            return (
+              <Card key={worker.id} service={worker} active onClick={() => handleClick(worker)} />
+            );
           }
-          return <Card key={worker.id} service={worker} onClick={() => handleClick(worker)} />;
+          return (
+            <Card key={worker.id} service={worker} onClick={() => handleClick(worker)} />
+          );
         })}
       </div>
       <div className={styles.btnContainer}>

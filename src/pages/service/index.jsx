@@ -9,7 +9,7 @@ import styles from './styles.module.css';
 function Service({ services }) {
   const [selected, setSelected] = useState('');
   const {
-    bookingData, setBookingData
+    bookingData, setBookingData,
   } = useContext(StoreContext);
   const router = useRouter();
 
@@ -45,9 +45,13 @@ function Service({ services }) {
       <div className={styles.subcontainer}>
         {services?.map((service) => {
           if (service === selected) {
-            return <Card key={service.id} service={service} active onClick={() => handleClick(service)} />;
+            return (
+              <Card key={service.id} service={service} active onClick={() => handleClick(service)} />
+            );
           }
-          return <Card key={service.id} service={service} onClick={() => handleClick(service)} />;
+          return (
+            <Card key={service.id} service={service} onClick={() => handleClick(service)} />
+          );
         })}
       </div>
       <div className={styles.btnContainer}>

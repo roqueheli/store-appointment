@@ -32,10 +32,10 @@ function PasswordReset() {
             router.push('/access');
           }, 3000);
         } else {
-          console.log('error', e);
+          setSuccess(false);
         }
       } catch {
-        console.log('error', e);
+        setSuccess(false);
       }
     })();
   };

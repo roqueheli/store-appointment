@@ -12,31 +12,31 @@ function Schedules() {
       <div className={styles.subcontainer}>
         <ul>
           <li>
-            <label>Lunes</label>
+            <span>Lunes</span>
             <span>11:00 - 20:00</span>
           </li>
           <li>
-            <label>Martes</label>
+            <span>Martes</span>
             <span>11:00 - 20:00</span>
           </li>
           <li>
-            <label>Miércoles</label>
+            <span>Miércoles</span>
             <span>11:00 - 20:00</span>
           </li>
           <li>
-            <label>Jueves</label>
+            <span>Jueves</span>
             <span>11:00 - 20:00</span>
           </li>
           <li>
-            <label>Viernes</label>
+            <span>Viernes</span>
             <span>11:00 - 20:00</span>
           </li>
           <li>
-            <label>Sábado</label>
+            <span>Sábado</span>
             <span>11:00 - 21:00</span>
           </li>
           <li>
-            <label>Domingo</label>
+            <span>Domingo</span>
             <span>11:00 - 19:00</span>
           </li>
         </ul>
@@ -57,7 +57,6 @@ Schedules.getInitialProps = async () => {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
   });
-  console.log(rs);
   const data = await rs.json();
   return { schedules: data };
 };

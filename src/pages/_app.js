@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppLayout } from '../components/AppLayout';
+import AppLayout from '../components/AppLayout';
 import Transition from '../components/Transition/Transition';
 import StoreProvider from '../context/store';
 import '../styles/globals.css';
@@ -16,4 +16,5 @@ function MyApp({ Component, pageProps }) {
     </StoreProvider>
   );
 }
+
 export default MyApp;

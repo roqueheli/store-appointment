@@ -15,7 +15,7 @@ function Confirmation() {
   const handleClick = (e) => {
     e.preventDefault();
     const userStorage = JSON.parse(sessionStorage.getItem('session'));
-    const execMethod = 'POST';
+    let execMethod = 'POST';
     if (bookingData.reservation.id > 0) execMethod = 'PUT';
     (async () => {
       try {
@@ -46,13 +46,13 @@ function Confirmation() {
             if (bookingData.user.user_id === 0) setUser(null);
             if (bookingData.user.user_id === 0 && user.avatar !== '') sessionStorage.removeItem('session');
           } else {
-            router.push(`myreservations/${userStorage.user_id}`);
+            router.push(`myreservations`);
           }
         } else {
-          console.log(data);
+          setUser({ error: data });
         }
-      } catch (e) {
-        console.log('error', e);
+      } catch (error) {
+        setUser({ error });
       }
     })();
   };
@@ -98,7 +98,7 @@ function Confirmation() {
               </Link>
               {bookingData.user.user_id > 0
                 ? (
-                  <Link href={`/myreservations/${bookingData.user.user_id}`}>
+                  <Link href={`/myreservations`}>
                     <Button>
                       Mis reservas
                     </Button>

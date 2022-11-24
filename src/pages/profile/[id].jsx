@@ -34,8 +34,8 @@ function ProfileDetail() {
           name: data.name,
           phone: data.phone,
         });
-      } catch {
-        console.log('error', e);
+      } catch (error) {
+        setProfile({ error });
       }
     })();
   }, []);
@@ -61,10 +61,10 @@ function ProfileDetail() {
             router.push('/profile');
           }, 3000);
         } else {
-          console.log('error', e);
+          setUser({ error: 'Ha ocurrido un error' });
         }
       } catch {
-        console.log('error', e);
+        setUser({ error: 'Ha ocurrido un error' });
       }
     })();
   };
@@ -82,7 +82,7 @@ function ProfileDetail() {
         <h1 className={styles.title}>Perfil</h1>
       </div>
       <div className={styles.subcontainer}>
-        {loading && !success
+        {(loading && !success)
           ? (
             <form onSubmit={handleUpdate}>
               <input type="text" name="email" disabled value={profile.email} />
@@ -94,7 +94,8 @@ function ProfileDetail() {
               </Link>
             </form>
           )
-          : success ? <Success /> : ''}
+          : ''}
+        {success ? <Success /> : ''}
       </div>
       <div className={styles.btnContainer} />
     </div>

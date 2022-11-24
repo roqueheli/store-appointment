@@ -1,7 +1,8 @@
+import React from 'react';
 import Head from 'next/head';
 import styles from './styles.module.css';
 
-export function AppLayout({ children }) {
+function AppLayout({ children }) {
   return (
     <>
       <Head>
@@ -17,3 +18,5 @@ export function AppLayout({ children }) {
     </>
   );
 }
+
+export default AppLayout;

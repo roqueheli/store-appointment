@@ -38,12 +38,12 @@ function Hour() {
           },
           body: JSON.stringify({ id: bookingData.worker.worker_id, day: bookingData.schedule.day }),
         });
+        const data = await rs.json();
         if (rs.status === 200) {
-          const data = await rs.json();
           setHours(data);
         }
-      } catch (e) {
-        console.log('error', e);
+      } catch (error) {
+        setHours({ error: 'Ha ocurrido un error' });
       }
     })();
   }, []);
@@ -57,9 +57,9 @@ function Hour() {
         <ul>
           {hours?.block_times?.map((hour) => {
             if (hour === selected) {
-              return <li key={hour.id} className={selected ? styles.liactive : ''} onClick={() => handleClick(hour)}>{hour.start.substring(11, 19)}</li>;
+              return (<li key={hour.id} className={selected ? styles.liactive : ''} onClick={() => handleClick(hour)}>{hour.start.substring(11, 19)}</li>);
             }
-            return <li key={hour.id} className={styles.linormal} onClick={() => handleClick(hour)}>{hour.start.substring(11, 19)}</li>;
+            return (<li key={hour.id} className={styles.linormal} onClick={() => handleClick(hour)}>{hour.start.substring(11, 19)}</li>);
           })}
         </ul>
       </div>

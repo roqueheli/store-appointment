@@ -47,8 +47,8 @@ function Access() {
         } else {
           setLoginError(true);
         }
-      } catch (e) {
-        console.log('error', e);
+      } catch (error) {
+        setUser({ error });
       }
     })();
   };

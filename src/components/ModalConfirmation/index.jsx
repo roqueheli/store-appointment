@@ -26,15 +26,12 @@ function ModalConfirmation({
               Authorization: `${userStorage.token}`,
             },
           });
-          const data = await rs.json();
           if (rs.status === 200) {
             setShowModal(false);
             router.replace(router.asPath);
-          } else {
-            console.log(data);
           }
-        } catch (e) {
-          console.log('error', e);
+        } catch (error) {
+          setShowModal(false);
         }
       })();
     }
@@ -88,7 +85,7 @@ function ModalConfirmation({
     <StyledModalOverlay>
       <StyledModal>
         <StyledModalHeader>
-          <a href="#" onClick={handleCloseClick}>x</a>
+          <button type="button" onClick={handleCloseClick}>x</button>
         </StyledModalHeader>
         {title && <StyledModalTitle>{title}</StyledModalTitle>}
         <StyledButtonsContainer>

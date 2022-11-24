@@ -26,7 +26,7 @@ function Login({ setLogin }) {
   const handleGoogleLogin = (e) => {
     e.preventDefault();
     loginWithGoogle().then(userStateChange(setUser))
-      .catch((err) => console.log('error', err));
+      .catch((error) => setUser({ error }));
   };
 
   useEffect(() => {
@@ -60,8 +60,11 @@ function Login({ setLogin }) {
   const handleReservations = (e) => {
     e.preventDefault();
     sessionStorage.setItem('session', JSON.stringify({
-      user_id: user?.user_id || null, username: user?.username, email: user?.email, 
-      avatar: user?.avatar || '', token: user?.token || null,
+      user_id: user?.user_id || null,
+      username: user?.username,
+      email: user?.email,
+      avatar: user?.avatar || '',
+      token: user?.token || null,
     }));
     router.push('/myreservations');
   };

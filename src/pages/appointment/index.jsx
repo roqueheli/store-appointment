@@ -10,16 +10,16 @@ function Appointment() {
   const { bookingData, setBookingData } = useContext(StoreContext);
   const buttonRef = useRef();
   const hourRef = useRef();
-  const [date, setDate] = useState(null);
+  const [dateBook, setDateBook] = useState(null);
 
-  const tileDisabled = ({ activeStartDate, date, view }) => new Date(date).setHours(0, 0, 0, 0) < new Date().setHours(0, 0, 0, 0);
+  const tileDisabled = ({ date }) => new Date(date).setHours(0, 0, 0, 0) < new Date().setHours(0, 0, 0, 0);
 
-  const handleChange = (date) => {
-    setDate(date);
+  const handleChange = (bookdate) => {
+    setDateBook(bookdate);
     setBookingData({
       ...bookingData,
       schedule: {
-        day: new Date(new Date(date).setHours(0, 0, 0, 0)).toISOString().slice(0, 10).replace(/-/g, ''),
+        day: new Date(new Date(bookdate).setHours(0, 0, 0, 0)).toISOString().slice(0, 10).replace(/-/g, ''),
       },
     });
   };
@@ -30,11 +30,11 @@ function Appointment() {
         <h1 className={styles.title}>Fechas</h1>
       </div>
       <div className={styles.subcontainer}>
-        <Calendar tileDisabled={tileDisabled} onChange={handleChange} value={date} />
+        <Calendar tileDisabled={tileDisabled} onChange={handleChange} value={dateBook} />
         <div className="text-center">
           Selected date:
           {' '}
-          {date?.toDateString()}
+          {dateBook?.toDateString()}
         </div>
       </div>
       <div className={styles.btnContainer}>

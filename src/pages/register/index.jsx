@@ -44,8 +44,8 @@ function Register() {
           setMessage({ first: 'Email', second: 'ya se encuentra registrado' });
           setRegisterError(true);
         }
-      } catch (e) {
-        console.log('error', e);
+      } catch (error) {
+        setMessage({ error: 'Ha ocurrido un error intentando hacer submit' });
       }
     })();
   };

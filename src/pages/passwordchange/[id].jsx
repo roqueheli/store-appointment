@@ -17,14 +17,15 @@ function PasswordChange() {
 
   const handleUpdate = (e) => {
     e.preventDefault();
-    console.log(newValues);
     const userStorage = JSON.parse(sessionStorage.getItem('session'));
     (async () => {
       try {
         const rs = await fetch(`${process.env.NEXT_PUBLIC_HOST}users/${router.query.id}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json', Authorization: userStorage.token },
-          body: JSON.stringify({ password: newValues.newpass, password_confirmation: newValues.confirm }),
+          body: JSON.stringify({
+            password: newValues.newpass, password_confirmation: newValues.confirm,
+          }),
         });
         if (rs.status === 200) {
           setSuccess(true);
@@ -32,10 +33,10 @@ function PasswordChange() {
             router.push('/profile');
           }, 3000);
         } else {
-          console.log('error', e);
+          setSuccess(false);
         }
       } catch {
-        console.log('error', e);
+        setSuccess(false);
       }
     })();
   };
