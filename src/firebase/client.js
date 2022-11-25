@@ -1,5 +1,7 @@
 import { initializeApp } from 'firebase/app';
-import {getAuth, signOut, GithubAuthProvider, signInWithPopup, onAuthStateChanged, GoogleAuthProvider } from 'firebase/auth';
+import {
+  getAuth, signOut, signInWithPopup, onAuthStateChanged, GoogleAuthProvider,
+} from 'firebase/auth';
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
@@ -12,7 +14,9 @@ const firebaseConfig = {
   measurementId: 'G-1GJRY9Q587',
 };
 
-!initializeApp(firebaseConfig) && initializeApp(firebaseConfig);
+if (!initializeApp(firebaseConfig)) {
+  initializeApp(firebaseConfig);
+}
 
 const mapFirebaseUser = (user) => {
   if (user) {

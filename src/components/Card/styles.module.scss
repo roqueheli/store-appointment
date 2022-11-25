@@ -13,6 +13,8 @@ $maincolor: #009688;
   pointer-events: auto;
   transform: scale(1);
   transition: all 0.4s;
+  border: none;
+  width: 100%;
 }
 
 .selected {
