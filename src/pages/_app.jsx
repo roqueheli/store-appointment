@@ -6,12 +6,13 @@ import StoreProvider from '../context/store';
 import '../styles/globals.css';
 import '../styles/transition.css';
 
-function MyApp({ Component }) {
+function MyApp({ Component, pageProps }) {
   return (
     <StoreProvider>
       <AppLayout>
         <Transition>
-          <Component />
+          {/* eslint-disable react/jsx-props-no-spreading */}
+          <Component {...pageProps} />
         </Transition>
       </AppLayout>
     </StoreProvider>
@@ -20,6 +21,7 @@ function MyApp({ Component }) {
 
 MyApp.propTypes = {
   Component: PropTypes.node.isRequired,
+  pageProps: PropTypes.node.isRequired,
 };
 
 export default MyApp;
