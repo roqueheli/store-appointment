@@ -9,12 +9,12 @@ import '../styles/transition.css';
 function MyApp({ Component, pageProps }) {
   return (
     <StoreProvider>
-      <AppLayout>
-        <Transition>
+      <Transition>
+        <AppLayout>
           {/* eslint-disable react/jsx-props-no-spreading */}
           <Component {...pageProps} />
-        </Transition>
-      </AppLayout>
+        </AppLayout>
+      </Transition>
     </StoreProvider>
   );
 }
