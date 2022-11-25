@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import Button from '../../components/Button';
 import Card from '../../components/Card';
 import Success from '../../components/Success/Success';
@@ -11,6 +11,10 @@ function Confirmation() {
   const [success, setSuccess] = useState(false);
   const { bookingData, setUser, user } = useContext(StoreContext);
   const router = useRouter();
+  const reservationRef = useRef();
+  const bookingRef = useRef();
+  const loginRef = useRef();
+  const backRef = useRef();
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -79,11 +83,11 @@ function Confirmation() {
         {!success
           ? (
             <>
-              <Button onClick={handleClick}>
+              <Button ref={bookingRef} onClick={handleClick}>
                 Agendar
               </Button>
               <Link href="/worker">
-                <Button>
+                <Button ref={backRef}>
                   Atrás
                 </Button>
               </Link>
@@ -92,14 +96,14 @@ function Confirmation() {
           : (
             <>
               <Link href="/login">
-                <Button>
+                <Button ref={loginRef}>
                   Inicio
                 </Button>
               </Link>
               {bookingData.user.user_id > 0
                 ? (
                   <Link href="/myreservations">
-                    <Button>
+                    <Button ref={reservationRef}>
                       Mis reservas
                     </Button>
                   </Link>

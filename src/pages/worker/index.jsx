@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import Button from '../../components/Button';
 import Card from '../../components/Card';
@@ -9,6 +9,8 @@ import styles from './styles.module.css';
 function Worker({ workers }) {
   const [selected, setSelected] = useState('');
   const { bookingData, setBookingData } = useContext(StoreContext);
+  const selectDateRef = useRef();
+  const backRef = useRef();
 
   const handleClick = (worker) => {
     setSelected(worker);
@@ -43,12 +45,12 @@ function Worker({ workers }) {
       </div>
       <div className={styles.btnContainer}>
         <Link href="/appointment">
-          <Button>
+          <Button ref={selectDateRef}>
             Seleccion fecha
           </Button>
         </Link>
         <Link href="/service">
-          <Button>
+          <Button ref={backRef}>
             Atrás
           </Button>
         </Link>

@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import Button from '../../components/Button';
 import Card from '../../components/Card';
@@ -13,6 +13,8 @@ function Service({ services }) {
     bookingData, setBookingData,
   } = useContext(StoreContext);
   const router = useRouter();
+  const backRef = useRef();
+  const nextRef = useRef();
 
   const handleClick = (service) => {
     setSelected(service);
@@ -62,11 +64,11 @@ function Service({ services }) {
       </div>
       <div className={styles.btnContainer}>
         <Link href="/worker">
-          <Button>
+          <Button ref={nextRef}>
             Siguiente
           </Button>
         </Link>
-        <Button onClick={handleBack}>
+        <Button onClick={handleBack} ref={backRef}>
           Atrás
         </Button>
       </div>

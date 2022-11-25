@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Button from '../../components/Button';
 import Success from '../../components/Success/Success';
 import styles from './styles.module.css';
@@ -14,6 +14,7 @@ function PasswordChange() {
   const [newValues, setNewValues] = useState(initialObj);
   const [success, setSuccess] = useState(false);
   const router = useRouter();
+  const backRef = useRef();
 
   const handleUpdate = (e) => {
     e.preventDefault();
@@ -66,7 +67,7 @@ function PasswordChange() {
       </div>
       <div className={styles.btnContainer}>
         <Link href="/profile">
-          <Button>Atrás</Button>
+          <Button ref={backRef}>Atrás</Button>
         </Link>
       </div>
     </div>

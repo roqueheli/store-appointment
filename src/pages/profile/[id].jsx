@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useContext, useEffect, useState } from 'react';
+import React, {
+  useContext, useEffect, useRef, useState,
+} from 'react';
 import Button from '../../components/Button';
 import Success from '../../components/Success/Success';
 import { StoreContext } from '../../context/store';
@@ -18,6 +20,7 @@ function ProfileDetail() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const router = useRouter();
+  const cancelRef = useRef();
 
   useEffect(() => {
     const userStorage = JSON.parse(sessionStorage.getItem('session'));
@@ -90,7 +93,7 @@ function ProfileDetail() {
               <input type="text" name="phone" placeholder="Teléfono" onChange={handleNewValue} value={newValues.phone} />
               <input className={styles.submitbutton} type="submit" value="Guardar" />
               <Link href="/profile">
-                <Button>Cancelar</Button>
+                <Button ref={cancelRef}>Cancelar</Button>
               </Link>
             </form>
           )

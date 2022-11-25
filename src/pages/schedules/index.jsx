@@ -1,9 +1,11 @@
 import Link from 'next/link';
-import React from 'react';
+import React, { useRef } from 'react';
 import Button from '../../components/Button';
 import styles from './styles.module.css';
 
 function Schedules() {
+  const backRef = useRef();
+
   return (
     <div className={styles.container}>
       <div className={styles.title_container}>
@@ -43,7 +45,7 @@ function Schedules() {
       </div>
       <div className={styles.btnContainer}>
         <Link href="/">
-          <Button>
+          <Button ref={backRef}>
             Atrás
           </Button>
         </Link>

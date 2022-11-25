@@ -1,5 +1,7 @@
 import { useRouter } from 'next/router';
-import React, { useContext, useEffect, useState } from 'react';
+import React, {
+  useContext, useEffect, useRef, useState,
+} from 'react';
 import PropTypes from 'prop-types';
 import { MdOutlineDelete } from 'react-icons/md';
 import { FiEdit } from 'react-icons/fi';
@@ -83,6 +85,7 @@ ReservationCard.propTypes = {
 
 function MyReservations({ reservations }) {
   const router = useRouter();
+  const backRef = useRef();
 
   return (
     <div className={styles.container}>
@@ -104,7 +107,7 @@ function MyReservations({ reservations }) {
         </ul>
       </div>
       <div className={styles.btnContainer}>
-        <Button onClick={() => router.back()}>
+        <Button ref={backRef} onClick={() => router.back()}>
           Atrás
         </Button>
       </div>

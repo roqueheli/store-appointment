@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 import Button from '../../components/Button';
@@ -6,6 +6,8 @@ import Card from '../../components/Card';
 import styles from './styles.module.css';
 
 function Services({ services }) {
+  const backRef = useRef();
+
   return (
     <div className={styles.container}>
       <div className={styles.title_container}>
@@ -20,7 +22,7 @@ function Services({ services }) {
       </div>
       <div className={styles.btnContainer}>
         <Link href="/">
-          <Button>
+          <Button ref={backRef}>
             Atrás
           </Button>
         </Link>

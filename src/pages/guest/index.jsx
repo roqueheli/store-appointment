@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useContext, useEffect, useState } from 'react';
+import React, {
+  useContext, useEffect, useRef, useState,
+} from 'react';
 import Button from '../../components/Button';
 import { StoreContext, initialObj } from '../../context/store';
 import styles from './styles.module.css';
@@ -15,6 +17,7 @@ function Guest() {
   const { bookingData, setBookingData } = useContext(StoreContext);
   const [guessData, setGuessData] = useState(initialObject);
   const router = useRouter();
+  const loginRef = useRef();
 
   useEffect(() => {
     setBookingData(initialObj);
@@ -56,7 +59,7 @@ function Guest() {
       </div>
       <div className={styles.btnContainer}>
         <Link href="/login">
-          <Button>
+          <Button ref={loginRef}>
             Atrás
           </Button>
         </Link>

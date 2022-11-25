@@ -6,12 +6,12 @@ import StoreProvider from '../context/store';
 import '../styles/globals.css';
 import '../styles/transition.css';
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component }) {
   return (
     <StoreProvider>
       <AppLayout>
         <Transition>
-          <Component {...pageProps} />
+          <Component />
         </Transition>
       </AppLayout>
     </StoreProvider>
@@ -20,7 +20,6 @@ function MyApp({ Component, pageProps }) {
 
 MyApp.propTypes = {
   Component: PropTypes.node.isRequired,
-  pageProps: PropTypes.node.isRequired,
 };
 
 export default MyApp;
