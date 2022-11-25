@@ -1,5 +1,6 @@
 import React, { Suspense } from 'react';
 import dynamic from 'next/dynamic';
+import Loader from '../../components/Loader';
 
 const DynamicProfile = dynamic(() => import('./Profile'), {
   suspense: true,
@@ -7,7 +8,7 @@ const DynamicProfile = dynamic(() => import('./Profile'), {
 
 function HomeProfile() {
   return (
-    <Suspense fallback="Loading...">
+    <Suspense fallback={<Loader />}>
       <DynamicProfile />
     </Suspense>
   );

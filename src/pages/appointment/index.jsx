@@ -1,5 +1,6 @@
 import React, { Suspense } from 'react';
 import dynamic from 'next/dynamic';
+import Loader from '../../components/Loader';
 
 const DynamicAppointment = dynamic(() => import('./Appointment'), {
   suspense: true,
@@ -7,7 +8,7 @@ const DynamicAppointment = dynamic(() => import('./Appointment'), {
 
 function HomeAppointment() {
   return (
-    <Suspense fallback="Loading...">
+    <Suspense fallback={<Loader />}>
       <DynamicAppointment />
     </Suspense>
   );

@@ -1,5 +1,6 @@
 import React, { Suspense } from 'react';
 import dynamic from 'next/dynamic';
+import Loader from '../../components/Loader';
 
 const DynamicSchedules = dynamic(() => import('./Schedules'), {
   suspense: true,
@@ -7,7 +8,7 @@ const DynamicSchedules = dynamic(() => import('./Schedules'), {
 
 function HomeSchedules() {
   return (
-    <Suspense fallback="Loading...">
+    <Suspense fallback={<Loader />}>
       <DynamicSchedules />
     </Suspense>
   );

@@ -1,5 +1,6 @@
 import React, { Suspense } from 'react';
 import dynamic from 'next/dynamic';
+import Loader from '../../components/Loader';
 
 const DynamicHour = dynamic(() => import('./Hour'), {
   suspense: true,
@@ -7,7 +8,7 @@ const DynamicHour = dynamic(() => import('./Hour'), {
 
 function HomeHour() {
   return (
-    <Suspense fallback="Loading...">
+    <Suspense fallback={<Loader />}>
       <DynamicHour />
     </Suspense>
   );
