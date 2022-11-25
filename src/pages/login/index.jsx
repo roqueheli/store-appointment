@@ -79,7 +79,7 @@ function Login({ setLogin }) {
         {!user
           ? (
             <>
-              <Button ref={googleRef} onClick={handleGoogleLogin}>
+              <Button onClick={handleGoogleLogin} ref={googleRef}>
                 <FcGoogle />
                 Login with Google
               </Button>
@@ -88,7 +88,7 @@ function Login({ setLogin }) {
                   Login / Registro
                 </Button>
               </Link>
-              <Button ref={backRef} onClick={handleClick}>
+              <Button onClick={handleClick} ref={backRef}>
                 Atrás
               </Button>
             </>
@@ -117,7 +117,7 @@ function Login({ setLogin }) {
                 <BsCalendarDate />
                 Mis reservas
               </Button>
-              <Button ref={logoutRef} onClick={handleLogout}>
+              <Button onClick={handleLogout} ref={logoutRef}>
                 <MdLogout />
                 Logout
               </Button>
@@ -185,7 +185,7 @@ function Home() {
             <img className={styles.logostyle} src="./mrbarber.jpeg" alt="logo" />
           </Link>
           <div className={styles.subcontainer}>
-            <Button ref={loginRef} onClick={handleClick}>
+            <Button onClick={handleClick} ref={loginRef}>
               Login
             </Button>
             <Link href="/guest">

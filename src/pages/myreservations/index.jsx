@@ -107,7 +107,7 @@ function MyReservations({ reservations }) {
         </ul>
       </div>
       <div className={styles.btnContainer}>
-        <Button ref={backRef} onClick={() => router.back()}>
+        <Button onClick={() => router.back()} ref={backRef}>
           Atrás
         </Button>
       </div>

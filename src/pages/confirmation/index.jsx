@@ -83,7 +83,7 @@ function Confirmation() {
         {!success
           ? (
             <>
-              <Button ref={bookingRef} onClick={handleClick}>
+              <Button onClick={handleClick} ref={bookingRef}>
                 Agendar
               </Button>
               <Link href="/worker">
