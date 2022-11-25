@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, {
   useContext, useEffect, useRef, useState,
@@ -54,7 +53,7 @@ function Hour() {
     e.preventDefault();
     if (selected) router.push('/confirmation');
   };
-  
+
   const handleBack = (e) => {
     e.preventDefault();
     router.push('/appointment');
