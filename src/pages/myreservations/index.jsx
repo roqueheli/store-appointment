@@ -1,6 +1,7 @@
 import React, { Suspense } from 'react';
 import dynamic from 'next/dynamic';
 import PropTypes from 'prop-types';
+import Loader from '../../components/Loader';
 
 const DynamicMyReservations = dynamic(() => import('./MyReservations'), {
   suspense: true,
@@ -8,7 +9,7 @@ const DynamicMyReservations = dynamic(() => import('./MyReservations'), {
 
 function HomeMyReservations({ reservations }) {
   return (
-    <Suspense fallback="Loading...">
+    <Suspense fallback={<Loader />}>
       <DynamicMyReservations reservations={reservations} />
     </Suspense>
   );

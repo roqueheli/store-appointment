@@ -1,6 +1,7 @@
 import React, { Suspense } from 'react';
 import dynamic from 'next/dynamic';
 import PropTypes from 'prop-types';
+import Loader from '../../components/Loader';
 
 const DynamicWorkerDetail = dynamic(() => import('./WorkerDetail'), {
   suspense: true,
@@ -8,7 +9,7 @@ const DynamicWorkerDetail = dynamic(() => import('./WorkerDetail'), {
 
 function HomeWorkerDetail({ worker }) {
   return (
-    <Suspense fallback="Loading...">
+    <Suspense fallback={<Loader />}>
       <DynamicWorkerDetail worker={worker} />
     </Suspense>
   );

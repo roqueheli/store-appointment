@@ -1,6 +1,7 @@
 import React, { Suspense } from 'react';
 import dynamic from 'next/dynamic';
 import PropTypes from 'prop-types';
+import Loader from '../../components/Loader';
 
 const DynamicServices = dynamic(() => import('./Services'), {
   suspense: true,
@@ -8,7 +9,7 @@ const DynamicServices = dynamic(() => import('./Services'), {
 
 function HomeServices({ services }) {
   return (
-    <Suspense fallback="Loading...">
+    <Suspense fallback={<Loader />}>
       <DynamicServices services={services} />
     </Suspense>
   );

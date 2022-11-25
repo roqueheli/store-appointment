@@ -1,5 +1,6 @@
 import React, { Suspense } from 'react';
 import dynamic from 'next/dynamic';
+import Loader from '../../components/Loader';
 
 const DynamicAccess = dynamic(() => import('./Access'), {
   suspense: true,
@@ -7,7 +8,7 @@ const DynamicAccess = dynamic(() => import('./Access'), {
 
 function HomeAccess() {
   return (
-    <Suspense fallback="Loading...">
+    <Suspense fallback={<Loader />}>
       <DynamicAccess />
     </Suspense>
   );

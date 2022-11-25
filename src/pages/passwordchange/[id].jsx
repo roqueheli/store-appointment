@@ -1,5 +1,6 @@
 import React, { Suspense } from 'react';
 import dynamic from 'next/dynamic';
+import Loader from '../../components/Loader';
 
 const DynamicPasswordChange = dynamic(() => import('./PasswordChange'), {
   suspense: true,
@@ -7,7 +8,7 @@ const DynamicPasswordChange = dynamic(() => import('./PasswordChange'), {
 
 function HomePasswordChange() {
   return (
-    <Suspense fallback="Loading...">
+    <Suspense fallback={<Loader />}>
       <DynamicPasswordChange />
     </Suspense>
   );

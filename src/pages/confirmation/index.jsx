@@ -1,5 +1,6 @@
 import React, { Suspense } from 'react';
 import dynamic from 'next/dynamic';
+import Loader from '../../components/Loader';
 
 const DynamicConfirmation = dynamic(() => import('./Confirmation'), {
   suspense: true,
@@ -7,7 +8,7 @@ const DynamicConfirmation = dynamic(() => import('./Confirmation'), {
 
 function HomeConfirmation() {
   return (
-    <Suspense fallback="Loading...">
+    <Suspense fallback={<Loader />}>
       <DynamicConfirmation />
     </Suspense>
   );

@@ -1,5 +1,6 @@
 import React, { Suspense } from 'react';
 import dynamic from 'next/dynamic';
+import Loader from '../../components/Loader';
 
 const DynamicRegister = dynamic(() => import('./Register'), {
   suspense: true,
@@ -7,7 +8,7 @@ const DynamicRegister = dynamic(() => import('./Register'), {
 
 function HomeRegister() {
   return (
-    <Suspense fallback="Loading...">
+    <Suspense fallback={<Loader />}>
       <DynamicRegister />
     </Suspense>
   );
