@@ -1,23 +1,30 @@
-import React, { useRef } from 'react';
-import Link from 'next/link';
-import Button from '../../components/Button';
-import styles from './styles.module.css';
+import React, { Suspense } from 'react';
+import dynamic from 'next/dynamic';
+import PropTypes from 'prop-types';
 
-function ServiceDetail() {
-  const backRef = useRef();
+const DynamicServiceDetail = dynamic(() => import('./ServiceDetail'), {
+  suspense: true,
+});
 
+function HomeServiceDetail({ service }) {
   return (
-    <div className={styles.container}>
-      <div className={styles.subcontainer}>ServiceDetail</div>
-      <div className={styles.btnContainer}>
-        <Link href="/services">
-          <Button ref={backRef}>
-            Atras
-          </Button>
-        </Link>
-      </div>
-    </div>
+    <Suspense fallback="Loading...">
+      <DynamicServiceDetail service={service} />
+    </Suspense>
   );
 }
 
-export default ServiceDetail;
+HomeServiceDetail.getInitialProps = async (ctx) => {
+  const rs = await fetch(`${process.env.NEXT_PUBLIC_HOST}services/${ctx.query.id}`, {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+  });
+  const data = await rs.json();
+  return { service: data };
+};
+
+HomeServiceDetail.propTypes = {
+  service: PropTypes.node.isRequired,
+};
+
+export default HomeServiceDetail;
