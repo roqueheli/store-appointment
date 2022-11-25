@@ -49,6 +49,9 @@ function Confirmation() {
             setSuccess(!success);
             if (bookingData.user.user_id === 0) setUser(null);
             if (bookingData.user.user_id === 0 && user.avatar !== '') sessionStorage.removeItem('session');
+            setTimeout(() => {
+              router.push('/login');
+            }, 4000);
           } else {
             router.push('/myreservations');
           }

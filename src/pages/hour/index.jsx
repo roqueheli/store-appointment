@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React, {
   useContext, useEffect, useRef, useState,
 } from 'react';
@@ -12,6 +13,7 @@ function Hour() {
   const [hours, setHours] = useState([]);
   const buttonRef = useRef();
   const serviceRef = useRef();
+  const router = useRouter();
 
   const handleClick = (blocktime) => {
     setSelected(blocktime);
@@ -48,6 +50,16 @@ function Hour() {
     })();
   }, []);
 
+  const handleConfirm = (e) => {
+    e.preventDefault();
+    if (selected) router.push('/confirmation');
+  };
+  
+  const handleBack = (e) => {
+    e.preventDefault();
+    router.push('/appointment');
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.title_container}>
@@ -78,16 +90,12 @@ function Hour() {
         </ul>
       </div>
       <div className={styles.btnContainer}>
-        <Link href="/confirmation">
-          <Button ref={serviceRef}>
-            Confirmar
-          </Button>
-        </Link>
-        <Link href="/appointment">
-          <Button ref={buttonRef}>
-            Atrás
-          </Button>
-        </Link>
+        <Button onClick={handleConfirm} ref={serviceRef}>
+          Confirmar
+        </Button>
+        <Button onClick={handleBack} ref={buttonRef}>
+          Atrás
+        </Button>
       </div>
     </div>
   );
