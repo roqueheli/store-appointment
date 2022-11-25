@@ -1,11 +1,11 @@
 import Link from 'next/link';
-import React, { useRef } from 'react';
+import React, { memo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import Button from '../../components/Button';
 import Card from '../../components/Card';
 import styles from './styles.module.css';
 
-function Workers({ workers }) {
+const Workers = memo(({ workers }) => {
   const backRef = useRef();
 
   return (
@@ -29,7 +29,7 @@ function Workers({ workers }) {
       </div>
     </div>
   );
-}
+});
 
 Workers.propTypes = {
   workers: PropTypes.node.isRequired,

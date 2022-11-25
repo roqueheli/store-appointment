@@ -1,11 +1,11 @@
-import React, { useRef } from 'react';
+import React, { memo, useRef } from 'react';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 import Button from '../../components/Button';
 import Card from '../../components/Card';
 import styles from './styles.module.css';
 
-function Services({ services }) {
+const Services = memo(({ services }) => {
   const backRef = useRef();
 
   return (
@@ -29,7 +29,7 @@ function Services({ services }) {
       </div>
     </div>
   );
-}
+});
 
 Services.propTypes = {
   services: PropTypes.node.isRequired,

@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import React, {
-  useContext, useEffect, useRef, useState,
+  memo,
+  useContext, useEffect, useMemo, useRef, useState,
 } from 'react';
 import PropTypes from 'prop-types';
 import { MdOutlineDelete } from 'react-icons/md';
@@ -16,7 +17,7 @@ function ReservationCard({ reservation, available }) {
   const [showModal, setShowModal] = useState(false);
   const router = useRouter();
 
-  const handleEdit = (e) => {
+  const handleEdit = useMemo((e) => {
     e.preventDefault();
     const userStorage = JSON.parse(sessionStorage.getItem('session'));
     if (userStorage) {
@@ -35,7 +36,7 @@ function ReservationCard({ reservation, available }) {
       });
       router.push('/service');
     }
-  };
+  }, []);
 
   useEffect(() => {
     document.body.addEventListener('keydown', (event) => {
@@ -83,7 +84,7 @@ ReservationCard.propTypes = {
   available: PropTypes.node.isRequired,
 };
 
-function MyReservations({ reservations }) {
+const MyReservations = memo(({ reservations }) => {
   const router = useRouter();
   const backRef = useRef();
 
@@ -113,7 +114,7 @@ function MyReservations({ reservations }) {
       </div>
     </div>
   );
-}
+});
 
 MyReservations.propTypes = {
   reservations: PropTypes.node.isRequired,

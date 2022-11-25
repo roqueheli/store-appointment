@@ -1,12 +1,15 @@
 import { useRouter } from 'next/router';
-import React, { useContext, useRef, useState } from 'react';
+import React, {
+  memo,
+  useContext, useRef, useState,
+} from 'react';
 import PropTypes from 'prop-types';
 import Button from '../../components/Button';
 import Card from '../../components/Card';
 import { StoreContext } from '../../context/store';
 import styles from './styles.module.css';
 
-function Service({ services }) {
+const Service = memo(({ services }) => {
   const [selected, setSelected] = useState('');
   const {
     bookingData, setBookingData,
@@ -76,7 +79,7 @@ function Service({ services }) {
       </div>
     </div>
   );
-}
+});
 
 Service.propTypes = {
   services: PropTypes.node.isRequired,

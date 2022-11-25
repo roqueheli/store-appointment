@@ -1,4 +1,7 @@
-import React, { useContext, useRef, useState } from 'react';
+import React, {
+  memo,
+  useContext, useRef, useState,
+} from 'react';
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import Button from '../../components/Button';
@@ -6,7 +9,7 @@ import Card from '../../components/Card';
 import { StoreContext } from '../../context/store';
 import styles from './styles.module.css';
 
-function Worker({ workers }) {
+const Worker = memo(({ workers }) => {
   const [selected, setSelected] = useState('');
   const { bookingData, setBookingData } = useContext(StoreContext);
   const selectDateRef = useRef();
@@ -69,7 +72,7 @@ function Worker({ workers }) {
       </div>
     </div>
   );
-}
+});
 
 Worker.propTypes = {
   workers: PropTypes.node.isRequired,
