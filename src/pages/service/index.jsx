@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useContext, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
@@ -40,6 +39,11 @@ function Service({ services }) {
     router.push('/login');
   };
 
+  const handleNext = (e) => {
+    e.preventDefault();
+    if (selected) router.push('/worker');
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.title_container}>
@@ -53,7 +57,7 @@ function Service({ services }) {
                 key={service.id}
                 service={service}
                 onClick={() => handleClick(service)}
-                active
+                selected={selected}
               />
             );
           }
@@ -63,11 +67,9 @@ function Service({ services }) {
         })}
       </div>
       <div className={styles.btnContainer}>
-        <Link href="/worker">
-          <Button ref={nextRef}>
-            Siguiente
-          </Button>
-        </Link>
+        <Button onClick={handleNext} ref={nextRef}>
+          Siguiente
+        </Button>
         <Button onClick={handleBack} ref={backRef}>
           Atrás
         </Button>

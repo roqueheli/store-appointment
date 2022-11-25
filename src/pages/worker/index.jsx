@@ -1,5 +1,5 @@
-import Link from 'next/link';
 import React, { useContext, useRef, useState } from 'react';
+import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import Button from '../../components/Button';
 import Card from '../../components/Card';
@@ -11,6 +11,7 @@ function Worker({ workers }) {
   const { bookingData, setBookingData } = useContext(StoreContext);
   const selectDateRef = useRef();
   const backRef = useRef();
+  const router = useRouter();
 
   const handleClick = (worker) => {
     setSelected(worker);
@@ -26,6 +27,16 @@ function Worker({ workers }) {
     });
   };
 
+  const handleBack = (e) => {
+    e.preventDefault();
+    router.push('/service');
+  };
+
+  const handleNext = (e) => {
+    e.preventDefault();
+    if (selected) router.push('/appointment');
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.title_container}>
@@ -35,7 +46,12 @@ function Worker({ workers }) {
         {workers?.map((worker) => {
           if (worker === selected) {
             return (
-              <Card key={worker.id} service={worker} onClick={() => handleClick(worker)} active />
+              <Card
+                key={worker.id}
+                service={worker}
+                onClick={() => handleClick(worker)}
+                selected={selected}
+              />
             );
           }
           return (
@@ -44,16 +60,12 @@ function Worker({ workers }) {
         })}
       </div>
       <div className={styles.btnContainer}>
-        <Link href="/appointment">
-          <Button ref={selectDateRef}>
-            Seleccion fecha
-          </Button>
-        </Link>
-        <Link href="/service">
-          <Button ref={backRef}>
-            Atrás
-          </Button>
-        </Link>
+        <Button onClick={handleNext} ref={selectDateRef}>
+          Siguiente
+        </Button>
+        <Button onClick={handleBack} ref={backRef}>
+          Atrás
+        </Button>
       </div>
     </div>
   );

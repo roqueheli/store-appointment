@@ -1,10 +1,16 @@
-import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React, { useRef } from 'react';
 import Button from '../../components/Button';
 import styles from './styles.module.css';
 
 function Schedules() {
   const backRef = useRef();
+  const router = useRouter();
+
+  const handleBack = (e) => {
+    e.preventDefault();
+    router.push('/');
+  };
 
   return (
     <div className={styles.container}>
@@ -44,11 +50,9 @@ function Schedules() {
         </ul>
       </div>
       <div className={styles.btnContainer}>
-        <Link href="/">
-          <Button ref={backRef}>
-            Atrás
-          </Button>
-        </Link>
+        <Button onClick={handleBack} ref={backRef}>
+          Atrás
+        </Button>
       </div>
     </div>
   );

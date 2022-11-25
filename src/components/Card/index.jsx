@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import handlePrice from '../../utils/helpers';
 import styles from './styles.module.scss';
 
-function Card({ service, onClick, active }) {
+function Card({ service, onClick, selected }) {
   return (
-    <button type="button" className={`${styles.content} ${active && `${styles.selected}`}`} onClick={onClick}>
+    <button type="button" className={`${styles.content} ${selected && `${styles.selected}`}`} onClick={onClick}>
       <div className={styles.card}>
         <img src="./mrbarber.jpeg" alt={service.name} />
       </div>
@@ -25,7 +25,7 @@ function Card({ service, onClick, active }) {
 Card.propTypes = {
   service: PropTypes.node.isRequired,
   onClick: PropTypes.node.isRequired,
-  active: PropTypes.node.isRequired,
+  selected: PropTypes.node.isRequired,
 };
 
 export default Card;

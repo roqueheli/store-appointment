@@ -1,5 +1,5 @@
 import React, { useContext, useRef, useState } from 'react';
-import Link from 'next/link';
+import { useRouter } from 'next/router';
 import Calendar from 'react-calendar';
 import Button from '../../components/Button';
 import 'react-calendar/dist/Calendar.css';
@@ -11,6 +11,7 @@ function Appointment() {
   const buttonRef = useRef();
   const hourRef = useRef();
   const [dateBook, setDateBook] = useState(null);
+  const router = useRouter();
 
   const tileDisabled = ({ date }) => {
     const setHoursDate = new Date(date).setHours(0, 0, 0, 0);
@@ -28,6 +29,16 @@ function Appointment() {
     });
   };
 
+  const handleBack = (e) => {
+    e.preventDefault();
+    router.push('/worker');
+  };
+
+  const handleNext = (e) => {
+    e.preventDefault();
+    if (dateBook) router.push('/hour');
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.title_container}>
@@ -42,16 +53,12 @@ function Appointment() {
         </div>
       </div>
       <div className={styles.btnContainer}>
-        <Link href="/hour">
-          <Button ref={hourRef}>
-            Siguiente
-          </Button>
-        </Link>
-        <Link href="/worker">
-          <Button ref={buttonRef}>
-            Atrás
-          </Button>
-        </Link>
+        <Button onClick={handleNext} ref={hourRef}>
+          Siguiente
+        </Button>
+        <Button onClick={handleBack} ref={buttonRef}>
+          Atrás
+        </Button>
       </div>
     </div>
   );
