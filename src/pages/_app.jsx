@@ -8,14 +8,14 @@ import '../styles/transition.css';
 
 function MyApp({ Component, pageProps }) {
   return (
-    <StoreProvider>
-      <Transition>
+    <Transition>
+      <StoreProvider>
         <AppLayout>
           {/* eslint-disable react/jsx-props-no-spreading */}
           <Component {...pageProps} />
         </AppLayout>
-      </Transition>
-    </StoreProvider>
+      </StoreProvider>
+    </Transition>
   );
 }
 
