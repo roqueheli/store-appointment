@@ -1,23 +1,30 @@
-import React, { useRef } from 'react';
-import Link from 'next/link';
-import Button from '../../components/Button';
-import styles from './styles.module.css';
+import React, { Suspense } from 'react';
+import dynamic from 'next/dynamic';
+import PropTypes from 'prop-types';
 
-function WorkerDetail() {
-  const backRef = useRef();
+const DynamicWorkerDetail = dynamic(() => import('./WorkerDetail'), {
+  suspense: true,
+});
 
+function HomeWorkerDetail({ worker }) {
   return (
-    <div className={styles.container}>
-      <div className={styles.subcontainer}>WorkerDetail</div>
-      <div className={styles.btnContainer}>
-        <Link href="/workers">
-          <Button ref={backRef}>
-            Atras
-          </Button>
-        </Link>
-      </div>
-    </div>
+    <Suspense fallback="Loading...">
+      <DynamicWorkerDetail worker={worker} />
+    </Suspense>
   );
 }
 
-export default WorkerDetail;
+HomeWorkerDetail.getInitialProps = async (ctx) => {
+  const rs = await fetch(`${process.env.NEXT_PUBLIC_HOST}workers/${ctx.query.id}`, {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+  });
+  const data = await rs.json();
+  return { worker: data };
+};
+
+HomeWorkerDetail.propTypes = {
+  worker: PropTypes.node.isRequired,
+};
+
+export default HomeWorkerDetail;

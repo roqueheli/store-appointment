@@ -1,55 +1,16 @@
-import Link from 'next/link';
-import React, { useEffect, useRef, useState } from 'react';
-import Button from '../../components/Button';
-import styles from './styles.module.css';
+import React, { Suspense } from 'react';
+import dynamic from 'next/dynamic';
 
-function Profile() {
-  const [userStorage, setUserStorage] = useState();
-  const backRef = useRef();
+const DynamicProfile = dynamic(() => import('./Profile'), {
+  suspense: true,
+});
 
-  useEffect(() => {
-    const userStoraged = JSON.parse(sessionStorage.getItem('session'));
-    setUserStorage(userStoraged);
-  }, []);
-
-  const userId = userStorage?.user_id || 0;
+function HomeProfile() {
   return (
-    <div className={styles.container}>
-      <div className={styles.title_container}>
-        <h1 className={styles.title}>Perfil</h1>
-      </div>
-      <div className={styles.subcontainer}>
-        {userId > 0
-          ? (
-            <>
-              <div className={styles.profilecard}>
-                <Link href={`profile/${userId}`}>
-                  <h1>Perfil</h1>
-                </Link>
-              </div>
-              <div className={styles.profilecard}>
-                <Link href={`passwordchange/${userId}`}>
-                  <h1>Cambiar contraseña</h1>
-                </Link>
-              </div>
-            </>
-          )
-          : ''}
-        <div className={styles.profilecard}>
-          <Link href="myreservations">
-            <h1>Mis Reservas</h1>
-          </Link>
-        </div>
-      </div>
-      <div className={styles.btnContainer}>
-        <Link href="/login">
-          <Button ref={backRef}>
-            Atrás
-          </Button>
-        </Link>
-      </div>
-    </div>
+    <Suspense fallback="Loading...">
+      <DynamicProfile />
+    </Suspense>
   );
 }
 
-export default Profile;
+export default HomeProfile;
