@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Button from '../../components/Button';
@@ -15,6 +15,7 @@ function Access() {
   const [loginError, setLoginError] = useState(false);
   const { setUser, bookingData, setBookingData } = useContext(StoreContext);
   const router = useRouter();
+  const accessRef = useRef();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -47,8 +48,8 @@ function Access() {
         } else {
           setLoginError(true);
         }
-      } catch (e) {
-        console.log('error', e);
+      } catch (error) {
+        setUser({ error });
       }
     })();
   };
@@ -84,7 +85,7 @@ function Access() {
       </div>
       <div className={styles.btnContainer}>
         <Link href="/login">
-          <Button>
+          <Button ref={accessRef}>
             Atrás
           </Button>
         </Link>

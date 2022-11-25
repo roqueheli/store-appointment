@@ -1,4 +1,5 @@
-import styles from './success.module.scss';
+import React from 'react';
+import styles from './success.module.css';
 
 function Success() {
   return (

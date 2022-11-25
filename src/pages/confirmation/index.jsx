@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import Button from '../../components/Button';
 import Card from '../../components/Card';
 import Success from '../../components/Success/Success';
@@ -11,11 +11,15 @@ function Confirmation() {
   const [success, setSuccess] = useState(false);
   const { bookingData, setUser, user } = useContext(StoreContext);
   const router = useRouter();
+  const reservationRef = useRef();
+  const bookingRef = useRef();
+  const loginRef = useRef();
+  const backRef = useRef();
 
   const handleClick = (e) => {
     e.preventDefault();
     const userStorage = JSON.parse(sessionStorage.getItem('session'));
-    const execMethod = 'POST';
+    let execMethod = 'POST';
     if (bookingData.reservation.id > 0) execMethod = 'PUT';
     (async () => {
       try {
@@ -45,14 +49,17 @@ function Confirmation() {
             setSuccess(!success);
             if (bookingData.user.user_id === 0) setUser(null);
             if (bookingData.user.user_id === 0 && user.avatar !== '') sessionStorage.removeItem('session');
+            setTimeout(() => {
+              router.push('/login');
+            }, 4000);
           } else {
-            router.push(`myreservations/${userStorage.user_id}`);
+            router.push('/myreservations');
           }
         } else {
-          console.log(data);
+          setUser({ error: data });
         }
-      } catch (e) {
-        console.log('error', e);
+      } catch (error) {
+        setUser({ error });
       }
     })();
   };
@@ -79,11 +86,11 @@ function Confirmation() {
         {!success
           ? (
             <>
-              <Button onClick={handleClick}>
+              <Button onClick={handleClick} ref={bookingRef}>
                 Agendar
               </Button>
               <Link href="/worker">
-                <Button>
+                <Button ref={backRef}>
                   Atrás
                 </Button>
               </Link>
@@ -92,14 +99,14 @@ function Confirmation() {
           : (
             <>
               <Link href="/login">
-                <Button>
+                <Button ref={loginRef}>
                   Inicio
                 </Button>
               </Link>
               {bookingData.user.user_id > 0
                 ? (
-                  <Link href={`/myreservations/${bookingData.user.user_id}`}>
-                    <Button>
+                  <Link href="/myreservations">
+                    <Button ref={reservationRef}>
                       Mis reservas
                     </Button>
                   </Link>

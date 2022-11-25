@@ -1,10 +1,11 @@
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Button from '../../components/Button';
 import styles from './styles.module.css';
 
 function Profile() {
   const [userStorage, setUserStorage] = useState();
+  const backRef = useRef();
 
   useEffect(() => {
     const userStoraged = JSON.parse(sessionStorage.getItem('session'));
@@ -42,7 +43,7 @@ function Profile() {
       </div>
       <div className={styles.btnContainer}>
         <Link href="/login">
-          <Button>
+          <Button ref={backRef}>
             Atrás
           </Button>
         </Link>

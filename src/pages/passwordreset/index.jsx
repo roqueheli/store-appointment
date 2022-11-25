@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Button from '../../components/Button';
 import Success from '../../components/Success/Success';
 import styles from './styles.module.css';
@@ -16,6 +16,7 @@ function PasswordReset() {
   const [newValues, setNewValues] = useState(initialObj);
   const [success, setSuccess] = useState(false);
   const router = useRouter();
+  const backRef = useRef();
 
   const handleUpdate = (e) => {
     e.preventDefault();
@@ -32,10 +33,10 @@ function PasswordReset() {
             router.push('/access');
           }, 3000);
         } else {
-          console.log('error', e);
+          setSuccess(false);
         }
       } catch {
-        console.log('error', e);
+        setSuccess(false);
       }
     })();
   };
@@ -64,7 +65,7 @@ function PasswordReset() {
       </div>
       <div className={styles.btnContainer}>
         <Link href="/access">
-          <Button>Atrás</Button>
+          <Button ref={backRef}>Atrás</Button>
         </Link>
       </div>
     </div>

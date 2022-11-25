@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Button from '../../components/Button';
@@ -19,6 +19,7 @@ function Register() {
   const [message, setMessage] = useState({});
   const [registerError, setRegisterError] = useState(false);
   const router = useRouter();
+  const backRef = useRef();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -44,8 +45,8 @@ function Register() {
           setMessage({ first: 'Email', second: 'ya se encuentra registrado' });
           setRegisterError(true);
         }
-      } catch (e) {
-        console.log('error', e);
+      } catch (error) {
+        setMessage({ error: 'Ha ocurrido un error intentando hacer submit' });
       }
     })();
   };
@@ -87,7 +88,7 @@ function Register() {
       </div>
       <div className={styles.btnContainer}>
         <Link href="/access">
-          <Button>
+          <Button ref={backRef}>
             Atrás
           </Button>
         </Link>

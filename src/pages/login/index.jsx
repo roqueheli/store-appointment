@@ -1,6 +1,7 @@
 import React, {
   useContext, useEffect, useRef, useState,
 } from 'react';
+import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { FcGoogle } from 'react-icons/fc';
 import { MdDateRange, MdLogout } from 'react-icons/md';
@@ -8,12 +9,12 @@ import { BsCalendarDate } from 'react-icons/bs';
 import { useRouter } from 'next/router';
 import { logout, userStateChange, loginWithGoogle } from '../../firebase/client';
 import Button from '../../components/Button';
-import { StoreContext } from '../../context/store';
+import { initialObj, StoreContext } from '../../context/store';
 import styles from './styles.module.css';
 
 function Login({ setLogin }) {
   const {
-    user, setUser, bookingData, setBookingData, initialObj,
+    user, setUser, bookingData, setBookingData,
   } = useContext(StoreContext);
   const googleRef = useRef();
   const loginRef = useRef();
@@ -26,7 +27,7 @@ function Login({ setLogin }) {
   const handleGoogleLogin = (e) => {
     e.preventDefault();
     loginWithGoogle().then(userStateChange(setUser))
-      .catch((err) => console.log('error', err));
+      .catch((error) => setUser({ error }));
   };
 
   useEffect(() => {
@@ -60,8 +61,11 @@ function Login({ setLogin }) {
   const handleReservations = (e) => {
     e.preventDefault();
     sessionStorage.setItem('session', JSON.stringify({
-      user_id: user?.user_id || null, username: user?.username, email: user?.email, 
-      avatar: user?.avatar || '', token: user?.token || null,
+      user_id: user?.user_id || null,
+      username: user?.username,
+      email: user?.email,
+      avatar: user?.avatar || '',
+      token: user?.token || null,
     }));
     router.push('/myreservations');
   };
@@ -75,7 +79,7 @@ function Login({ setLogin }) {
         {!user
           ? (
             <>
-              <Button ref={googleRef} onClick={handleGoogleLogin}>
+              <Button onClick={handleGoogleLogin} ref={googleRef}>
                 <FcGoogle />
                 Login with Google
               </Button>
@@ -84,7 +88,7 @@ function Login({ setLogin }) {
                   Login / Registro
                 </Button>
               </Link>
-              <Button ref={backRef} onClick={handleClick}>
+              <Button onClick={handleClick} ref={backRef}>
                 Atrás
               </Button>
             </>
@@ -95,7 +99,11 @@ function Login({ setLogin }) {
                 <div className={styles.avatarContainer}>
                   {user.avatar !== ''
                     ? <img className={styles.avatar} src={user.avatar} alt={user.username} />
-                    : <span className={styles.noavatar}>{user.username.toUpperCase().slice(0, 1)}</span>}
+                    : (
+                      <span className={styles.noavatar}>
+                        {user.username.toUpperCase().slice(0, 1)}
+                      </span>
+                    )}
                   <strong>{`${user.username[0].toUpperCase()}${user.username.substring(1)}`}</strong>
                 </div>
               </Link>
@@ -109,7 +117,7 @@ function Login({ setLogin }) {
                 <BsCalendarDate />
                 Mis reservas
               </Button>
-              <Button ref={logoutRef} onClick={handleLogout}>
+              <Button onClick={handleLogout} ref={logoutRef}>
                 <MdLogout />
                 Logout
               </Button>
@@ -120,9 +128,13 @@ function Login({ setLogin }) {
   );
 }
 
+Login.propTypes = {
+  setLogin: PropTypes.node.isRequired,
+};
+
 function Home() {
   const {
-    user, setUser, bookingData, setBookingData, initialObj,
+    user, setUser, bookingData, setBookingData,
   } = useContext(StoreContext);
   const [login, setLogin] = useState(false);
   const loginRef = useRef();
@@ -166,33 +178,31 @@ function Home() {
   };
 
   return (
-    <>
-      {!login
-        ? (
-          <div className={styles.container}>
-            <Link href="/">
-              <img className={styles.logostyle} src="./mrbarber.jpeg" alt="logo" />
-            </Link>
-            <div className={styles.subcontainer}>
-              <Button ref={loginRef} onClick={handleClick}>
-                Login
+    !login
+      ? (
+        <div className={styles.container}>
+          <Link href="/">
+            <img className={styles.logostyle} src="./mrbarber.jpeg" alt="logo" />
+          </Link>
+          <div className={styles.subcontainer}>
+            <Button onClick={handleClick} ref={loginRef}>
+              Login
+            </Button>
+            <Link href="/guest">
+              <Button ref={guestRef}>
+                <MdDateRange />
+                Reserva invitado
               </Button>
-              <Link href="/guest">
-                <Button ref={guestRef}>
-                  <MdDateRange />
-                  Reserva invitado
-                </Button>
-              </Link>
-              <Link href="/">
-                <Button ref={backRef}>
-                  Atrás
-                </Button>
-              </Link>
-            </div>
+            </Link>
+            <Link href="/">
+              <Button ref={backRef}>
+                Atrás
+              </Button>
+            </Link>
           </div>
-        )
-        : <Login setLogin={setLogin} />}
-    </>
+        </div>
+      )
+      : <Login setLogin={setLogin} />
   );
 }
 

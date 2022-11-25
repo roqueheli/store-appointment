@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React, {
   useContext, useEffect, useRef, useState,
 } from 'react';
@@ -12,6 +12,7 @@ function Hour() {
   const [hours, setHours] = useState([]);
   const buttonRef = useRef();
   const serviceRef = useRef();
+  const router = useRouter();
 
   const handleClick = (blocktime) => {
     setSelected(blocktime);
@@ -38,15 +39,25 @@ function Hour() {
           },
           body: JSON.stringify({ id: bookingData.worker.worker_id, day: bookingData.schedule.day }),
         });
+        const data = await rs.json();
         if (rs.status === 200) {
-          const data = await rs.json();
           setHours(data);
         }
-      } catch (e) {
-        console.log('error', e);
+      } catch (error) {
+        setHours({ error: 'Ha ocurrido un error' });
       }
     })();
   }, []);
+
+  const handleConfirm = (e) => {
+    e.preventDefault();
+    if (selected) router.push('/confirmation');
+  };
+
+  const handleBack = (e) => {
+    e.preventDefault();
+    router.push('/appointment');
+  };
 
   return (
     <div className={styles.container}>
@@ -57,23 +68,33 @@ function Hour() {
         <ul>
           {hours?.block_times?.map((hour) => {
             if (hour === selected) {
-              return <li key={hour.id} className={selected ? styles.liactive : ''} onClick={() => handleClick(hour)}>{hour.start.substring(11, 19)}</li>;
+              return (
+                <li
+                  key={hour.id}
+                  className={selected ? styles.liactive : ''}
+                >
+                  <button type="button" onClick={() => handleClick(hour)}>{hour.start.substring(11, 19)}</button>
+                </li>
+              );
             }
-            return <li key={hour.id} className={styles.linormal} onClick={() => handleClick(hour)}>{hour.start.substring(11, 19)}</li>;
+            return (
+              <li
+                key={hour.id}
+                className={styles.linormal}
+              >
+                <button type="button" onClick={() => handleClick(hour)}>{hour.start.substring(11, 19)}</button>
+              </li>
+            );
           })}
         </ul>
       </div>
       <div className={styles.btnContainer}>
-        <Link href="/confirmation">
-          <Button ref={serviceRef}>
-            Confirmar
-          </Button>
-        </Link>
-        <Link href="/appointment">
-          <Button ref={buttonRef}>
-            Atrás
-          </Button>
-        </Link>
+        <Button onClick={handleConfirm} ref={serviceRef}>
+          Confirmar
+        </Button>
+        <Button onClick={handleBack} ref={buttonRef}>
+          Atrás
+        </Button>
       </div>
     </div>
   );

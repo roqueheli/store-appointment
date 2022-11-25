@@ -1,9 +1,17 @@
-import Link from 'next/link';
-import React from 'react';
+import { useRouter } from 'next/router';
+import React, { useRef } from 'react';
 import Button from '../../components/Button';
 import styles from './styles.module.css';
 
 function Schedules() {
+  const backRef = useRef();
+  const router = useRouter();
+
+  const handleBack = (e) => {
+    e.preventDefault();
+    router.push('/');
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.title_container}>
@@ -12,41 +20,39 @@ function Schedules() {
       <div className={styles.subcontainer}>
         <ul>
           <li>
-            <label>Lunes</label>
+            <span>Lunes</span>
             <span>11:00 - 20:00</span>
           </li>
           <li>
-            <label>Martes</label>
+            <span>Martes</span>
             <span>11:00 - 20:00</span>
           </li>
           <li>
-            <label>Miércoles</label>
+            <span>Miércoles</span>
             <span>11:00 - 20:00</span>
           </li>
           <li>
-            <label>Jueves</label>
+            <span>Jueves</span>
             <span>11:00 - 20:00</span>
           </li>
           <li>
-            <label>Viernes</label>
+            <span>Viernes</span>
             <span>11:00 - 20:00</span>
           </li>
           <li>
-            <label>Sábado</label>
+            <span>Sábado</span>
             <span>11:00 - 21:00</span>
           </li>
           <li>
-            <label>Domingo</label>
+            <span>Domingo</span>
             <span>11:00 - 19:00</span>
           </li>
         </ul>
       </div>
       <div className={styles.btnContainer}>
-        <Link href="/">
-          <Button>
-            Atrás
-          </Button>
-        </Link>
+        <Button onClick={handleBack} ref={backRef}>
+          Atrás
+        </Button>
       </div>
     </div>
   );
@@ -57,7 +63,6 @@ Schedules.getInitialProps = async () => {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
   });
-  console.log(rs);
   const data = await rs.json();
   return { schedules: data };
 };

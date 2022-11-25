@@ -1,5 +1,6 @@
-import Link from 'next/link';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
+import { useRouter } from 'next/router';
+import PropTypes from 'prop-types';
 import Button from '../../components/Button';
 import Card from '../../components/Card';
 import { StoreContext } from '../../context/store';
@@ -8,6 +9,9 @@ import styles from './styles.module.css';
 function Worker({ workers }) {
   const [selected, setSelected] = useState('');
   const { bookingData, setBookingData } = useContext(StoreContext);
+  const selectDateRef = useRef();
+  const backRef = useRef();
+  const router = useRouter();
 
   const handleClick = (worker) => {
     setSelected(worker);
@@ -23,6 +27,16 @@ function Worker({ workers }) {
     });
   };
 
+  const handleBack = (e) => {
+    e.preventDefault();
+    router.push('/service');
+  };
+
+  const handleNext = (e) => {
+    e.preventDefault();
+    if (selected) router.push('/appointment');
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.title_container}>
@@ -31,22 +45,27 @@ function Worker({ workers }) {
       <div className={styles.subcontainer}>
         {workers?.map((worker) => {
           if (worker === selected) {
-            return <Card key={worker.id} service={worker} active onClick={() => handleClick(worker)} />;
+            return (
+              <Card
+                key={worker.id}
+                service={worker}
+                onClick={() => handleClick(worker)}
+                selected={selected}
+              />
+            );
           }
-          return <Card key={worker.id} service={worker} onClick={() => handleClick(worker)} />;
+          return (
+            <Card key={worker.id} service={worker} onClick={() => handleClick(worker)} />
+          );
         })}
       </div>
       <div className={styles.btnContainer}>
-        <Link href="/appointment">
-          <Button>
-            Seleccion fecha
-          </Button>
-        </Link>
-        <Link href="/service">
-          <Button>
-            Atrás
-          </Button>
-        </Link>
+        <Button onClick={handleNext} ref={selectDateRef}>
+          Siguiente
+        </Button>
+        <Button onClick={handleBack} ref={backRef}>
+          Atrás
+        </Button>
       </div>
     </div>
   );
@@ -59,6 +78,10 @@ Worker.getInitialProps = async () => {
   });
   const data = await rs.json();
   return { workers: data };
+};
+
+Worker.propTypes = {
+  workers: PropTypes.node.isRequired,
 };
 
 export default Worker;

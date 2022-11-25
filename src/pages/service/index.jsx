@@ -1,6 +1,6 @@
-import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
+import PropTypes from 'prop-types';
 import Button from '../../components/Button';
 import Card from '../../components/Card';
 import { StoreContext } from '../../context/store';
@@ -9,9 +9,11 @@ import styles from './styles.module.css';
 function Service({ services }) {
   const [selected, setSelected] = useState('');
   const {
-    bookingData, setBookingData
+    bookingData, setBookingData,
   } = useContext(StoreContext);
   const router = useRouter();
+  const backRef = useRef();
+  const nextRef = useRef();
 
   const handleClick = (service) => {
     setSelected(service);
@@ -37,6 +39,11 @@ function Service({ services }) {
     router.push('/login');
   };
 
+  const handleNext = (e) => {
+    e.preventDefault();
+    if (selected) router.push('/worker');
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.title_container}>
@@ -45,18 +52,25 @@ function Service({ services }) {
       <div className={styles.subcontainer}>
         {services?.map((service) => {
           if (service === selected) {
-            return <Card key={service.id} service={service} active onClick={() => handleClick(service)} />;
+            return (
+              <Card
+                key={service.id}
+                service={service}
+                onClick={() => handleClick(service)}
+                selected={selected}
+              />
+            );
           }
-          return <Card key={service.id} service={service} onClick={() => handleClick(service)} />;
+          return (
+            <Card key={service.id} service={service} onClick={() => handleClick(service)} />
+          );
         })}
       </div>
       <div className={styles.btnContainer}>
-        <Link href="/worker">
-          <Button>
-            Siguiente
-          </Button>
-        </Link>
-        <Button onClick={handleBack}>
+        <Button onClick={handleNext} ref={nextRef}>
+          Siguiente
+        </Button>
+        <Button onClick={handleBack} ref={backRef}>
           Atrás
         </Button>
       </div>
@@ -71,6 +85,10 @@ Service.getInitialProps = async () => {
   });
   const data = await rs.json();
   return { services: data };
+};
+
+Service.propTypes = {
+  services: PropTypes.node.isRequired,
 };
 
 export default Service;

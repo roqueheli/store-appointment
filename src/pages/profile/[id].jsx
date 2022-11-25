@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useContext, useEffect, useState } from 'react';
+import React, {
+  useContext, useEffect, useRef, useState,
+} from 'react';
 import Button from '../../components/Button';
 import Success from '../../components/Success/Success';
 import { StoreContext } from '../../context/store';
@@ -18,6 +20,7 @@ function ProfileDetail() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const router = useRouter();
+  const cancelRef = useRef();
 
   useEffect(() => {
     const userStorage = JSON.parse(sessionStorage.getItem('session'));
@@ -34,8 +37,8 @@ function ProfileDetail() {
           name: data.name,
           phone: data.phone,
         });
-      } catch {
-        console.log('error', e);
+      } catch (error) {
+        setProfile({ error });
       }
     })();
   }, []);
@@ -61,10 +64,10 @@ function ProfileDetail() {
             router.push('/profile');
           }, 3000);
         } else {
-          console.log('error', e);
+          setUser({ error: 'Ha ocurrido un error' });
         }
       } catch {
-        console.log('error', e);
+        setUser({ error: 'Ha ocurrido un error' });
       }
     })();
   };
@@ -82,7 +85,7 @@ function ProfileDetail() {
         <h1 className={styles.title}>Perfil</h1>
       </div>
       <div className={styles.subcontainer}>
-        {loading && !success
+        {(loading && !success)
           ? (
             <form onSubmit={handleUpdate}>
               <input type="text" name="email" disabled value={profile.email} />
@@ -90,11 +93,12 @@ function ProfileDetail() {
               <input type="text" name="phone" placeholder="Teléfono" onChange={handleNewValue} value={newValues.phone} />
               <input className={styles.submitbutton} type="submit" value="Guardar" />
               <Link href="/profile">
-                <Button>Cancelar</Button>
+                <Button ref={cancelRef}>Cancelar</Button>
               </Link>
             </form>
           )
-          : success ? <Success /> : ''}
+          : ''}
+        {success ? <Success /> : ''}
       </div>
       <div className={styles.btnContainer} />
     </div>
