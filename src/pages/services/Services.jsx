@@ -1,5 +1,6 @@
 import React, { memo, useRef } from 'react';
 import Link from 'next/link';
+import fadeIn from 'react-animations/lib/fade-in';
 import PropTypes from 'prop-types';
 import Button from '../../components/Button';
 import Card from '../../components/Card';
@@ -16,7 +17,7 @@ const Services = memo(({ services }) => {
       <div className={styles.subcontainer}>
         {services?.map((service) => (
           <Link href={`/services/${service.id}`}>
-            <Card key={service.id} service={service} />
+            <Card key={service.id} service={service} animationType={fadeIn} />
           </Link>
         ))}
       </div>

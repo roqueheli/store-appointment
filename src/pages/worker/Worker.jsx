@@ -3,6 +3,7 @@ import React, {
   useContext, useRef, useState,
 } from 'react';
 import { useRouter } from 'next/router';
+import fadeIn from 'react-animations/lib/fade-in';
 import PropTypes from 'prop-types';
 import Button from '../../components/Button';
 import Card from '../../components/Card';
@@ -54,11 +55,17 @@ const Worker = memo(({ workers }) => {
                 service={worker}
                 onClick={() => handleClick(worker)}
                 selected={selected}
+                animationType={fadeIn}
               />
             );
           }
           return (
-            <Card key={worker.id} service={worker} onClick={() => handleClick(worker)} />
+            <Card
+              key={worker.id}
+              service={worker}
+              onClick={() => handleClick(worker)}
+              animationType={fadeIn}
+            />
           );
         })}
       </div>

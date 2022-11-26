@@ -6,9 +6,9 @@ import React, {
 import PropTypes from 'prop-types';
 import { MdOutlineDelete } from 'react-icons/md';
 import { FiEdit } from 'react-icons/fi';
-import { SlideInUp } from 'react-animations';
-import Button from '../../components/Button';
 import styled, { keyframes } from 'styled-components';
+import fadeIn from 'react-animations/lib/fade-in';
+import Button from '../../components/Button';
 import styles from './styles.module.css';
 import ModalConfirmation from '../../components/ModalConfirmation';
 import handlePrice from '../../utils/helpers';
@@ -89,6 +89,7 @@ function ReservationCard({ reservation, available, animationType }) {
 ReservationCard.propTypes = {
   reservation: PropTypes.node.isRequired,
   available: PropTypes.node.isRequired,
+  animationType: PropTypes.node.isRequired,
 };
 
 const MyReservations = memo(({ reservations }) => {
@@ -104,13 +105,17 @@ const MyReservations = memo(({ reservations }) => {
         {reservations?.current?.length > 0 ? <h4>Próximas</h4> : ''}
         <ul>
           {reservations?.current?.map((reservation) => (
-            <li key={reservation.id}><ReservationCard reservation={reservation} available animationType={SlideInUp} /></li>
+            <li key={reservation.id}>
+              <ReservationCard reservation={reservation} available animationType={fadeIn} />
+            </li>
           ))}
         </ul>
         {reservations?.old?.length > 0 ? <h4>Anteriores</h4> : ''}
         <ul>
           {reservations?.old?.map((reservation) => (
-            <li key={reservation.id}><ReservationCard reservation={reservation} animationType={SlideInUp} /></li>
+            <li key={reservation.id}>
+              <ReservationCard reservation={reservation} animationType={fadeIn} />
+            </li>
           ))}
         </ul>
       </div>
