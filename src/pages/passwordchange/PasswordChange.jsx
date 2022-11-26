@@ -1,20 +1,20 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Button from '../../components/Button';
 import Success from '../../components/Success/Success';
 import styles from './styles.module.css';
 
-const initialObj = {
-  newpass: '',
-  confirm: '',
-};
-
 function PasswordChange() {
-  const [newValues, setNewValues] = useState(initialObj);
   const [success, setSuccess] = useState(false);
   const router = useRouter();
   const backRef = useRef();
+  const newPassRef = useRef();
+  const confirmRef = useRef();
+
+  useEffect(() => {
+    newPassRef.current?.focus();
+  }, []);
 
   const handleUpdate = (e) => {
     e.preventDefault();
@@ -25,7 +25,7 @@ function PasswordChange() {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json', Authorization: userStorage.token },
           body: JSON.stringify({
-            password: newValues.newpass, password_confirmation: newValues.confirm,
+            password: newPassRef.current?.value, password_confirmation: confirmRef.current?.value,
           }),
         });
         if (rs.status === 200) {
@@ -42,13 +42,6 @@ function PasswordChange() {
     })();
   };
 
-  const handleNewValue = (e) => {
-    setNewValues({
-      ...newValues,
-      [e.target.name]: e.target.value,
-    });
-  };
-
   return (
     <div className={styles.container}>
       <div className={styles.title_container}>
@@ -58,8 +51,8 @@ function PasswordChange() {
         {!success
           ? (
             <form onSubmit={handleUpdate}>
-              <input required placeholder="Nueva contraseña" type="password" name="newpass" onChange={handleNewValue} value={newValues.newpass} />
-              <input required placeholder="Confirmar contraseña" type="password" name="confirm" onChange={handleNewValue} value={newValues.confirm} />
+              <input required placeholder="Nueva contraseña" type="password" name="newpass" ref={newPassRef} value={newPassRef.current?.value} />
+              <input required placeholder="Confirmar contraseña" type="password" name="confirm" ref={confirmRef} value={confirmRef.current?.value} />
               <input className={styles.submitbutton} type="submit" value="Cambiar contraseña" />
             </form>
           )

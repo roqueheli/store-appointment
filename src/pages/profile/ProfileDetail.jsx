@@ -9,6 +9,7 @@ import { StoreContext } from '../../context/store';
 import styles from './styles.module.css';
 
 const initialObj = {
+  email: '',
   name: '',
   phone: '',
 };
@@ -16,7 +17,6 @@ const initialObj = {
 function ProfileDetail() {
   const { user, setUser } = useContext(StoreContext);
   const [newValues, setNewValues] = useState(initialObj);
-  const [profile, setProfile] = useState({});
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const router = useRouter();
@@ -31,14 +31,14 @@ function ProfileDetail() {
           headers: { 'Content-Type': 'application/json', Authorization: userStorage.token },
         });
         const data = await rs.json();
-        setProfile(data);
         setLoading(true);
         setNewValues({
+          email: data.email,
           name: data.name,
           phone: data.phone,
         });
       } catch (error) {
-        setProfile({ error });
+        setNewValues({ error });
       }
     })();
   }, []);
@@ -88,8 +88,8 @@ function ProfileDetail() {
         {(loading && !success)
           ? (
             <form onSubmit={handleUpdate}>
-              <input type="text" name="email" disabled value={profile.email} />
-              <input type="text" name="name" onChange={handleNewValue} value={newValues.name} />
+              <input type="text" name="email" disabled value={newValues.email} />
+              <input type="text" name="name" placeholder="Nombre" onChange={handleNewValue} value={newValues.name} />
               <input type="text" name="phone" placeholder="Teléfono" onChange={handleNewValue} value={newValues.phone} />
               <input className={styles.submitbutton} type="submit" value="Guardar" />
               <Link href="/profile">

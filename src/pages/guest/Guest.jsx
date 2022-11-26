@@ -1,26 +1,23 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, {
-  useContext, useEffect, useRef, useState,
+  useContext, useEffect, useRef,
 } from 'react';
 import Button from '../../components/Button';
 import { StoreContext, initialObj } from '../../context/store';
 import styles from './styles.module.css';
 
-const initialObject = {
-  username: '',
-  email: '',
-  phone: '',
-};
-
 function Guest() {
   const { bookingData, setBookingData } = useContext(StoreContext);
-  const [guessData, setGuessData] = useState(initialObject);
   const router = useRouter();
   const loginRef = useRef();
+  const nameRef = useRef();
+  const emailRef = useRef();
+  const phoneRef = useRef();
 
   useEffect(() => {
     setBookingData(initialObj);
+    nameRef.current?.focus();
   }, []);
 
   const handleSubmit = (e) => {
@@ -28,20 +25,13 @@ function Guest() {
     setBookingData({
       ...bookingData,
       user: {
-        firstname: guessData.username,
-        phone: guessData?.phone || 0,
-        email: guessData.email,
+        firstname: nameRef.current?.value,
+        phone: emailRef.current?.value || 0,
+        email: phoneRef.current?.value,
         token: '',
       },
     });
     router.push('/service');
-  };
-
-  const handleChange = (e) => {
-    setGuessData({
-      ...guessData,
-      [e.target.name]: e.target.value,
-    });
   };
 
   return (
@@ -51,9 +41,9 @@ function Guest() {
       </div>
       <div className={styles.subcontainer}>
         <form onSubmit={handleSubmit}>
-          <input required type="text" placeholder="Nombre" name="username" onChange={handleChange} value={guessData.username} />
-          <input required type="email" placeholder="Email" name="email" onChange={handleChange} value={guessData.email} />
-          <input required type="text" placeholder="Celular" name="phone" onChange={handleChange} value={guessData.phone} />
+          <input required type="text" placeholder="Nombre" name="username" ref={nameRef} value={nameRef.current?.value} />
+          <input required type="email" placeholder="Email" name="email" ref={emailRef} value={emailRef.current?.value} />
+          <input required type="text" placeholder="Celular" name="phone" ref={phoneRef} value={phoneRef.current?.value} />
           <input className={styles.submitbutton} type="submit" value="Agenda invitado" />
         </form>
       </div>
