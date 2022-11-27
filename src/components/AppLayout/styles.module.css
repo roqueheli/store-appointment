@@ -18,7 +18,7 @@
   height: 100vh;
 }
 
-@media (min-width: 520px) {
+@media (min-width: 390px) {
   .main {
     width: 450px;
     height: 90vh;
