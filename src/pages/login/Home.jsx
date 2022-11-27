@@ -10,9 +10,8 @@ import Login from './Login';
 
 function Home() {
   const {
-    setUser, bookingData, setBookingData,
+    setUser, bookingData, setBookingData, login, setLogin
   } = useContext(StoreContext);
-  const [login, setLogin] = useState(false);
   const loginRef = useRef();
   const guestRef = useRef();
   const backRef = useRef();

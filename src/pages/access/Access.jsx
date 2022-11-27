@@ -2,17 +2,16 @@ import React, {
   useContext, useRef, useState, useEffect,
 } from 'react';
 import { useRouter } from 'next/router';
-import PropTypes from 'prop-types';
 import { FcGoogle } from 'react-icons/fc';
 import Button from '../../components/Button';
 import styles from './styles.module.css';
 import { userStateChange, loginWithGoogle } from '../../firebase/client';
 import { StoreContext } from '../../context/store';
 
-function Access({ setLogin }) {
+function Access() {
   const [loginError, setLoginError] = useState(false);
   const {
-    user, setUser, bookingData, setBookingData,
+    user, setUser, bookingData, setBookingData, setLogin,
   } = useContext(StoreContext);
   const router = useRouter();
   const accessRef = useRef();
@@ -76,6 +75,7 @@ function Access({ setLogin }) {
   const handleBack = (e) => {
     e.preventDefault();
     setLogin(false);
+    router.push('/login');
   };
 
   return (
@@ -112,9 +112,5 @@ function Access({ setLogin }) {
     </div>
   );
 }
-
-Access.propTypes = {
-  setLogin: PropTypes.node.isRequired,
-};
 
 export default Access;

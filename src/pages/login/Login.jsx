@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import PropTypes from 'prop-types';
 import { MdDateRange, MdLogout } from 'react-icons/md';
 import { BsCalendarDate } from 'react-icons/bs';
 import { useRouter } from 'next/router';
@@ -10,9 +9,9 @@ import { initialObj, StoreContext } from '../../context/store';
 import styles from './styles.module.css';
 import Access from '../access/Access';
 
-function Login({ setLogin }) {
+function Login() {
   const {
-    user, setUser, bookingData, setBookingData,
+    user, setUser, bookingData, setBookingData, setLogin,
   } = useContext(StoreContext);
   const appointmentRef = useRef();
   const myreservationsRef = useRef();
@@ -105,9 +104,5 @@ function Login({ setLogin }) {
     </div>
   );
 }
-
-Login.propTypes = {
-  setLogin: PropTypes.node.isRequired,
-};
 
 export default Login;
