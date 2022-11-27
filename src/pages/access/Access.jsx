@@ -1,15 +1,19 @@
 import React, {
   useContext, useRef, useState, useEffect,
 } from 'react';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
+import PropTypes from 'prop-types';
+import { FcGoogle } from 'react-icons/fc';
 import Button from '../../components/Button';
 import styles from './styles.module.css';
+import { userStateChange, loginWithGoogle } from '../../firebase/client';
 import { StoreContext } from '../../context/store';
 
-function Access() {
+function Access({ setLogin }) {
   const [loginError, setLoginError] = useState(false);
-  const { setUser, bookingData, setBookingData } = useContext(StoreContext);
+  const {
+    user, setUser, bookingData, setBookingData,
+  } = useContext(StoreContext);
   const router = useRouter();
   const accessRef = useRef();
   const emailRef = useRef();
@@ -58,6 +62,22 @@ function Access() {
     })();
   };
 
+  const handleGoogleLogin = (e) => {
+    e.preventDefault();
+    loginWithGoogle().then(userStateChange(setUser))
+      .then(sessionStorage.setItem('session', JSON.stringify(
+        {
+          user_id: user?.user_id || null, username: user?.username, email: user?.email, avatar: user?.avatar || '', token: user?.token || null,
+        },
+      )))
+      .catch((error) => setUser({ error }));
+  };
+
+  const handleBack = (e) => {
+    e.preventDefault();
+    setLogin(false);
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.title_container}>
@@ -68,6 +88,10 @@ function Access() {
           <input required type="email" placeholder="Email" name="email" ref={emailRef} value={emailRef.current?.value} />
           <input required type="password" placeholder="Password" name="password" ref={passwordRef} value={passwordRef.current?.value} autoComplete="off" />
           <input className={styles.submitbutton} type="submit" value="Iniciar sesión" />
+          <button onClick={handleGoogleLogin} className={styles.loginGoogle} type="button">
+            <FcGoogle />
+            Login con Google
+          </button>
           <div className={styles.othertexts}>
             <a href="/register">Registrarse</a>
             <a href="/passwordreset">¿Olvidó su contraseña?</a>
@@ -81,14 +105,16 @@ function Access() {
         ) : <p />}
       </div>
       <div className={styles.btnContainer}>
-        <Link href="/login">
-          <Button ref={accessRef}>
-            Atrás
-          </Button>
-        </Link>
+        <Button onClick={handleBack} ref={accessRef}>
+          Atrás
+        </Button>
       </div>
     </div>
   );
 }
+
+Access.propTypes = {
+  setLogin: PropTypes.node.isRequired,
+};
 
 export default Access;
