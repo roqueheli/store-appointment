@@ -1,22 +1,19 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Button from '../../components/Button';
 import Success from '../../components/Success/Success';
 import styles from './styles.module.css';
 
-const initialObj = {
-  email: '',
-  temporal: '',
-  newpass: '',
-  confirm: '',
-};
-
 function PasswordReset() {
-  const [newValues, setNewValues] = useState(initialObj);
   const [success, setSuccess] = useState(false);
   const router = useRouter();
   const backRef = useRef();
+  const emailRef = useRef();
+
+  useEffect(() => {
+    emailRef.current?.focus();
+  }, []);
 
   const handleUpdate = (e) => {
     e.preventDefault();
@@ -25,7 +22,7 @@ function PasswordReset() {
         const rs = await fetch(`${process.env.NEXT_PUBLIC_HOST}users/reset_password`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: newValues.email }),
+          body: JSON.stringify({ email: emailRef.current?.value }),
         });
         if (rs.status === 200) {
           setSuccess(true);
@@ -41,13 +38,6 @@ function PasswordReset() {
     })();
   };
 
-  const handleNewValue = (e) => {
-    setNewValues({
-      ...newValues,
-      [e.target.name]: e.target.value,
-    });
-  };
-
   return (
     <div className={styles.container}>
       <div className={styles.title_container}>
@@ -57,7 +47,7 @@ function PasswordReset() {
         {!success
           ? (
             <form onSubmit={handleUpdate}>
-              <input required placeholder="Email" type="text" name="email" onChange={handleNewValue} value={newValues.email} />
+              <input required placeholder="Email" type="text" name="email" ref={emailRef} value={emailRef.current?.value} />
               <input className={styles.submitbutton} type="submit" value="Recuperar contraseña" />
             </form>
           )

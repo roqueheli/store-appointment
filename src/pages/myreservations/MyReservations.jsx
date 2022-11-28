@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import React, {
   memo,
-  useContext, useEffect, useMemo, useRef, useState,
+  useContext, useEffect, useRef, useState,
 } from 'react';
 import PropTypes from 'prop-types';
 import { MdOutlineDelete } from 'react-icons/md';
@@ -17,7 +17,7 @@ function ReservationCard({ reservation, available }) {
   const [showModal, setShowModal] = useState(false);
   const router = useRouter();
 
-  const handleEdit = useMemo((e) => {
+  const handleEdit = (e) => {
     e.preventDefault();
     const userStorage = JSON.parse(sessionStorage.getItem('session'));
     if (userStorage) {
@@ -36,7 +36,7 @@ function ReservationCard({ reservation, available }) {
       });
       router.push('/service');
     }
-  }, []);
+  };
 
   useEffect(() => {
     document.body.addEventListener('keydown', (event) => {
