@@ -43,10 +43,11 @@ export const initialObj = {
 function StoreProvider({ children }) {
   const [bookingData, setBookingData] = useState(initialObj);
   const [user, setUser] = useState(undefined);
+  const [login, setLogin] = useState(false);
 
   const value = useMemo(() => ({
-    user, setUser, bookingData, setBookingData,
-  }), [user, bookingData]);
+    user, setUser, bookingData, setBookingData, login, setLogin,
+  }), [user, bookingData, login]);
 
   return (
     <StoreContext.Provider value={value}>

@@ -8,7 +8,7 @@ function Home() {
   const servicesRef = useRef();
   const schedulesRef = useRef();
 
-  const logostyle = { borderRadius: '50%', cursor: 'pointer', width: '20rem' };
+  const logostyle = { borderRadius: '50%', cursor: 'pointer', width: '80%' };
 
   return (
     <div className={styles.container}>
@@ -31,7 +31,7 @@ function Home() {
             Horarios
           </Button>
         </Link>
-        <Link href="/login">
+        <Link href="/homelogin">
           <Button>
             Entrar
           </Button>
