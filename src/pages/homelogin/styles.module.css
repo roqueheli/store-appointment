@@ -1,0 +1,72 @@
+.btnContainer {
+  margin-top: 16px;
+  width: 80%;
+}
+
+.subcontainer {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-evenly;
+  width: 80%;
+}
+
+.loggedContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 90vh;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+}
+
+.buttonscontainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.logostyle {
+  border-radius: 50%;
+  cursor: pointer;
+  width: 80%;
+}
+
+.avatar {
+  border-radius: 9999px;
+  width: 60px;
+  height: 60px;
+  margin-bottom: .4rem;
+  cursor: pointer;
+}
+
+.noavatar {
+  border-radius: 9999px;
+  width: 75px;
+  height: 75px;
+  font-size: 1.5rem;
+  margin-bottom: .4rem;
+  background-color: #050443;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #e3c67c;
+  color: #e3c67c;
+  cursor: pointer;
+}
+
+.avatarContainer {
+  color: #050443;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: .7rem;
+  margin-top: 1rem;
+}

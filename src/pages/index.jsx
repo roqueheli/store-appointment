@@ -31,7 +31,7 @@ function Home() {
             Horarios
           </Button>
         </Link>
-        <Link href="/login">
+        <Link href="/homelogin">
           <Button>
             Entrar
           </Button>

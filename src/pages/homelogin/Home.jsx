@@ -6,11 +6,10 @@ import { MdDateRange } from 'react-icons/md';
 import Button from '../../components/Button';
 import { initialObj, StoreContext } from '../../context/store';
 import styles from './styles.module.css';
-import Login from './Login';
 
 function Home() {
   const {
-    setUser, bookingData, setBookingData, login, setLogin,
+    setUser, bookingData, setBookingData,
   } = useContext(StoreContext);
   const loginRef = useRef();
   const guestRef = useRef();
@@ -21,7 +20,6 @@ function Home() {
     const userStorage = JSON.parse(sessionStorage.getItem('session'));
     if (userStorage) {
       setUser(userStorage);
-      setLogin(true);
       setBookingData({
         ...bookingData,
         user: {
@@ -35,36 +33,30 @@ function Home() {
     }
   }, []);
 
-  const handleClick = () => {
-    setLogin(true);
-  };
-
   return (
-    !login
-      ? (
-        <div className={styles.container}>
-          <Link href="/">
-            <img className={styles.logostyle} src="./mrbarber.jpeg" alt="logo" />
-          </Link>
-          <div className={styles.subcontainer}>
-            <Button onClick={handleClick} ref={loginRef}>
-              Login
-            </Button>
-            <Link href="/guest">
-              <Button ref={guestRef}>
-                <MdDateRange />
-                Reserva invitado
-              </Button>
-            </Link>
-            <Link href="/">
-              <Button ref={backRef}>
-                Atrás
-              </Button>
-            </Link>
-          </div>
-        </div>
-      )
-      : <Login setLogin={setLogin} />
+    <div className={styles.container}>
+      <Link href="/">
+        <img className={styles.logostyle} src="./mrbarber.jpeg" alt="logo" />
+      </Link>
+      <div className={styles.subcontainer}>
+        <Link href="/access">
+          <Button ref={loginRef}>
+            Login
+          </Button>
+        </Link>
+        <Link href="/guest">
+          <Button ref={guestRef}>
+            <MdDateRange />
+            Reserva invitado
+          </Button>
+        </Link>
+        <Link href="/">
+          <Button ref={backRef}>
+            Atrás
+          </Button>
+        </Link>
+      </div>
+    </div>
   );
 }
 

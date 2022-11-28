@@ -2,11 +2,11 @@ import React, { Suspense } from 'react';
 import dynamic from 'next/dynamic';
 import Loader from '../../components/Loader';
 
-const DynamicLogin = dynamic(() => import('./Login'), {
+const DynamicLogin = dynamic(() => import('./Home'), {
   suspense: true,
 });
 
-function Login() {
+function HomeLogin() {
   return (
     <Suspense fallback={<Loader />}>
       <DynamicLogin />
@@ -14,4 +14,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default HomeLogin;

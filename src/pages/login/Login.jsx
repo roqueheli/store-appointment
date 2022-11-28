@@ -7,16 +7,19 @@ import { logout } from '../../firebase/client';
 import Button from '../../components/Button';
 import { initialObj, StoreContext } from '../../context/store';
 import styles from './styles.module.css';
-import Access from '../access/Access';
 
 function Login() {
   const {
-    user, setUser, bookingData, setBookingData, setLogin,
+    user, setUser, bookingData, setBookingData,
   } = useContext(StoreContext);
   const appointmentRef = useRef();
   const myreservationsRef = useRef();
   const logoutRef = useRef();
   const router = useRouter();
+
+  useEffect(() => {
+    if (!user) router.push('/access');
+  }, []);
 
   useEffect(() => {
     setBookingData({
@@ -37,6 +40,7 @@ function Login() {
     setUser(null);
     sessionStorage.removeItem('session');
     setBookingData(initialObj);
+    router.push('/access');
   };
 
   const handleReservations = (e) => {
@@ -98,7 +102,7 @@ function Login() {
             </Button>
           </>
         ) : (
-          <Access setLogin={setLogin} />
+          ''
         )}
       </div>
     </div>
