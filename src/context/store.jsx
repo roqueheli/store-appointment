@@ -46,7 +46,7 @@ function StoreProvider({ children }) {
   const [login, setLogin] = useState(false);
 
   const value = useMemo(() => ({
-    user, setUser, bookingData, setBookingData, login, setLogin
+    user, setUser, bookingData, setBookingData, login, setLogin,
   }), [user, bookingData, login]);
 
   return (

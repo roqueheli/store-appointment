@@ -1,5 +1,5 @@
 import React, {
-  useContext, useEffect, useRef, useState,
+  useContext, useEffect, useRef,
 } from 'react';
 import Link from 'next/link';
 import { MdDateRange } from 'react-icons/md';
@@ -10,7 +10,7 @@ import Login from './Login';
 
 function Home() {
   const {
-    setUser, bookingData, setBookingData, login, setLogin
+    setUser, bookingData, setBookingData, login, setLogin,
   } = useContext(StoreContext);
   const loginRef = useRef();
   const guestRef = useRef();
