@@ -6,16 +6,23 @@ import React, {
 import PropTypes from 'prop-types';
 import { MdOutlineDelete } from 'react-icons/md';
 import { FiEdit } from 'react-icons/fi';
+import styled, { keyframes } from 'styled-components';
+import fadeIn from 'react-animations/lib/fade-in';
 import Button from '../../components/Button';
 import styles from './styles.module.css';
 import ModalConfirmation from '../../components/ModalConfirmation';
 import handlePrice from '../../utils/helpers';
 import { StoreContext } from '../../context/store';
 
-function ReservationCard({ reservation, available }) {
+function ReservationCard({ reservation, available, animationType }) {
   const { bookingData, setBookingData } = useContext(StoreContext);
   const [showModal, setShowModal] = useState(false);
   const router = useRouter();
+
+  const animation = keyframes`${animationType}`;
+  const AnimationDiv = styled.div`
+    animation: 2s ${animation};
+  `;
 
   const handleEdit = (e) => {
     e.preventDefault();
@@ -47,7 +54,7 @@ function ReservationCard({ reservation, available }) {
   }, []);
 
   return (
-    <>
+    <AnimationDiv>
       {showModal ? <ModalConfirmation onClose={() => setShowModal(false)} setShowModal={setShowModal} reservation={reservation} title="¿Desea eliminar la reserva?" /> : ''}
       <div className={styles.reservationcard}>
         <div className={styles.leftside}>
@@ -75,13 +82,14 @@ function ReservationCard({ reservation, available }) {
             : ''}
         </div>
       </div>
-    </>
+    </AnimationDiv>
   );
 }
 
 ReservationCard.propTypes = {
   reservation: PropTypes.node.isRequired,
   available: PropTypes.node.isRequired,
+  animationType: PropTypes.node.isRequired,
 };
 
 const MyReservations = memo(({ reservations }) => {
@@ -97,13 +105,17 @@ const MyReservations = memo(({ reservations }) => {
         {reservations?.current?.length > 0 ? <h4>Próximas</h4> : ''}
         <ul>
           {reservations?.current?.map((reservation) => (
-            <li key={reservation.id}><ReservationCard reservation={reservation} available /></li>
+            <li key={reservation.id}>
+              <ReservationCard reservation={reservation} available animationType={fadeIn} />
+            </li>
           ))}
         </ul>
         {reservations?.old?.length > 0 ? <h4>Anteriores</h4> : ''}
         <ul>
           {reservations?.old?.map((reservation) => (
-            <li key={reservation.id}><ReservationCard reservation={reservation} /></li>
+            <li key={reservation.id}>
+              <ReservationCard reservation={reservation} animationType={fadeIn} />
+            </li>
           ))}
         </ul>
       </div>

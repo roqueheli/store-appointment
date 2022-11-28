@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import React, { memo, useRef } from 'react';
+import fadeIn from 'react-animations/lib/fade-in';
 import PropTypes from 'prop-types';
 import Button from '../../components/Button';
 import Card from '../../components/Card';
@@ -16,7 +17,7 @@ const Workers = memo(({ workers }) => {
       <div className={styles.subcontainer}>
         {workers?.map((worker) => (
           <Link href={`/workers/${worker.id}`}>
-            <Card key={worker.id} service={worker} />
+            <Card key={worker.id} service={worker} animationType={fadeIn} />
           </Link>
         ))}
       </div>

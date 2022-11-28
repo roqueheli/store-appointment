@@ -3,6 +3,7 @@ import React, {
   memo,
   useContext, useRef, useState,
 } from 'react';
+import fadeIn from 'react-animations/lib/fade-in';
 import PropTypes from 'prop-types';
 import Button from '../../components/Button';
 import Card from '../../components/Card';
@@ -61,11 +62,17 @@ const Service = memo(({ services }) => {
                 service={service}
                 onClick={() => handleClick(service)}
                 selected={selected}
+                animationType={fadeIn}
               />
             );
           }
           return (
-            <Card key={service.id} service={service} onClick={() => handleClick(service)} />
+            <Card
+              key={service.id}
+              service={service}
+              onClick={() => handleClick(service)}
+              animationType={fadeIn}
+            />
           );
         })}
       </div>
