@@ -8,7 +8,7 @@ function AppLayout({ children }) {
     <>
       <Head>
         <title>Mr. Barber | cut & shave | Since 2022</title>
-        <meta name="description" content="Devtter" />
+        <meta name="description" content="store-appointment" />
         <link rel="icon" href="/mrbarber.jpeg" />
       </Head>
       <div className={styles.groupDiv}>

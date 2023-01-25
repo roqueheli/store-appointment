@@ -1,11 +1,11 @@
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect, useRef, useState } from 'react';
+import PropTypes from 'prop-types';
 import Button from '../../components/Button';
 import Success from '../../components/Success/Success';
 import styles from './styles.module.css';
 
-function PasswordReset() {
+function PasswordReset({ organization }) {
   const [success, setSuccess] = useState(false);
   const router = useRouter();
   const backRef = useRef();
@@ -22,12 +22,15 @@ function PasswordReset() {
         const rs = await fetch(`${process.env.NEXT_PUBLIC_HOST}users/reset_password`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: emailRef.current?.value }),
+          body: JSON.stringify({
+            email: emailRef.current?.value,
+            organization: organization?.id,
+          }),
         });
         if (rs.status === 200) {
           setSuccess(true);
           setTimeout(() => {
-            router.push('/access');
+            router.push(`/access/${organization?.nid}`);
           }, 3000);
         } else {
           setSuccess(false);
@@ -54,12 +57,14 @@ function PasswordReset() {
           : <Success />}
       </div>
       <div className={styles.btnContainer}>
-        <Link href="/access">
-          <Button ref={backRef}>Atrás</Button>
-        </Link>
+        <Button onClick={() => router.push(`/access/${organization?.nid}`)} ref={backRef}>Atrás</Button>
       </div>
     </div>
   );
 }
+
+PasswordReset.propTypes = {
+  organization: PropTypes.node.isRequired,
+};
 
 export default PasswordReset;

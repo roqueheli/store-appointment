@@ -14,7 +14,12 @@ import ModalConfirmation from '../../components/ModalConfirmation';
 import handlePrice from '../../utils/helpers';
 import { StoreContext } from '../../context/store';
 
-function ReservationCard({ reservation, available, animationType }) {
+function ReservationCard({
+  reservation,
+  available,
+  animationType,
+  organization,
+}) {
   const { bookingData, setBookingData } = useContext(StoreContext);
   const [showModal, setShowModal] = useState(false);
   const router = useRouter();
@@ -30,6 +35,13 @@ function ReservationCard({ reservation, available, animationType }) {
     if (userStorage) {
       setBookingData({
         ...bookingData,
+        organization: {
+          id: organization?.id,
+          name: organization?.name,
+          nid: organization?.nid,
+          uri_web: organization?.uri_web,
+          logo: organization?.logo,
+        },
         user: {
           user_id: userStorage.user_id,
           firstname: userStorage.username,
@@ -41,7 +53,7 @@ function ReservationCard({ reservation, available, animationType }) {
           id: reservation.id,
         },
       });
-      router.push('/service');
+      router.push(`/service/${organization.nid}`);
     }
   };
 
@@ -90,11 +102,32 @@ ReservationCard.propTypes = {
   reservation: PropTypes.node.isRequired,
   available: PropTypes.node.isRequired,
   animationType: PropTypes.node.isRequired,
+  organization: PropTypes.node.isRequired,
 };
 
-const MyReservations = memo(({ reservations }) => {
+const MyReservations = memo(({ organization }) => {
+  const [reservations, setReservations] = useState(null);
   const router = useRouter();
   const backRef = useRef();
+
+  useEffect(() => {
+    (async () => {
+      const userStorage = JSON.parse(sessionStorage.getItem('session'));
+      try {
+        const rs = await fetch(`${process.env.NEXT_PUBLIC_HOST}${userStorage?.token ? '' : 'guest/'}reservations/by_user`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Authorization: userStorage?.token || '' },
+          body: JSON.stringify({ email: userStorage.email }),
+        });
+        const data = await rs.json();
+        if (rs.status === 200) {
+          setReservations(data);
+        }
+      } catch (error) {
+        setReservations({ error: 'Ha ocurrido un error intentando hacer submit' });
+      }
+    })();
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -106,7 +139,12 @@ const MyReservations = memo(({ reservations }) => {
         <ul>
           {reservations?.current?.map((reservation) => (
             <li key={reservation.id}>
-              <ReservationCard reservation={reservation} available animationType={fadeIn} />
+              <ReservationCard
+                reservation={reservation}
+                available
+                animationType={fadeIn}
+                organization={organization}
+              />
             </li>
           ))}
         </ul>
@@ -114,7 +152,11 @@ const MyReservations = memo(({ reservations }) => {
         <ul>
           {reservations?.old?.map((reservation) => (
             <li key={reservation.id}>
-              <ReservationCard reservation={reservation} animationType={fadeIn} />
+              <ReservationCard
+                reservation={reservation}
+                animationType={fadeIn}
+                organization={organization}
+              />
             </li>
           ))}
         </ul>
@@ -129,7 +171,7 @@ const MyReservations = memo(({ reservations }) => {
 });
 
 MyReservations.propTypes = {
-  reservations: PropTypes.node.isRequired,
+  organization: PropTypes.node.isRequired,
 };
 
 export default MyReservations;

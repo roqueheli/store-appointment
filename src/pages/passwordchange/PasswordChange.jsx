@@ -1,11 +1,16 @@
+import React, {
+  useContext, useEffect, useRef, useState,
+} from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useEffect, useRef, useState } from 'react';
+import PropTypes from 'prop-types';
+import { StoreContext } from '../../context/store';
 import Button from '../../components/Button';
 import Success from '../../components/Success/Success';
 import styles from './styles.module.css';
 
-function PasswordChange() {
+function PasswordChange({ organization }) {
+  const { bookingData } = useContext(StoreContext);
   const [success, setSuccess] = useState(false);
   const router = useRouter();
   const backRef = useRef();
@@ -21,7 +26,7 @@ function PasswordChange() {
     const userStorage = JSON.parse(sessionStorage.getItem('session'));
     (async () => {
       try {
-        const rs = await fetch(`${process.env.NEXT_PUBLIC_HOST}users/${router.query.id}`, {
+        const rs = await fetch(`${process.env.NEXT_PUBLIC_HOST}users/${bookingData.user.user_id}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json', Authorization: userStorage.token },
           body: JSON.stringify({
@@ -31,7 +36,7 @@ function PasswordChange() {
         if (rs.status === 200) {
           setSuccess(true);
           setTimeout(() => {
-            router.push('/profile');
+            router.push(`/profile/${organization?.nid}`);
           }, 3000);
         } else {
           setSuccess(false);
@@ -59,12 +64,16 @@ function PasswordChange() {
           : <Success />}
       </div>
       <div className={styles.btnContainer}>
-        <Link href="/profile">
+        <Link href={`/profile/${organization?.nid}`}>
           <Button ref={backRef}>Atrás</Button>
         </Link>
       </div>
     </div>
   );
 }
+
+PasswordChange.propTypes = {
+  organization: PropTypes.node.isRequired,
+};
 
 export default PasswordChange;

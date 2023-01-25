@@ -1,13 +1,14 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useContext, useRef, useState } from 'react';
+import PropTypes from 'prop-types';
 import Button from '../../components/Button';
 import Card from '../../components/Card';
 import Success from '../../components/Success/Success';
 import { StoreContext } from '../../context/store';
 import styles from './styles.module.css';
 
-function Confirmation() {
+function Confirmation({ organization }) {
   const [success, setSuccess] = useState(false);
   const { bookingData, setUser, user } = useContext(StoreContext);
   const router = useRouter();
@@ -23,7 +24,7 @@ function Confirmation() {
     if (bookingData.reservation.id > 0) execMethod = 'PUT';
     (async () => {
       try {
-        const rs = await fetch(`${process.env.NEXT_PUBLIC_HOST}${bookingData.user.user_id === 0 || bookingData.user.user_id === null ? 'guest/' : ''}reservations${execMethod === 'PUT' ? `/${bookingData.reservation.id}` : ''}`, {
+        const rs = await fetch(`${process.env.NEXT_PUBLIC_HOST}${bookingData.user.token !== '' ? '' : 'guest/'}reservations${execMethod === 'PUT' ? `/${bookingData.reservation.id}` : ''}`, {
           method: execMethod,
           headers: {
             'Content-Type': 'application/json',
@@ -41,6 +42,7 @@ function Confirmation() {
             worker_id: bookingData.worker.worker_id,
             service_id: bookingData.service.service_id,
             rut: '',
+            organization_id: bookingData.organization.id,
           }),
         });
         const data = await rs.json();
@@ -50,10 +52,10 @@ function Confirmation() {
             if (bookingData.user.user_id === 0) setUser(null);
             if (bookingData.user.user_id === 0 && user.avatar !== '') sessionStorage.removeItem('session');
             setTimeout(() => {
-              router.push('/login');
+              router.push(`/login/${organization?.nid}`);
             }, 4000);
           } else {
-            router.push('/myreservations');
+            router.push(`/myreservations/${organization?.nid}`);
           }
         } else {
           setUser({ error: data });
@@ -89,7 +91,7 @@ function Confirmation() {
               <Button onClick={handleClick} ref={bookingRef}>
                 Agendar
               </Button>
-              <Link href="/worker">
+              <Link href={`/appointment/${organization?.nid}`}>
                 <Button ref={backRef}>
                   Atrás
                 </Button>
@@ -98,14 +100,14 @@ function Confirmation() {
           )
           : (
             <>
-              <Link href="/login">
+              <Link href={`/login/${organization?.nid}`}>
                 <Button ref={loginRef}>
                   Inicio
                 </Button>
               </Link>
               {bookingData.user.user_id > 0
                 ? (
-                  <Link href="/myreservations">
+                  <Link href={`/myreservations/${organization?.nid}`}>
                     <Button ref={reservationRef}>
                       Mis reservas
                     </Button>
@@ -118,5 +120,9 @@ function Confirmation() {
     </div>
   );
 }
+
+Confirmation.propTypes = {
+  organization: PropTypes.node.isRequired,
+};
 
 export default Confirmation;

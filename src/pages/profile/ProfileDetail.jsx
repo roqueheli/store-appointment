@@ -1,8 +1,9 @@
-import Link from 'next/link';
-import { useRouter } from 'next/router';
 import React, {
   useContext, useEffect, useRef, useState,
 } from 'react';
+import PropTypes from 'prop-types';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import Button from '../../components/Button';
 import Success from '../../components/Success/Success';
 import { StoreContext } from '../../context/store';
@@ -14,7 +15,7 @@ const initialObj = {
   phone: '',
 };
 
-function ProfileDetail() {
+function ProfileDetail({ organization }) {
   const { user, setUser } = useContext(StoreContext);
   const [newValues, setNewValues] = useState(initialObj);
   const [loading, setLoading] = useState(false);
@@ -26,7 +27,7 @@ function ProfileDetail() {
     const userStorage = JSON.parse(sessionStorage.getItem('session'));
     (async () => {
       try {
-        const rs = await fetch(`${process.env.NEXT_PUBLIC_HOST}users/${router.query.id}`, {
+        const rs = await fetch(`${process.env.NEXT_PUBLIC_HOST}users/${router.query.slug[1]}`, {
           method: 'GET',
           headers: { 'Content-Type': 'application/json', Authorization: userStorage.token },
         });
@@ -48,7 +49,7 @@ function ProfileDetail() {
     const userStorage = JSON.parse(sessionStorage.getItem('session'));
     (async () => {
       try {
-        const rs = await fetch(`${process.env.NEXT_PUBLIC_HOST}users/${router.query.id}`, {
+        const rs = await fetch(`${process.env.NEXT_PUBLIC_HOST}users/${router.query.slug[1]}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json', Authorization: userStorage.token },
           body: JSON.stringify({ name: newValues.name, phone: newValues.phone }),
@@ -61,7 +62,7 @@ function ProfileDetail() {
           });
           setSuccess(true);
           setTimeout(() => {
-            router.push('/profile');
+            router.push(`/profile/${organization.nid}`);
           }, 3000);
         } else {
           setUser({ error: 'Ha ocurrido un error' });
@@ -92,7 +93,7 @@ function ProfileDetail() {
               <input type="text" name="name" placeholder="Nombre" onChange={handleNewValue} value={newValues.name} />
               <input type="text" name="phone" placeholder="Teléfono" onChange={handleNewValue} value={newValues.phone} />
               <input className={styles.submitbutton} type="submit" value="Guardar" />
-              <Link href="/profile">
+              <Link href={`/profile/${organization.nid}`}>
                 <Button ref={cancelRef}>Cancelar</Button>
               </Link>
             </form>
@@ -104,5 +105,9 @@ function ProfileDetail() {
     </div>
   );
 }
+
+ProfileDetail.propTypes = {
+  organization: PropTypes.node.isRequired,
+};
 
 export default ProfileDetail;

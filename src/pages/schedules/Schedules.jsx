@@ -9,7 +9,7 @@ function Schedules() {
 
   const handleBack = (e) => {
     e.preventDefault();
-    router.push('/');
+    router.back();
   };
 
   return (
@@ -58,13 +58,13 @@ function Schedules() {
   );
 }
 
-Schedules.getInitialProps = async () => {
-  const rs = await fetch(`${process.env.NEXT_PUBLIC_HOST}work_days`, {
-    method: 'GET',
-    headers: { 'Content-Type': 'application/json' },
-  });
-  const data = await rs.json();
-  return { schedules: data };
-};
+// Schedules.getInitialProps = async () => {
+//   const rs = await fetch(`${process.env.NEXT_PUBLIC_HOST}work_days`, {
+//     method: 'GET',
+//     headers: { 'Content-Type': 'application/json' },
+//   });
+//   const data = await rs.json();
+//   return { schedules: data };
+// };
 
 export default Schedules;

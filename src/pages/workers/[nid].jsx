@@ -15,14 +15,15 @@ function HomeWorkers({ workers }) {
   );
 }
 
-HomeWorkers.getInitialProps = async () => {
-  const rs = await fetch(`${process.env.NEXT_PUBLIC_HOST}workers`, {
-    method: 'GET',
+export async function getServerSideProps(ctx) {
+  const rs = await fetch(`${process.env.NEXT_PUBLIC_HOST}workers/by_org_nid`, {
+    method: 'POST',
     headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ nid: ctx.query.nid }),
   });
-  const data = await rs.json();
-  return { workers: data };
-};
+  const workers = await rs.json();
+  return { props: { workers } };
+}
 
 HomeWorkers.propTypes = {
   workers: PropTypes.node.isRequired,

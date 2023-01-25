@@ -15,14 +15,15 @@ function Service({ services }) {
   );
 }
 
-Service.getInitialProps = async () => {
-  const rs = await fetch(`${process.env.NEXT_PUBLIC_HOST}services`, {
-    method: 'GET',
+export async function getServerSideProps({ params }) {
+  const rs = await fetch(`${process.env.NEXT_PUBLIC_HOST}services/by_org_nid`, {
+    method: 'POST',
     headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ nid: params.nid }),
   });
-  const data = await rs.json();
-  return { services: data };
-};
+  const services = await rs.json();
+  return { props: { services } };
+}
 
 Service.propTypes = {
   services: PropTypes.node.isRequired,

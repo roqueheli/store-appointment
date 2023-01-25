@@ -40,12 +40,12 @@ const Service = memo(({ services }) => {
         id: 0,
       },
     });
-    router.push('/login');
+    router.push(`/login/${router.query?.nid}`);
   };
 
   const handleNext = (e) => {
     e.preventDefault();
-    if (selected) router.push('/worker');
+    if (selected) router.push(`/worker/${router.query?.nid}`);
   };
 
   return (

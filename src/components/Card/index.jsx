@@ -16,7 +16,7 @@ function Card({
     <AnimationDiv>
       <button type="button" className={`${styles.content} ${selected && `${styles.selected}`}`} onClick={onClick}>
         <div className={styles.card}>
-          <img src="./mrbarber.jpeg" alt={service.name} />
+          <img src={service?.photoUrl} alt={service?.name} />
         </div>
         <div className={styles.firstinfo}>
           <div className={styles.profileinfo}>

@@ -2,12 +2,19 @@ import Link from 'next/link';
 import React, { memo, useRef } from 'react';
 import fadeIn from 'react-animations/lib/fade-in';
 import PropTypes from 'prop-types';
+import { useRouter } from 'next/router';
 import Button from '../../components/Button';
 import Card from '../../components/Card';
 import styles from './styles.module.css';
 
 const Workers = memo(({ workers }) => {
   const backRef = useRef();
+  const router = useRouter();
+
+  const handleBack = (e) => {
+    e.preventDefault();
+    router.back();
+  };
 
   return (
     <div className={styles.container}>
@@ -22,11 +29,9 @@ const Workers = memo(({ workers }) => {
         ))}
       </div>
       <div className={styles.btnContainer}>
-        <Link href="/">
-          <Button ref={backRef}>
-            Atrás
-          </Button>
-        </Link>
+        <Button onClick={handleBack} ref={backRef}>
+          Atrás
+        </Button>
       </div>
     </div>
   );

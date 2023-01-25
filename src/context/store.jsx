@@ -4,6 +4,13 @@ import PropTypes from 'prop-types';
 export const StoreContext = createContext();
 
 export const initialObj = {
+  organization: {
+    id: '',
+    name: '',
+    nid: '',
+    uri_web: '',
+    logo: '',
+  },
   user: {
     user_id: 0,
     firstname: '',

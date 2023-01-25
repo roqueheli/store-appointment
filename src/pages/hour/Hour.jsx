@@ -2,11 +2,12 @@ import { useRouter } from 'next/router';
 import React, {
   useContext, useEffect, useRef, useState,
 } from 'react';
+import PropTypes from 'prop-types';
 import Button from '../../components/Button';
 import { StoreContext } from '../../context/store';
 import styles from './styles.module.css';
 
-function Hour() {
+function Hour({ organization }) {
   const [selected, setSelected] = useState('');
   const { bookingData, setBookingData } = useContext(StoreContext);
   const [hours, setHours] = useState([]);
@@ -51,12 +52,12 @@ function Hour() {
 
   const handleConfirm = (e) => {
     e.preventDefault();
-    if (selected) router.push('/confirmation');
+    if (selected) router.push(`/confirmation/${organization.nid}`);
   };
 
   const handleBack = (e) => {
     e.preventDefault();
-    router.push('/appointment');
+    router.push(`/appointment/${organization.nid}`);
   };
 
   return (
@@ -99,5 +100,9 @@ function Hour() {
     </div>
   );
 }
+
+Hour.propTypes = {
+  organization: PropTypes.node.isRequired,
+};
 
 export default Hour;

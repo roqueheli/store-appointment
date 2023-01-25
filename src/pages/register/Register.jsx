@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import PropTypes from 'prop-types';
 import Button from '../../components/Button';
 import styles from './styles.module.css';
 import Success from '../../components/Success/Success';
@@ -11,9 +12,10 @@ const initialObject = {
   password: '',
   password_confirmation: '',
   phone: '',
+  organization_nid: '',
 };
 
-function Register() {
+function Register({ organization }) {
   const [registerData, setRegisterData] = useState(initialObject);
   const [success, setSuccess] = useState(false);
   const [message, setMessage] = useState({});
@@ -34,12 +36,19 @@ function Register() {
         const rs = await fetch(`${process.env.NEXT_PUBLIC_HOST}users`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(registerData),
+          body: JSON.stringify({
+            name: registerData?.name,
+            email: registerData?.email,
+            password: registerData.password,
+            password_confirmation: registerData?.password_confirmation,
+            phone: registerData?.phone,
+            organization_id: organization?.id,
+          }),
         });
         if (rs.status === 201) {
           setSuccess(true);
           setTimeout(() => {
-            router.push('/login');
+            router.push(`/login/${organization?.nid}`);
           }, 2000);
         } else if (rs.status === 422) {
           setMessage({ first: 'Email', second: 'ya se encuentra registrado' });
@@ -87,7 +96,7 @@ function Register() {
           : <Success />}
       </div>
       <div className={styles.btnContainer}>
-        <Link href="/access">
+        <Link href={`/access/${organization?.nid}`}>
           <Button ref={backRef}>
             Atrás
           </Button>
@@ -96,5 +105,9 @@ function Register() {
     </div>
   );
 }
+
+Register.propTypes = {
+  organization: PropTypes.node.isRequired,
+};
 
 export default Register;
