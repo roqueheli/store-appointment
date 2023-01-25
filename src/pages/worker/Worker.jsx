@@ -33,12 +33,12 @@ const Worker = memo(({ workers }) => {
 
   const handleBack = (e) => {
     e.preventDefault();
-    router.push('/service');
+    router.push(`/service/${router.query?.nid}`);
   };
 
   const handleNext = (e) => {
     e.preventDefault();
-    if (selected) router.push('/appointment');
+    if (selected) router.push(`/appointment/${router.query?.nid}`);
   };
 
   return (

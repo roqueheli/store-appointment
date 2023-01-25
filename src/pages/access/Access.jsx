@@ -2,13 +2,14 @@ import React, {
   useContext, useRef, useState, useEffect,
 } from 'react';
 import { useRouter } from 'next/router';
+import PropTypes from 'prop-types';
 import { FcGoogle } from 'react-icons/fc';
 import Button from '../../components/Button';
 import styles from './access.module.css';
 import { userStateChange, loginWithGoogle } from '../../firebase/client';
 import { StoreContext } from '../../context/store';
 
-function Access() {
+function Access({ organization }) {
   const [loginError, setLoginError] = useState(false);
   const {
     user, setUser, bookingData, setBookingData,
@@ -19,9 +20,9 @@ function Access() {
   const passwordRef = useRef();
 
   useEffect(() => {
-    if (user) router.push('/login');
+    if (user) router.push(`/login/${organization?.nid}`);
     emailRef.current?.focus();
-  }, []);
+  }, [user]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -31,13 +32,21 @@ function Access() {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            email: emailRef.current?.value, password: passwordRef.current?.value,
+            email: emailRef.current?.value,
+            password: passwordRef.current?.value,
+            organization_id: organization?.id,
           }),
         });
         if (rs.status === 200) {
           const data = await rs.json();
           setUser({
-            username: data.username, email: emailRef.current?.value, phone: data?.phone || 0, avatar: '', token: data.token,
+            user_id: data.user_id,
+            username: data.username,
+            email: emailRef.current?.value,
+            phone: data?.phone || 0,
+            avatar: '',
+            token: data.token,
+            organization: organization?.nid,
           });
           setBookingData({
             ...bookingData,
@@ -50,9 +59,15 @@ function Access() {
             },
           });
           sessionStorage.setItem('session', JSON.stringify({
-            user_id: data?.user_id || null, username: data?.username, email: emailRef.current?.value, phone: data?.phone || 0, avatar: '', token: data?.token || null,
+            user_id: data?.user_id || null,
+            username: data?.username,
+            email: emailRef.current?.value,
+            phone: data?.phone || 0,
+            avatar: '',
+            token: data?.token || null,
+            organization: organization?.nid,
           }));
-          router.push('/login');
+          router.push(`/login/${organization?.nid}`);
         } else {
           setLoginError(true);
         }
@@ -62,21 +77,25 @@ function Access() {
     })();
   };
 
-  const handleGoogleLogin = (e) => {
+  const handleGoogleLogin = async (e) => {
     e.preventDefault();
-    loginWithGoogle().then(userStateChange(setUser))
+    await loginWithGoogle().then(userStateChange(setUser))
       .then(sessionStorage.setItem('session', JSON.stringify(
         {
-          user_id: user?.user_id || null, username: user?.username, email: user?.email, avatar: user?.avatar || '', token: user?.token || null,
+          user_id: user?.user_id || null,
+          username: user?.username,
+          email: user?.email,
+          avatar: user?.avatar || '',
+          token: user?.token || null,
         },
       )))
       .catch((error) => setUser({ error }));
-    router.push('/login');
+    router.push(`/login/${organization?.nid}`);
   };
 
   const handleBack = (e) => {
     e.preventDefault();
-    router.push('/homelogin');
+    router.push(`/homelogin/${organization?.nid}`);
   };
 
   return (
@@ -95,8 +114,8 @@ function Access() {
               Login con Google
             </button>
             <div className={styles.access_othertexts}>
-              <a href="/register">Registrarse</a>
-              <a href="/passwordreset">¿Olvidó su contraseña?</a>
+              <a href={`/register/${organization?.nid}`}>Registrarse</a>
+              <a href={`/passwordreset/${organization?.nid}`}>¿Olvidó su contraseña?</a>
             </div>
           </form>
           {loginError ? (
@@ -116,5 +135,9 @@ function Access() {
       : ''
   );
 }
+
+Access.propTypes = {
+  organization: PropTypes.node.isRequired,
+};
 
 export default Access;

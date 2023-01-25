@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import PropTypes from 'prop-types';
 import { MdDateRange, MdLogout } from 'react-icons/md';
 import { BsCalendarDate } from 'react-icons/bs';
 import { useRouter } from 'next/router';
@@ -8,7 +9,7 @@ import Button from '../../components/Button';
 import { initialObj, StoreContext } from '../../context/store';
 import styles from './styles.module.css';
 
-function Login() {
+function Login({ organization }) {
   const {
     user, setUser, bookingData, setBookingData,
   } = useContext(StoreContext);
@@ -18,12 +19,19 @@ function Login() {
   const router = useRouter();
 
   useEffect(() => {
-    if (!user) router.push('/access');
+    if (!user) router.push(`/access/${organization?.nid}`);
   }, []);
 
   useEffect(() => {
     setBookingData({
       ...bookingData,
+      organization: {
+        id: organization?.id,
+        name: organization?.name,
+        nid: organization?.nid,
+        uri_web: organization?.uri_web,
+        logo: organization?.logo,
+      },
       user: {
         user_id: user?.user_id || '',
         firstname: user?.username,
@@ -40,7 +48,7 @@ function Login() {
     setUser(null);
     sessionStorage.removeItem('session');
     setBookingData(initialObj);
-    router.push('/access');
+    router.push(`/access/${organization?.nid}`);
   };
 
   const handleReservations = (e) => {
@@ -55,7 +63,7 @@ function Login() {
         token: user?.token || null,
       }),
     );
-    router.push('/myreservations');
+    router.push(`/myreservations/${organization?.nid}`);
   };
 
   return (
@@ -63,14 +71,14 @@ function Login() {
       <div className={styles.subcontainer}>
         {user ? (
           <>
-            <Link href="/">
+            <Link href={`/${organization?.nid}`}>
               <img
                 className={styles.logostyle}
-                src="./mrbarber.jpeg"
-                alt="logo"
+                src={organization?.logo}
+                alt={organization?.name}
               />
             </Link>
-            <Link href="/profile">
+            <Link href={`/profile/${organization?.nid}`}>
               <div className={styles.avatarContainer}>
                 {user.avatar !== '' ? (
                   <img
@@ -86,7 +94,7 @@ function Login() {
                 <strong>{`${user.username[0].toUpperCase()}${user.username.substring(1)}`}</strong>
               </div>
             </Link>
-            <Link href="/service">
+            <Link href={`/service/${organization?.nid}`}>
               <Button ref={appointmentRef}>
                 <MdDateRange />
                 Reserva ahora
@@ -108,5 +116,9 @@ function Login() {
     </div>
   );
 }
+
+Login.propTypes = {
+  organization: PropTypes.node.isRequired,
+};
 
 export default Login;

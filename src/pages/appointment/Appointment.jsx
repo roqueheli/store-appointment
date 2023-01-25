@@ -1,12 +1,13 @@
 import React, { useContext, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
+import PropTypes from 'prop-types';
 import Calendar from 'react-calendar';
 import Button from '../../components/Button';
 import 'react-calendar/dist/Calendar.css';
 import styles from './styles.module.css';
 import { StoreContext } from '../../context/store';
 
-function Appointment() {
+function Appointment({ organization }) {
   const { bookingData, setBookingData } = useContext(StoreContext);
   const buttonRef = useRef();
   const hourRef = useRef();
@@ -31,12 +32,12 @@ function Appointment() {
 
   const handleBack = (e) => {
     e.preventDefault();
-    router.push('/worker');
+    router.push(`/worker/${organization.nid}`);
   };
 
   const handleNext = (e) => {
     e.preventDefault();
-    if (dateBook) router.push('/hour');
+    if (dateBook) router.push(`/hour/${organization.nid}`);
   };
 
   return (
@@ -63,5 +64,9 @@ function Appointment() {
     </div>
   );
 }
+
+Appointment.propTypes = {
+  organization: PropTypes.node.isRequired,
+};
 
 export default Appointment;
